@@ -1,0 +1,36 @@
+diff --git a/src/test/include.am b/src/test/include.am
+index 2dd4d8c58..916f39b93 100644
+--- a/src/test/include.am
++++ b/src/test/include.am
+@@ -117,6 +117,7 @@ src_test_test_SOURCES += \
+ 	src/test/test_channel.c \
+ 	src/test/test_channelpadding.c \
+ 	src/test/test_circuitpadding.c \
++	src/test/test_circuitpadding_sim.c \
+ 	src/test/test_channeltls.c \
+ 	src/test/test_checkdir.c \
+ 	src/test/test_circuitlist.c \
+diff --git a/src/test/test.c b/src/test/test.c
+index 65e169b38..48c9b2c6c 100644
+--- a/src/test/test.c
++++ b/src/test/test.c
+@@ -834,6 +834,7 @@ struct testgroup_t testgroups[] = {
+   { "checkdir/", checkdir_tests },
+   { "circuitbuild/", circuitbuild_tests },
+   { "circuitpadding/", circuitpadding_tests },
++  { "circuitpadding_sim/", circuitpadding_sim_tests },
+   { "circuitlist/", circuitlist_tests },
+   { "circuitmux/", circuitmux_tests },
+   { "circuitstats/", circuitstats_tests },
+diff --git a/src/test/test.h b/src/test/test.h
+index d6a1d19ea..a3a3f2e06 100644
+--- a/src/test/test.h
++++ b/src/test/test.h
+@@ -188,6 +188,7 @@ extern struct testcase_t cell_queue_tests[];
+ extern struct testcase_t channel_tests[];
+ extern struct testcase_t channelpadding_tests[];
+ extern struct testcase_t circuitpadding_tests[];
++extern struct testcase_t circuitpadding_sim_tests[];
+ extern struct testcase_t channeltls_tests[];
+ extern struct testcase_t checkdir_tests[];
+ extern struct testcase_t circuitbuild_tests[];

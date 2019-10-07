@@ -34,3 +34,126 @@ index d6a1d19ea..a3a3f2e06 100644
  extern struct testcase_t channeltls_tests[];
  extern struct testcase_t checkdir_tests[];
  extern struct testcase_t circuitbuild_tests[];
+diff --git a/src/core/or/circuitpadding.c b/src/core/or/circuitpadding.c
+index 99c68d5f6..72d113b92 100644
+--- a/src/core/or/circuitpadding.c
++++ b/src/core/or/circuitpadding.c
+@@ -1791,6 +1791,8 @@ circpad_estimate_circ_rtt_on_send(circuit_t *circ,
+ void
+ circpad_cell_event_nonpadding_sent(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_nonpadding_sent");
++
+   /* Update global cell count */
+   circpad_global_nonpadding_sent++;
+ 
+@@ -1881,6 +1883,8 @@ circpad_check_received_cell(cell_t *cell, circuit_t *circ,
+ void
+ circpad_cell_event_nonpadding_received(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_nonpadding_received");
++
+   FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
+     /* First, update any timestamps */
+     on_circ->padding_info[i]->last_cell_time_sec = approx_time();
+@@ -1902,6 +1906,8 @@ circpad_cell_event_nonpadding_received(circuit_t *on_circ)
+ void
+ circpad_cell_event_padding_sent(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_padding_sent");
++
+   FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
+     /* Check to see if we've run out of tokens for this state already,
+      * and if not, check for other state transitions */
+@@ -1928,6 +1934,8 @@ circpad_cell_event_padding_sent(circuit_t *on_circ)
+ void
+ circpad_cell_event_padding_received(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_padding_received");
++
+   /* identical to padding sent */
+   FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
+     on_circ->padding_info[i]->last_cell_time_sec = approx_time();
+@@ -2196,6 +2204,8 @@ circpad_add_matching_machines(origin_circuit_t *on_circ,
+ void
+ circpad_machine_event_circ_added_hop(origin_circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_added_hop");
++
+   /* Since our padding conditions do not specify a max_hops,
+    * all we can do is add machines here */
+   circpad_add_matching_machines(on_circ, origin_padding_machines);
+@@ -2210,6 +2220,8 @@ circpad_machine_event_circ_added_hop(origin_circuit_t *on_circ)
+ void
+ circpad_machine_event_circ_built(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_built");
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2223,6 +2235,8 @@ circpad_machine_event_circ_built(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_purpose_changed(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_purpose_changed");
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2237,6 +2251,8 @@ circpad_machine_event_circ_purpose_changed(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_has_no_relay_early(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_has_no_relay_early");
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2252,6 +2268,8 @@ circpad_machine_event_circ_has_no_relay_early(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_has_streams(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_has_streams");
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2267,6 +2285,8 @@ circpad_machine_event_circ_has_streams(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_has_no_streams(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_has_no_streams");
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -3041,6 +3061,12 @@ circpad_free_all(void)
+   }
+ }
+ 
++MOCK_IMPL(STATIC void,
++circpad_event_callback,(const char *event))
++{
++  (void)event;
++}
++
+ /* Serialization */
+ // TODO: Should we use keyword=value here? Are there helpers for that?
+ #if 0
+diff --git a/src/core/or/circuitpadding.h b/src/core/or/circuitpadding.h
+index e9eb32c61..a63b5220d 100644
+--- a/src/core/or/circuitpadding.h
++++ b/src/core/or/circuitpadding.h
+@@ -802,6 +802,11 @@ STATIC void
+ circpad_add_matching_machines(origin_circuit_t *on_circ,
+                               smartlist_t *machines_sl);
+ 
++// called by circpad_cell_event_* and circpad_machine_event_* callbacks for the
++// specific event, used to generate traces for circpad simulations.
++MOCK_DECL(STATIC void,
++circpad_event_callback, (const char *event));
++
+ #ifdef TOR_UNIT_TESTS
+ extern smartlist_t *origin_padding_machines;
+ extern smartlist_t *relay_padding_machines;

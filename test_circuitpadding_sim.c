@@ -58,11 +58,12 @@ static void simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
 static void timers_advance_and_run(int64_t msec_update);
 static const node_t * node_get_by_id_mock(const char *identity_digest);
 static void nodes_init(void);
+static void circpad_event_callback_mock(const char *event);
 
 // simulation-related functions
 void test_circuitpadding_sim_main(void *arg);
-MOCK_DECL(void, helper_add_client_machine, (void));
-MOCK_DECL(void, helper_add_relay_machine, (void));
+MOCK_DECL(STATIC void, helper_add_client_machine, (void));
+MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
 static void helper_add_client_machine_mock(void);
 static void helper_add_relay_machine_mock(void);
 void* create_test_env(const struct testcase_t *testcase);
@@ -109,6 +110,7 @@ test_circuitpadding_sim_main(void *arg)
   MOCK(helper_add_relay_machine, helper_add_relay_machine_mock);
   // FIXME: mock input and output as well, add a final check on the output
   // somehow
+  MOCK(circpad_event_callback, circpad_event_callback_mock);
 
   MOCK(circuitmux_attach_circuit, circuitmux_attach_circuit_mock);
   MOCK(circuit_package_relay_cell, circuit_package_relay_cell_mock);
@@ -156,6 +158,9 @@ test_circuitpadding_sim_main(void *arg)
   // now, create empty patch
 
   // core loop going moving time forward
+  // - one machine can have at most one timer scheduled
+  // - ordering between client and relay a problem when factoring in time and
+  //   events?
 
   done:
     free_fake_origin_circuit(TO_ORIGIN_CIRCUIT(client_side));
@@ -166,6 +171,8 @@ test_circuitpadding_sim_main(void *arg)
     UNMOCK(node_get_by_id);
     UNMOCK(circuit_package_relay_cell);
     UNMOCK(circuitmux_attach_circuit);
+    UNMOCK(helper_add_relay_machine);
+    UNMOCK(helper_add_client_machine);
 }
 
 /*
@@ -207,13 +214,13 @@ struct testcase_t circuitpadding_sim_tests[] = {
 };
 
 // The client machine to test. Can be generated, e.g., from a python script.
-MOCK_IMPL(void, helper_add_client_machine, (void))
+MOCK_IMPL(STATIC void, helper_add_client_machine, (void))
 {
   //REPLACE-client-padding-machine-REPLACE
 }
 
 // The relay machine to test. Can be generated, e.g., from a python script.
-MOCK_IMPL(void, helper_add_relay_machine, (void))
+MOCK_IMPL(STATIC void, helper_add_relay_machine, (void))
 {
   //REPLACE-relay-padding-machine-REPLACE
 }
@@ -416,7 +423,6 @@ nodes_init(void)
   non_padding_node.rs->pv.supports_hs_setup_padding = 0;
 }
 
-// The client machine to test. Should be generated somehow.
 static void
 helper_add_client_machine_mock(void)
 {
@@ -433,24 +439,22 @@ helper_add_client_machine_mock(void)
   circ_origin_machine->target_hopnum = 2;
   circ_origin_machine->is_origin_side = 1;
 
+  // sends one padding cell after 100 ms, then just idles
    circpad_machine_states_init(circ_origin_machine, 2);
    circ_origin_machine->states[CIRCPAD_STATE_START].
-      next_state[CIRCPAD_EVENT_NONPADDING_RECV] = CIRCPAD_STATE_BURST;
-  circ_origin_machine->states[CIRCPAD_STATE_BURST].
       next_state[CIRCPAD_EVENT_NONPADDING_RECV] = CIRCPAD_STATE_BURST;
   circ_origin_machine->states[CIRCPAD_STATE_BURST].
       iat_dist.type = CIRCPAD_DIST_UNIFORM;
   circ_origin_machine->states[CIRCPAD_STATE_BURST].
       iat_dist.param1 = 0;
   circ_origin_machine->states[CIRCPAD_STATE_BURST].
-      iat_dist.param2 = 10000;
+      iat_dist.param2 = 100*1000;
 
   circ_origin_machine->machine_num = smartlist_len(origin_padding_machines);
   circpad_register_padding_machine(circ_origin_machine,
                                    origin_padding_machines);
 }
 
-// The relay machine to test. Should be generated somehow.
 static void
 helper_add_relay_machine_mock(void)
 {
@@ -461,19 +465,28 @@ helper_add_relay_machine_mock(void)
   circ_relay_machine->target_hopnum = 2;
   circ_relay_machine->is_origin_side = 0;
 
+  // sends one padding cell after 100 ms, then just idles
    circpad_machine_states_init(circ_relay_machine, 2);
    circ_relay_machine->states[CIRCPAD_STATE_START].
       next_state[CIRCPAD_EVENT_NONPADDING_RECV] = CIRCPAD_STATE_BURST;
-  circ_relay_machine->states[CIRCPAD_STATE_BURST].
-      next_state[CIRCPAD_EVENT_NONPADDING_RECV] = CIRCPAD_STATE_BURST;
-  circ_relay_machine->states[CIRCPAD_STATE_BURST].
+  circ_relay_machine->states[CIRCPAD_STATE_START].
       iat_dist.type = CIRCPAD_DIST_UNIFORM;
-  circ_relay_machine->states[CIRCPAD_STATE_BURST].
+  circ_relay_machine->states[CIRCPAD_STATE_START].
       iat_dist.param1 = 0;
   circ_relay_machine->states[CIRCPAD_STATE_BURST].
-      iat_dist.param2 = 10000;
+      iat_dist.param2 = 100*1000;
 
   circ_relay_machine->machine_num = smartlist_len(relay_padding_machines);
   circpad_register_padding_machine(circ_relay_machine,
                                    relay_padding_machines);
+}
+
+static void 
+circpad_event_callback_mock(const char *event)
+{
+  struct timeval now;
+  tor_gettimeofday(&now);
+  int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
+               (int64_t)(now.tv_usec);
+  printf("%ld %s\n", us, event);
 }

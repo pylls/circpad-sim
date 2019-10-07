@@ -157,3 +157,4 @@ index d6a1d19ea..a3a3f2e06 100644
  extern struct testcase_t channeltls_tests[];
  extern struct testcase_t checkdir_tests[];
  extern struct testcase_t circuitbuild_tests[];
+ 

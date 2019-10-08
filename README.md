@@ -51,6 +51,12 @@ value to encourage machines to be conservative in their timers. About 1/4 of the
 RRT is the time it takes for a (non-)padding cell to traverse to/from the client
 to/from the relay.
 
+### input collection
+in torrc, set ``Log [circ]info notice stdout''.- TODO, write glue script. Make
+separate patch for default logging to tor log in TB for collection. Collect one
+short trace here to use for sim development, don't spend more time on collection
+before sim half-works.
+
 ### premature optimization
 - now we fork then run the setup. If we want to use the c binary to fork bomb
   ourselves, then this is not so good. Probably shouldn't have as input the

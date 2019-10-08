@@ -58,7 +58,8 @@ static void simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
 static void timers_advance_and_run(int64_t msec_update);
 static const node_t * node_get_by_id_mock(const char *identity_digest);
 static void nodes_init(void);
-static void circpad_event_callback_mock(const char *event);
+static void circpad_event_callback_mock(const char *event, 
+                                        uint32_t circuit_identifier);
 
 // simulation-related functions
 void test_circuitpadding_sim_main(void *arg);
@@ -482,11 +483,12 @@ helper_add_relay_machine_mock(void)
 }
 
 static void 
-circpad_event_callback_mock(const char *event)
+circpad_event_callback_mock(const char *event, 
+                            uint32_t circuit_identifier)
 {
   struct timeval now;
   tor_gettimeofday(&now);
   int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
                (int64_t)(now.tv_usec);
-  printf("%ld %s\n", us, event);
+  printf("%ld %s %d\n", us, event, circuit_identifier);
 }

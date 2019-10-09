@@ -490,5 +490,5 @@ circpad_event_callback_mock(const char *event,
   tor_gettimeofday(&now);
   int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
                (int64_t)(now.tv_usec);
-  printf("%ld %s %d\n", us, event, circuit_identifier);
+  printf("%ld %d %s\n", us, circuit_identifier, event);
 }

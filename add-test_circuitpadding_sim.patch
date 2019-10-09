@@ -1,5 +1,5 @@
 diff --git a/src/core/or/circuitpadding.c b/src/core/or/circuitpadding.c
-index 99c68d5f6..35ef7617f 100644
+index 99c68d5f6..bb1156bae 100644
 --- a/src/core/or/circuitpadding.c
 +++ b/src/core/or/circuitpadding.c
 @@ -1791,6 +1791,10 @@ circpad_estimate_circ_rtt_on_send(circuit_t *circ,
@@ -120,7 +120,7 @@ index 99c68d5f6..35ef7617f 100644
 +  tor_gettimeofday(&now);
 +  int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
 +               (int64_t)(now.tv_usec);
-+  log_fn(LOG_INFO, LD_CIRC, "%ld %s %d", us, event, circuit_identifier);
++  log_fn(LOG_INFO, LD_CIRC, "%ld %d %s", us, circuit_identifier, event);
 +}
 +
  /* Serialization */

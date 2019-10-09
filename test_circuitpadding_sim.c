@@ -156,7 +156,8 @@ test_circuitpadding_sim_main(void *arg)
 
   // re-use instrumentation in circpad_cell_event_* and circpad_machine_event_*
   // callbacks to create our output, use the MOCK functionality, leave empty for
-  // now, create empty patch
+  // now, create empty patch. We want to inject events we not recognize (like
+  // address resolve in the loop to maintain those in output)
 
   // core loop going moving time forward
   // - one machine can have at most one timer scheduled

@@ -1,0 +1,35 @@
+diff --git a/src/core/or/circuitpadding.c b/src/core/or/circuitpadding.c
+index 9aa761436..2d2b08b54 100644
+--- a/src/core/or/circuitpadding.c
++++ b/src/core/or/circuitpadding.c
+@@ -3078,8 +3078,11 @@ circpad_free_all(void)
+ MOCK_IMPL(void,
+ circpad_event_callback,(const char *event, uint32_t circuit_identifier))
+ {
+-  (void)event;
+-  (void)circuit_identifier;
++  struct timeval now;
++  tor_gettimeofday(&now);
++  int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 +
++               (int64_t)(now.tv_usec);
++  log_fn(LOG_INFO, LD_CIRC, "%ld %d %s", us, circuit_identifier, event);
+ }
+ 
+ /* Serialization */
+diff --git a/src/core/or/connection_edge.c b/src/core/or/connection_edge.c
+index 5f1664d28..9e4298d23 100644
+--- a/src/core/or/connection_edge.c
++++ b/src/core/or/connection_edge.c
+@@ -3102,6 +3102,12 @@ connection_ap_handshake_send_begin,(entry_connection_t *ap_conn))
+     payload_len += 4;
+   }
+ 
++  char circpadmsg[CELL_PAYLOAD_SIZE];
++  tor_snprintf(circpadmsg, RELAY_PAYLOAD_SIZE,
++              "connection_ap_handshake_send_begin %s",
++              (ap_conn->socks_request->address));
++  circpad_event_callback(circpadmsg, circ->global_identifier);
++
+   log_info(LD_APP,
+            "Sending relay cell %d on circ %u to begin stream %d.",
+            (int)ap_conn->use_begindir,

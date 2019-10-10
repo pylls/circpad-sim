@@ -41,6 +41,17 @@
 #define MONOTIME_MOCK_START   (monotime_absolute_nsec()+\
                                TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC)
 
+
+#ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
+DISABLE_GCC_WARNING(overlength-strings)
+/* We allow huge string constants in the unit tests, but not in the code
+ * at large. */
+#endif
+#include "circpad_sim_test_trace.inc"
+#ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
+ENABLE_GCC_WARNING(overlength-strings)
+#endif
+
 // mocked functions and helpers, mostly lifted from test_circuitpadding.c
 static void
 circuitmux_attach_circuit_mock(circuitmux_t *cmux, circuit_t *circ,
@@ -95,6 +106,8 @@ test_circuitpadding_sim_main(void *arg)
 {
   struct env *env = arg;
   tt_assert(env);
+
+  (void)CIRCPAD_SIM_TEST_TRACE; // FIXME
 
   /*
   * The simulator works as follows:
@@ -185,7 +198,7 @@ void*
 create_test_env(const struct testcase_t *testcase)
 {
   struct env *env = calloc(sizeof(*env), 1);
-  if (! env)
+  if (!env)
       return NULL;
     env->trace = testcase->setup_data;
     return env;
@@ -211,7 +224,7 @@ struct testcase_setup_t env_setup = {
 struct testcase_t circuitpadding_sim_tests[] = {
   //REPLACE-simulation-traces-goes-here-REPLACE
   TEST_CIRCUITPADDING_SIM(circuitpadding_sim_main, TT_FORK, 
-                          "a pretty string"),
+                          "test-trace.circpadtrace"),
   END_OF_TESTCASES
 };
 
@@ -228,7 +241,22 @@ MOCK_IMPL(STATIC void, helper_add_relay_machine, (void))
 }
 
 /*
-* Mocking functions and helpers, mostly lifted from test_circuitpadding.c
+* Helpers for the simulation.
+*/
+
+static void 
+circpad_event_callback_mock(const char *event, 
+                            uint32_t circuit_identifier)
+{
+  struct timeval now;
+  tor_gettimeofday(&now);
+  int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
+               (int64_t)(now.tv_usec);
+  printf("%ld %d %s\n", us, circuit_identifier, event);
+}
+
+/*
+* Lifted from test_circuitpadding.c to get the circpad-part to work.
 */
 static void
 circuitmux_attach_circuit_mock(circuitmux_t *cmux, circuit_t *circ,
@@ -481,15 +509,4 @@ helper_add_relay_machine_mock(void)
   circ_relay_machine->machine_num = smartlist_len(relay_padding_machines);
   circpad_register_padding_machine(circ_relay_machine,
                                    relay_padding_machines);
-}
-
-static void 
-circpad_event_callback_mock(const char *event, 
-                            uint32_t circuit_identifier)
-{
-  struct timeval now;
-  tor_gettimeofday(&now);
-  int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
-               (int64_t)(now.tv_usec);
-  printf("%ld %d %s\n", us, circuit_identifier, event);
 }

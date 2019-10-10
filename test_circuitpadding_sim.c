@@ -303,7 +303,10 @@ trace_get_next(circpad_sim_env* env, circpad_sim_event *e)
 {
   char *line;
 
-  // first time: have to read in trace
+  // We have to read in the trace the first time. Read in the entire file at
+  // once, trading memory for less back-and-forth calls. There's an assert if
+  // the internal buffer (of CIRCPAD_SIM_MAX_TRACE_SIZE) is too small to fit a
+  // trace.
   if (!circpad_sim_trace_buffer) {
     circpad_sim_trace_buffer = tor_malloc(CIRCPAD_SIM_MAX_TRACE_SIZE);
     if (strcmp(env->trace, CIRCPAD_SIM_TEST_TRACE_FILE) == 0) {

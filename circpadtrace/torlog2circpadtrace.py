@@ -78,9 +78,14 @@ def main():
                 longest_cid_len = len(circuits[cid])
 
         # all done, time to save results and warn 
+        base = -1
         with open(outfname, 'w') as f:
             for l in circuits[longest_cid]:
-                f.write("{} {}\n".format(l[0], l[1].strip()))
+                t = int(l[0])
+                if base == -1:
+                    base = t
+                t = t - base
+                f.write(f"{t:016d} {l[1].strip()}\n")
         
         for cid in smaller_cids:
             if len(circuits[cid]) > CONST_OTHER_MAX_EVENTS_WARNING:

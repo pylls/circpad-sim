@@ -1,0 +1,1725 @@
+Fontconfig warning: "/home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/fontconfig/fonts.conf", line 85: unknown element "blank"
+Oct 09 11:45:08.176 [notice] Tor 0.4.2.1-alpha-dev (git-bca30bcb90a7c01e) running on Linux with Libevent 2.1.8-stable, OpenSSL 1.1.1c, Zlib 1.2.11, Liblzma 5.2.4, and Libzstd 1.4.3.
+Oct 09 11:45:08.176 [notice] Tor can't help you if you use it wrong! Learn how to be safe at https://www.torproject.org/download/download#warning
+Oct 09 11:45:08.176 [notice] This version is not a stable Tor release. Expect more bugs than usual.
+Oct 09 11:45:08.176 [notice] Read configuration file "/home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults".
+Oct 09 11:45:08.176 [notice] Read configuration file "/home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc".
+Oct 09 11:45:08.178 [notice] Opening Socks listener on 127.0.0.1:9150
+Oct 09 11:45:08.178 [notice] Opened Socks listener on 127.0.0.1:9150
+Oct 09 11:45:08.178 [notice] Opening Control listener on 127.0.0.1:9151
+Oct 09 11:45:08.178 [notice] Opened Control listener on 127.0.0.1:9151
+Oct 09 11:45:08.000 [warn] Your log may contain sensitive information - you're logging more than "notice". Don't log unless it serves an important reason. Overwrite the log afterwards.
+Oct 09 11:45:08.000 [info] circuit_build_times_parse_state(): Adding 2 timeouts.
+Oct 09 11:45:08.000 [info] circuit_build_times_parse_state(): Loaded 837/837 values from 54 lines in circuit time histogram
+Oct 09 11:45:08.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 120
+Oct 09 11:45:08.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 722.861392ms. Setting to 1500ms
+Oct 09 11:45:08.000 [info] circuit_build_times_set_timeout(): Based on 837 circuit times, it looks like we don't need to wait so long for circuits to finish. We will now assume a circuit is too slow to use after waiting 2 seconds.
+Oct 09 11:45:08.000 [info] circuit_build_times_set_timeout(): Circuit timeout data: 1500.000000ms, 60000.000000ms, Xm: 275, a: 1.665315, r: 0.035842
+Oct 09 11:45:08.000 [notice] Parsing GEOIP IPv4 file /home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/Tor/geoip.
+Oct 09 11:45:08.000 [notice] Parsing GEOIP IPv6 file /home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/Tor/geoip6.
+Oct 09 11:45:08.000 [info] circpad_machine_client_hide_intro_circuits(): Registered client intro point hiding padding machine (0)
+Oct 09 11:45:08.000 [info] circpad_machine_relay_hide_intro_circuits(): Registered relay intro circuit hiding padding machine (0)
+Oct 09 11:45:08.000 [info] circpad_machine_client_hide_rend_circuits(): Registered client rendezvous circuit hiding padding machine (1)
+Oct 09 11:45:08.000 [info] circpad_machine_relay_hide_rend_circuits(): Registered relay rendezvous circuit hiding padding machine (1)
+Oct 09 11:45:08.000 [info] add_predicted_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:08.000 [notice] Bootstrapped 0% (starting): Starting
+Oct 09 11:45:08.000 [notice] Starting with guard context "default"
+Oct 09 11:45:08.000 [notice] New control connection opened from 127.0.0.1.
+Oct 09 11:45:08.000 [info] circuit_predict_and_launch_new(): Have 0 clean circs (0 internal), need another exit circ.
+Oct 09 11:45:08.000 [info] origin_circuit_new(): Circuit 1 chose an idle timeout of 2670 based on 2625 seconds of predictive building remaining.
+Oct 09 11:45:08.000 [info] choose_good_exit_server_general(): Found 799 servers that might support 0/0 pending connections.
+Oct 09 11:45:08.000 [info] choose_good_exit_server_general(): Chose exit server '$5C54720AFE96FDB4447670C67E4EBE3442525FED~XKEYSCORE at 23.129.64.207 and [2620:18c::207]'
+Oct 09 11:45:08.000 [info] extend_info_from_node(): Including Ed25519 ID for $5C54720AFE96FDB4447670C67E4EBE3442525FED~XKEYSCORE at 23.129.64.207 and [2620:18c::207]
+Oct 09 11:45:08.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:08.000 [info] extend_info_from_node(): Including Ed25519 ID for $EFFD831D48BC397F52349939F1C95C9B0B234EEC~xauto at 185.44.76.136 and [2a01:4020:1:43::4351]
+Oct 09 11:45:08.000 [info] circuit_handle_first_hop(): Next router is [scrubbed]: Not connected. Connecting.
+Oct 09 11:45:08.000 [info] connection_or_set_canonical(): Channel 0 chose an idle timeout of 253.
+Oct 09 11:45:08.000 [info] connection_or_set_canonical(): Channel 1 chose an idle timeout of 199.
+Oct 09 11:45:08.000 [notice] Bootstrapped 5% (conn): Connecting to a relay
+Oct 09 11:45:08.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:08.000 [info] origin_circuit_new(): Circuit 2 chose an idle timeout of 2742 based on 2625 seconds of predictive building remaining.
+Oct 09 11:45:08.000 [info] onion_pick_cpath_exit(): Using requested exit node '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:08.000 [info] circuit_handle_first_hop(): Next router is [scrubbed]: Connection in progress; waiting.
+Oct 09 11:45:08.000 [info] extend_info_from_node(): Including Ed25519 ID for $484A10BA2B8D48A5F0216674C8DD50EF27BC32F3~Aerodynamik03 at 193.70.43.76
+Oct 09 11:45:08.000 [info] origin_circuit_new(): Circuit 3 chose an idle timeout of 2713 based on 2625 seconds of predictive building remaining.
+Oct 09 11:45:08.000 [info] onion_pick_cpath_exit(): Using requested exit node '$484A10BA2B8D48A5F0216674C8DD50EF27BC32F3~Aerodynamik03 at 193.70.43.76'
+Oct 09 11:45:08.000 [info] circuit_handle_first_hop(): Next router is [scrubbed]: Not connected. Connecting.
+Oct 09 11:45:08.000 [info] connection_or_set_canonical(): Channel 0 chose an idle timeout of 258.
+Oct 09 11:45:08.000 [info] connection_or_set_canonical(): Channel 2 chose an idle timeout of 222.
+Oct 09 11:45:08.000 [notice] New control connection opened from 127.0.0.1.
+Oct 09 11:45:08.000 [notice] Bootstrapped 10% (conn_done): Connected to a relay
+Oct 09 11:45:08.000 [notice] Bootstrapped 14% (handshake): Handshaking with a relay
+Oct 09 11:45:08.000 [notice] Bootstrapped 15% (handshake_done): Handshake with a relay done
+Oct 09 11:45:08.000 [notice] Bootstrapped 75% (enough_dirinfo): Loaded enough directory info to build circuits
+Oct 09 11:45:08.000 [notice] Bootstrapped 90% (ap_handshake_done): Handshake finished with a relay to build circuits
+Oct 09 11:45:08.000 [notice] Bootstrapped 95% (circuit_create): Establishing a Tor circuit
+Oct 09 11:45:08.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:08.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:09.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$484A10BA2B8D48A5F0216674C8DD50EF27BC32F3~Aerodynamik03 at 193.70.43.76'
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] exit circ (length 3, last hop XKEYSCORE): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EFFD831D48BC397F52349939F1C95C9B0B234EEC(closed) $5C54720AFE96FDB4447670C67E4EBE3442525FED(closed)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033116 1 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033173 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] internal circ (length 1, last hop niftycongogerbil): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033413 2 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033418 2 circpad_machine_event_circ_built
+Oct 09 11:45:09.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:09.000 [info] internal circ (length 1): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033450 2 circpad_machine_event_circ_has_streams
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033460 2 connection_ap_handshake_send_begin 51.38.164.157
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033465 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033475 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033482 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033488 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033494 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033500 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033506 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033512 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033518 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033525 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033531 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033537 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033544 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] internal circ (length 1): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033565 2 connection_ap_handshake_send_begin 51.38.164.157
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033570 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033577 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033583 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033589 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033595 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033601 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033607 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033613 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033620 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033626 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033632 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033638 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509033645 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] internal circ (length 1, last hop Aerodynamik03): $484A10BA2B8D48A5F0216674C8DD50EF27BC32F3(open)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509046996 3 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047002 3 circpad_machine_event_circ_built
+Oct 09 11:45:09.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:09.000 [info] internal circ (length 1): $484A10BA2B8D48A5F0216674C8DD50EF27BC32F3(open)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047024 3 circpad_machine_event_circ_has_streams
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047043 3 connection_ap_handshake_send_begin 193.70.43.76
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047049 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047067 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047073 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047079 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047085 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047091 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047097 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047103 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047109 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047115 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047121 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047127 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509047134 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509074702 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509080426 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085108 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085149 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085159 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085166 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085173 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085250 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085265 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085273 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085280 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085286 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085295 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085301 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085308 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085327 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085353 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085364 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085371 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085378 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085385 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085393 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509085400 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509088707 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091206 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091224 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091228 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091231 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091234 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091237 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091274 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091280 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091283 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091286 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091290 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091293 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091296 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091299 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091308 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091312 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091315 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091318 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091321 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091325 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091328 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091337 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091341 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091345 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509091348 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111520 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111557 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111567 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111575 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111582 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111588 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111595 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111601 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111645 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111660 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111667 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111682 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111690 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111696 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111703 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111727 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111737 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111745 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111751 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111757 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111763 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509111770 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122098 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122139 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122147 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122154 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122160 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122165 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122170 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122176 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122191 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122261 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122273 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122291 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 156.312500/162.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] exit circ (length 3, last hop XKEYSCORE): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EFFD831D48BC397F52349939F1C95C9B0B234EEC(open) $5C54720AFE96FDB4447670C67E4EBE3442525FED(closed)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122501 1 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122547 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122558 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122565 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122571 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122576 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122581 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122586 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122605 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122622 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122640 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122648 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122654 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122659 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122665 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122671 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122675 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122693 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122701 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122715 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122721 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122725 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122730 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122734 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122739 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509122744 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124679 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124702 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124708 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124712 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124717 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124722 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124726 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124757 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124767 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124773 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124778 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124783 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124788 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124792 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124797 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124816 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124824 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124830 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124835 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124840 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124851 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124858 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509124863 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127264 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127293 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127302 3 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127319 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127344 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127364 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509127373 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129645 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129681 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129688 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129693 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129699 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129704 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509129709 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148401 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148443 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148460 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148466 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148472 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148477 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148482 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148521 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148530 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148536 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148541 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148546 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148551 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148556 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148574 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148583 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148600 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148607 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148612 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148617 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148630 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148635 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148640 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148648 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148692 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148702 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148719 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148727 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148732 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148737 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148742 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148747 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148752 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148767 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148774 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148780 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148785 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148791 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148795 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148800 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509148805 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158833 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158887 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158902 2 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158920 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158927 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158934 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158941 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158947 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509158953 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159038 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159051 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159057 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159064 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159070 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159076 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159082 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159099 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159118 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159126 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159147 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159156 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159162 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159168 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159174 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159183 2 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509159196 2 circpad_machine_event_circ_has_no_streams
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509179533 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509179558 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509179563 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509179566 3 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509179572 3 circpad_machine_event_circ_has_no_streams
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509479853 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] exit circ (length 3, last hop XKEYSCORE): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EFFD831D48BC397F52349939F1C95C9B0B234EEC(open) $5C54720AFE96FDB4447670C67E4EBE3442525FED(open)
+Oct 09 11:45:09.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 120
+Oct 09 11:45:09.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 722.826748ms. Setting to 1500ms
+Oct 09 11:45:09.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.665398, r: 0.035800) based on 838 circuit times
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509480229 1 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509480235 1 circpad_machine_event_circ_built
+Oct 09 11:45:09.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:09.000 [info] pathbias_count_build_success(): Got success count 157.312500/162.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:09.000 [notice] Bootstrapped 100% (done): Done
+Oct 09 11:45:09.000 [info] circuit_predict_and_launch_new(): Have 1 clean circs (0 internal), need another exit circ.
+Oct 09 11:45:09.000 [info] origin_circuit_new(): Circuit 4 chose an idle timeout of 2703 based on 2624 seconds of predictive building remaining.
+Oct 09 11:45:09.000 [info] choose_good_exit_server_general(): Found 835 servers that might support 0/0 pending connections.
+Oct 09 11:45:09.000 [info] choose_good_exit_server_general(): Chose exit server '$DAB96CEA61CC039A803217035293FAB32645FDDA~kree at 85.248.227.165 and [2a00:1298:8011:212::165]'
+Oct 09 11:45:09.000 [info] extend_info_from_node(): Including Ed25519 ID for $DAB96CEA61CC039A803217035293FAB32645FDDA~kree at 85.248.227.165 and [2a00:1298:8011:212::165]
+Oct 09 11:45:09.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:09.000 [info] extend_info_from_node(): Including Ed25519 ID for $53134D9637D9FBE565FA1E3AF82B23CC964C56D6~Fission6 at 51.255.26.155 and [2001:470:ca94:32::40]
+Oct 09 11:45:09.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] exit circ (length 3, last hop kree): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(closed) $DAB96CEA61CC039A803217035293FAB32645FDDA(closed)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509891093 4 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509891137 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:09.000 [notice] New control connection opened from 127.0.0.1.
+Oct 09 11:45:09.000 [notice] New control connection opened from 127.0.0.1.
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509950545 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:09.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 157.312500/163.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:09.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:09.000 [info] exit circ (length 3, last hop kree): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(closed)
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509950893 4 circpad_machine_event_circ_added_hop
+Oct 09 11:45:09.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:09.000 [info] circpad_event_callback(): 1570621509950958 4 circpad_cell_event_nonpadding_sent
+Fontconfig warning: "/home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/fontconfig/fonts.conf", line 85: unknown element "blank"
+Oct 09 11:45:10.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:10.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EFFD831D48BC397F52349939F1C95C9B0B234EEC(open) $5C54720AFE96FDB4447670C67E4EBE3442525FED(open)
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510020708 1 circpad_machine_event_circ_has_streams
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510020727 1 connection_ap_handshake_send_begin aus1.torproject.org
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510020737 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510384244 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:10.000 [info] exit circ (length 3, last hop kree): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:10.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 120
+Oct 09 11:45:10.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 722.924923ms. Setting to 1500ms
+Oct 09 11:45:10.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.665164, r: 0.035757) based on 839 circuit times
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510384454 4 circpad_machine_event_circ_added_hop
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510384458 4 circpad_machine_event_circ_built
+Oct 09 11:45:10.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:10.000 [info] pathbias_count_build_success(): Got success count 158.312500/163.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510465718 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510465980 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:10.000 [info] circuit_predict_and_launch_new(): Have 1 clean circs (0 internal), need another exit circ.
+Oct 09 11:45:10.000 [info] origin_circuit_new(): Circuit 5 chose an idle timeout of 2694 based on 2625 seconds of predictive building remaining.
+Oct 09 11:45:10.000 [info] choose_good_exit_server_general(): Found 835 servers that might support 0/0 pending connections.
+Oct 09 11:45:10.000 [info] choose_good_exit_server_general(): Chose exit server '$8CF987FF43FB7F3D9AA4C4F3D96FFDF247A9A6C2~zucchini at 109.70.100.6 and [2a03:e600:100::6]'
+Oct 09 11:45:10.000 [info] extend_info_from_node(): Including Ed25519 ID for $8CF987FF43FB7F3D9AA4C4F3D96FFDF247A9A6C2~zucchini at 109.70.100.6 and [2a03:e600:100::6]
+Oct 09 11:45:10.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:10.000 [info] extend_info_from_node(): Including Ed25519 ID for $D08660B6D70B6249A57D89BB7A8F2EA2C952BD35~SNTor at 130.89.149.57 and [2001:67c:2564:a120::57]
+Oct 09 11:45:10.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852212 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852235 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852242 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852249 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852255 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852262 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510852268 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:10.000 [info] exit circ (length 3, last hop zucchini): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $D08660B6D70B6249A57D89BB7A8F2EA2C952BD35(closed) $8CF987FF43FB7F3D9AA4C4F3D96FFDF247A9A6C2(closed)
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510913667 5 circpad_machine_event_circ_added_hop
+Oct 09 11:45:10.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510913723 5 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510922950 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510922977 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510924010 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:10.000 [info] circpad_event_callback(): 1570621510924054 1 circpad_cell_event_nonpadding_sent
+Fontconfig warning: "/home/pulls/Downloads/tor-browser_en-US/Browser/TorBrowser/Data/fontconfig/fonts.conf", line 85: unknown element "blank"
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511005187 5 circpad_cell_event_nonpadding_received
+Oct 09 11:45:11.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 158.312500/164.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:11.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:11.000 [info] exit circ (length 3, last hop zucchini): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $D08660B6D70B6249A57D89BB7A8F2EA2C952BD35(open) $8CF987FF43FB7F3D9AA4C4F3D96FFDF247A9A6C2(closed)
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511005471 5 circpad_machine_event_circ_added_hop
+Oct 09 11:45:11.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511005526 5 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511125736 5 circpad_cell_event_nonpadding_received
+Oct 09 11:45:11.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:11.000 [info] exit circ (length 3, last hop zucchini): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $D08660B6D70B6249A57D89BB7A8F2EA2C952BD35(open) $8CF987FF43FB7F3D9AA4C4F3D96FFDF247A9A6C2(open)
+Oct 09 11:45:11.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 121
+Oct 09 11:45:11.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 722.101645ms. Setting to 1500ms
+Oct 09 11:45:11.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.667129, r: 0.035714) based on 840 circuit times
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511126094 5 circpad_machine_event_circ_added_hop
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511126099 5 circpad_machine_event_circ_built
+Oct 09 11:45:11.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:11.000 [info] pathbias_count_build_success(): Got success count 159.312500/164.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511410550 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511410595 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511410604 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:11.000 [info] circuit_predict_and_launch_new(): Have 2 clean circs (0 uptime-internal, 0 internal), need another hidden service circ.
+Oct 09 11:45:11.000 [info] origin_circuit_new(): Circuit 6 chose an idle timeout of 2716 based on 2624 seconds of predictive building remaining.
+Oct 09 11:45:11.000 [info] extend_info_from_node(): Including Ed25519 ID for $AA9785862655F6FEFCD6A3B84DB6B0817838F2AA~Unnamed at 92.222.22.91
+Oct 09 11:45:11.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:11.000 [info] extend_info_from_node(): Including Ed25519 ID for $16AE2704B794C6C0013C7E47AF11DCABA808A0B9~torreyporrey at 69.164.222.151 and [2600:3c03::f03c:91ff:fe4c:1fd0]
+Oct 09 11:45:11.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:11.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:11.000 [info] internal (high-uptime) circ (length 3, last hop Unnamed): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $16AE2704B794C6C0013C7E47AF11DCABA808A0B9(closed) $AA9785862655F6FEFCD6A3B84DB6B0817838F2AA(closed)
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511895467 6 circpad_machine_event_circ_added_hop
+Oct 09 11:45:11.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:11.000 [info] circpad_event_callback(): 1570621511895517 6 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512042605 6 circpad_cell_event_nonpadding_received
+Oct 09 11:45:12.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 159.312500/165.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:12.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:12.000 [info] internal (high-uptime) circ (length 3, last hop Unnamed): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $16AE2704B794C6C0013C7E47AF11DCABA808A0B9(open) $AA9785862655F6FEFCD6A3B84DB6B0817838F2AA(closed)
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512042895 6 circpad_machine_event_circ_added_hop
+Oct 09 11:45:12.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512042950 6 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512278586 6 circpad_cell_event_nonpadding_received
+Oct 09 11:45:12.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:12.000 [info] internal (high-uptime) circ (length 3, last hop Unnamed): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $16AE2704B794C6C0013C7E47AF11DCABA808A0B9(open) $AA9785862655F6FEFCD6A3B84DB6B0817838F2AA(open)
+Oct 09 11:45:12.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 121
+Oct 09 11:45:12.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 721.873795ms. Setting to 1500ms
+Oct 09 11:45:12.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.667674, r: 0.035672) based on 841 circuit times
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512278933 6 circpad_machine_event_circ_added_hop
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512278938 6 circpad_machine_event_circ_built
+Oct 09 11:45:12.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:12.000 [info] pathbias_count_build_success(): Got success count 160.312500/165.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:12.000 [info] circuit_predict_and_launch_new(): Have 3 clean circs (1 uptime-internal, 1 internal), need another hidden service circ.
+Oct 09 11:45:12.000 [info] origin_circuit_new(): Circuit 7 chose an idle timeout of 2704 based on 2623 seconds of predictive building remaining.
+Oct 09 11:45:12.000 [info] extend_info_from_node(): Including Ed25519 ID for $B0553175AADB0501E5A61FC61CEA3970BE130FF2~zwiubel at 5.9.147.226 and [2a01:4f8:190:30e1::2]
+Oct 09 11:45:12.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:12.000 [info] extend_info_from_node(): Including Ed25519 ID for $EBE718E1A49EE229071702964F8DB1F318075FF8~fluxe4 at 131.188.40.188 and [2001:638:a000:4140::ffff:188]
+Oct 09 11:45:12.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:12.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:12.000 [info] internal (high-uptime) circ (length 3, last hop zwiubel): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EBE718E1A49EE229071702964F8DB1F318075FF8(closed) $B0553175AADB0501E5A61FC61CEA3970BE130FF2(closed)
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512917756 7 circpad_machine_event_circ_added_hop
+Oct 09 11:45:12.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512917810 7 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512989199 7 circpad_cell_event_nonpadding_received
+Oct 09 11:45:12.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 160.312500/166.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:12.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:12.000 [info] internal (high-uptime) circ (length 3, last hop zwiubel): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EBE718E1A49EE229071702964F8DB1F318075FF8(open) $B0553175AADB0501E5A61FC61CEA3970BE130FF2(closed)
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512989480 7 circpad_machine_event_circ_added_hop
+Oct 09 11:45:12.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:12.000 [info] circpad_event_callback(): 1570621512989532 7 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513089207 7 circpad_cell_event_nonpadding_received
+Oct 09 11:45:13.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:13.000 [info] internal (high-uptime) circ (length 3, last hop zwiubel): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $EBE718E1A49EE229071702964F8DB1F318075FF8(open) $B0553175AADB0501E5A61FC61CEA3970BE130FF2(open)
+Oct 09 11:45:13.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 121
+Oct 09 11:45:13.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 721.044908ms. Setting to 1500ms
+Oct 09 11:45:13.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.669662, r: 0.035629) based on 842 circuit times
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513089567 7 circpad_machine_event_circ_added_hop
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513089572 7 circpad_machine_event_circ_built
+Oct 09 11:45:13.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:13.000 [info] pathbias_count_build_success(): Got success count 161.312500/166.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:13.000 [info] circuit_predict_and_launch_new(): Have 4 clean circs (2 uptime-internal, 2 internal), need another hidden service circ.
+Oct 09 11:45:13.000 [info] origin_circuit_new(): Circuit 8 chose an idle timeout of 2686 based on 2622 seconds of predictive building remaining.
+Oct 09 11:45:13.000 [info] extend_info_from_node(): Including Ed25519 ID for $4B351545DD58473F36B0A20E5500AC6ED51E8CD5~idideditheconfig at 185.171.130.240
+Oct 09 11:45:13.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:13.000 [info] extend_info_from_node(): Including Ed25519 ID for $B143D439B72D239A419F8DCE07B8A8EB1B486FA7~wardsback at 212.129.62.232
+Oct 09 11:45:13.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:13.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:13.000 [info] internal (high-uptime) circ (length 3, last hop idideditheconfig): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $B143D439B72D239A419F8DCE07B8A8EB1B486FA7(closed) $4B351545DD58473F36B0A20E5500AC6ED51E8CD5(closed)
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513920849 8 circpad_machine_event_circ_added_hop
+Oct 09 11:45:13.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513920899 8 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513990614 8 circpad_cell_event_nonpadding_received
+Oct 09 11:45:13.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 161.312500/167.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:13.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:13.000 [info] internal (high-uptime) circ (length 3, last hop idideditheconfig): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $B143D439B72D239A419F8DCE07B8A8EB1B486FA7(open) $4B351545DD58473F36B0A20E5500AC6ED51E8CD5(closed)
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513990880 8 circpad_machine_event_circ_added_hop
+Oct 09 11:45:13.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:13.000 [info] circpad_event_callback(): 1570621513990927 8 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:14.000 [info] circpad_event_callback(): 1570621514112146 8 circpad_cell_event_nonpadding_received
+Oct 09 11:45:14.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:14.000 [info] internal (high-uptime) circ (length 3, last hop idideditheconfig): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $B143D439B72D239A419F8DCE07B8A8EB1B486FA7(open) $4B351545DD58473F36B0A20E5500AC6ED51E8CD5(open)
+Oct 09 11:45:14.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 122
+Oct 09 11:45:14.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 720.218940ms. Setting to 1500ms
+Oct 09 11:45:14.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.671650, r: 0.035587) based on 843 circuit times
+Oct 09 11:45:14.000 [info] circpad_event_callback(): 1570621514112515 8 circpad_machine_event_circ_added_hop
+Oct 09 11:45:14.000 [info] circpad_event_callback(): 1570621514112520 8 circpad_machine_event_circ_built
+Oct 09 11:45:14.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:14.000 [info] pathbias_count_build_success(): Got success count 162.312500/167.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516410988 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516411054 1 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516411061 1 circpad_machine_event_circ_has_no_relay_early
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516411079 1 circpad_machine_event_circ_has_no_streams
+Oct 09 11:45:16.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:16.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516437708 4 circpad_machine_event_circ_has_streams
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516437722 4 connection_ap_handshake_send_begin google.com
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516437729 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516476491 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516476529 1 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516659190 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516660490 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516660534 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] circuit_predict_and_launch_new(): Have 4 clean circs (3 internal), need another exit circ.
+Oct 09 11:45:16.000 [info] origin_circuit_new(): Circuit 9 chose an idle timeout of 2711 based on 2625 seconds of predictive building remaining.
+Oct 09 11:45:16.000 [info] choose_good_exit_server_general(): Found 835 servers that might support 0/0 pending connections.
+Oct 09 11:45:16.000 [info] choose_good_exit_server_general(): Chose exit server '$C282248597D1C8522A2A7525E61C8B77BBC37614~erbse at 109.70.100.3 and [2a03:e600:100::3]'
+Oct 09 11:45:16.000 [info] extend_info_from_node(): Including Ed25519 ID for $C282248597D1C8522A2A7525E61C8B77BBC37614~erbse at 109.70.100.3 and [2a03:e600:100::3]
+Oct 09 11:45:16.000 [info] extend_info_from_node(): Including Ed25519 ID for $85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157
+Oct 09 11:45:16.000 [info] extend_info_from_node(): Not including the ed25519 ID for $1D361A2F1CAE4FDD5A85E13C168BE7075A100524~ButaryEntry1 at 193.31.27.93, since it won't be able to authenticate it.
+Oct 09 11:45:16.000 [info] circuit_send_first_onion_skin(): First hop: finished sending CREATE cell to '$85A3AC041E3FCD796AF5D653953D5E27A56E3719~niftycongogerbil at 51.38.164.157'
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516873984 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516874001 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516874009 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516874016 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516874023 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516874041 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516874048 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516910301 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516912705 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] add_predicted_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:16.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:16.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516913285 4 connection_ap_handshake_send_begin ocsp.pki.goog
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516913297 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:16.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:16.000 [info] exit circ (length 3, last hop erbse): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $1D361A2F1CAE4FDD5A85E13C168BE7075A100524(closed) $C282248597D1C8522A2A7525E61C8B77BBC37614(closed)
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516947172 9 circpad_machine_event_circ_added_hop
+Oct 09 11:45:16.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:16.000 [info] circpad_event_callback(): 1570621516947225 9 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517058653 9 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] entry_guard_inc_circ_attempt_count(): Got success count 162.312500/168.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:17.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:17.000 [info] exit circ (length 3, last hop erbse): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $1D361A2F1CAE4FDD5A85E13C168BE7075A100524(open) $C282248597D1C8522A2A7525E61C8B77BBC37614(closed)
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517058937 9 circpad_machine_event_circ_added_hop
+Oct 09 11:45:17.000 [info] circuit_send_intermediate_onion_skin(): Sending extend relay cell.
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517058988 9 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517096057 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517185327 9 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circuit_finish_handshake(): Finished building circuit hop:
+Oct 09 11:45:17.000 [info] exit circ (length 3, last hop erbse): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $1D361A2F1CAE4FDD5A85E13C168BE7075A100524(open) $C282248597D1C8522A2A7525E61C8B77BBC37614(open)
+Oct 09 11:45:17.000 [info] circuit_build_times_get_xm(): Xm mode #0: 275 122
+Oct 09 11:45:17.000 [info] circuit_build_times_set_timeout(): Set buildtimeout to low value 719.569478ms. Setting to 1500ms
+Oct 09 11:45:17.000 [info] circuit_build_times_set_timeout(): Set circuit build timeout to 2s (1500.000000ms, 60000.000000ms, Xm: 275, a: 1.673218, r: 0.035545) based on 844 circuit times
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517185661 9 circpad_machine_event_circ_added_hop
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517185666 9 circpad_machine_event_circ_built
+Oct 09 11:45:17.000 [info] circuit_build_no_more_hops(): circuit built!
+Oct 09 11:45:17.000 [info] pathbias_count_build_success(): Got success count 163.312500/168.437500 for guard niftycongogerbil ($85A3AC041E3FCD796AF5D653953D5E27A56E3719)
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517185703 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517185903 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517185914 4 circpad_machine_event_circ_has_no_relay_early
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517476564 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517476619 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517478637 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517478716 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517660324 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517732189 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517732224 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517732543 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:17.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:17.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517753194 4 connection_ap_handshake_send_begin www.google.com
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517753202 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517964426 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517965728 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:17.000 [info] circpad_event_callback(): 1570621517965770 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518200287 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518200337 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518200347 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518200355 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518200362 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518200370 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518202599 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518202715 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518406158 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518551262 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518551306 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518552568 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518552654 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518763605 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518763789 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879036 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879086 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879097 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879117 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879124 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879131 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518879138 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915844 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915884 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915892 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915899 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915906 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915912 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518915919 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518952789 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518952823 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983273 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983310 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983320 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983327 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983333 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983339 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983345 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518983364 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989515 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989541 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989550 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989557 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989564 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989570 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:18.000 [info] circpad_event_callback(): 1570621518989576 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519027199 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063874 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063916 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063925 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063932 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063940 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063947 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063954 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519063997 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100704 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100752 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100760 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100777 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100784 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100790 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100796 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100803 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519100869 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137723 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137752 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137761 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137767 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137774 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137780 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137786 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519137805 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519151310 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:19.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:19.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519151495 4 connection_ap_handshake_send_begin ssl.gstatic.com
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519151500 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:19.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:19.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519161737 4 connection_ap_handshake_send_begin www.gstatic.com
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519161744 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188419 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188471 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188481 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188488 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188495 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188509 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188516 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519188539 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519195569 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519199271 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225354 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225384 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225393 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225401 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225408 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225414 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225420 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519225440 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:19.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:19.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519231621 4 connection_ap_handshake_send_begin consent.google.com
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519231627 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262435 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262470 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262478 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262485 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262492 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262507 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262513 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262520 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519262563 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519280014 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300269 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300295 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300304 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300312 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300318 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300324 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300331 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519300349 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337643 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337687 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337695 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337701 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337714 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337730 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337737 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337743 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519337815 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374478 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374502 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374510 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374517 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374523 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374529 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374535 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519374553 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519425993 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519426030 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519426037 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519426043 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519426048 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519426053 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519426058 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429121 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429132 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429137 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429142 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429146 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429151 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519429156 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519460634 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519460677 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462629 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462643 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462651 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462657 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462677 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462683 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462690 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519462706 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519542998 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543042 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543050 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543057 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543063 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543070 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543098 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519543321 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519544850 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519544903 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519546087 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519546124 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519561989 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519579570 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519580865 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519580889 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519616282 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519616304 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519616311 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519616318 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519616325 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653172 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653203 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653210 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653217 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653223 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653238 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519653245 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519689880 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519689914 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519689921 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519689928 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519689935 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726836 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726880 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726888 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726894 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726901 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726907 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519726914 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750126 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750145 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750152 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750159 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750165 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750171 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519750178 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:19.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:19.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519763875 4 connection_ap_handshake_send_begin www.gstatic.com
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519763881 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519786730 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519786749 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519786756 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519786774 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840531 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840577 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840585 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840592 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840598 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840604 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840611 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519840631 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877324 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877344 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877363 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877370 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877388 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877395 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877402 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519877411 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519915172 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961758 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961778 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961785 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961791 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961798 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961804 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961810 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519961827 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519987614 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519987653 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519987669 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519987676 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519987683 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:19.000 [info] circpad_event_callback(): 1570621519987689 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520003046 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520003078 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520003086 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520003093 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520003099 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520003106 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520068136 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520068161 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520068168 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520068174 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520068180 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520068187 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093819 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093865 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093872 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093878 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093885 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093891 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520093908 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520105492 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520105513 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520105521 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520105528 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520105536 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520105543 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155817 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155841 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155848 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155854 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155860 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155867 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520155873 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520185109 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520185142 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520185150 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520185156 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520185163 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520185169 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242079 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242110 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242118 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242124 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242130 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242137 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520242143 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520278964 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520278980 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281497 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281514 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281521 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281527 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281534 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281540 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520281546 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520315732 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520315765 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520315773 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520315780 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323136 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323153 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323160 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323166 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323173 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323179 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520323185 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520352433 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520352487 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520389973 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520389995 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520390001 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520390008 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520390014 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520390020 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520390027 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394584 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394604 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394611 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394617 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394623 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394629 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394636 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520394644 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520426683 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520426716 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520426724 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520426731 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520426737 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520426744 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435679 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435718 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435729 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435739 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435758 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435767 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520435776 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520463383 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520463408 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520463415 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520463421 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520463438 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520475966 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520475988 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520475995 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520476001 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520476007 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520476014 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520476020 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520500215 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520500239 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520500246 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520500253 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557792 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557816 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557823 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557829 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557835 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557842 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520557848 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560512 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560528 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560535 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560541 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560547 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560554 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520560560 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520594605 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520594625 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520594632 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520594638 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520594654 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603650 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603672 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603680 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603686 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603692 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603698 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520603704 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635027 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635052 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635059 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635116 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635129 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635136 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635142 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635148 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635154 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520635160 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520640672 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520640689 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520640696 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520640712 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520640719 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676911 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676932 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676940 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676946 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676952 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676958 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520676965 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520677933 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520677948 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520677955 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520677961 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715661 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715687 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715694 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715709 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715716 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715722 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520715729 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520751661 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520751688 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520751696 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520751702 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753103 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753119 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753126 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753132 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753139 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753145 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753151 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753167 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520753175 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520757698 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520757715 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520757732 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794550 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794573 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794580 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794586 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794592 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794598 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520794605 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520795281 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520795296 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520795303 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520795309 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835098 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835119 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835126 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835132 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835137 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835148 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835161 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520835168 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520836042 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520836065 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867144 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867189 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867213 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867222 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867228 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867234 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867241 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867247 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867253 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867776 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520867791 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520872108 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520872125 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520911989 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520912012 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520912019 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520912026 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520912032 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520912038 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520912044 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520945897 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520945922 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520945942 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948625 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948642 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948648 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948655 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948661 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948667 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520948674 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986398 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986422 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986429 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986446 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986453 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986459 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:20.000 [info] circpad_event_callback(): 1570621520986465 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018509 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018532 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018540 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018546 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018552 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018558 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521018565 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023173 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023189 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023206 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023213 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023238 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023246 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023252 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023259 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023327 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023340 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521023346 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521024549 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521024575 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059853 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059877 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059885 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059891 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059897 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059904 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521059910 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521060173 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521060189 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521060196 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521060203 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521062263 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521064612 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521064808 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521064824 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521065031 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521065047 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100675 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100717 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100724 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100730 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100736 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100743 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521100750 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521103114 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521103361 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521103382 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521137647 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521137669 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521137675 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521137682 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153405 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153424 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153431 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153438 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153445 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153456 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153462 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521153469 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521175028 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521175050 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521175057 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521175063 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194645 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194665 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194672 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194678 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194684 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194690 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521194697 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521211962 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521211985 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521212005 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521212013 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236502 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236536 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236544 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236551 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236559 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236566 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521236574 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521250663 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521250699 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521250720 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521250728 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329200 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329232 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329239 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329246 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329253 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329259 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329266 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521329433 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363741 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363785 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363793 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363800 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363807 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363814 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363821 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363843 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363897 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363910 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363918 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363926 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363933 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363940 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521363959 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366035 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366052 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366069 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366271 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366449 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366709 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521366954 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521367257 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521367269 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521367358 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521367379 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521369604 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414008 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414036 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414044 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414050 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414057 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414063 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521414070 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521465766 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521465811 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521465821 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521465828 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521465837 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521466067 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521636753 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521637060 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687505 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687530 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687538 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687545 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687552 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687559 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521687566 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521727978 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521728014 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521728032 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521728039 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521728045 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521728051 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521728058 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521739573 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521739599 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521739607 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521739614 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765036 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765057 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765063 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765070 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765076 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765082 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521765100 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779154 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779172 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779179 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779185 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779192 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779198 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521779204 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521790074 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521790091 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521790109 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521790116 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521816025 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521816044 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842337 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842361 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842368 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842375 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842379 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842390 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521842397 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862545 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862573 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862580 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862586 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862592 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862598 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521862605 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869279 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869295 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869302 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869308 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869315 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869321 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521869327 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521905870 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521905907 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521905914 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521905921 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942828 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942856 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942864 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942872 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942879 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942885 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942892 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521942898 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954400 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954433 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954440 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954447 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954453 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954460 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954466 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954494 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954503 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954510 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954516 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954522 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954538 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954545 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521954551 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979745 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979774 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979782 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979789 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979795 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979802 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521979808 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998013 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998039 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998047 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998054 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998060 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998066 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998072 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998101 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998111 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998117 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998123 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998129 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998136 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998142 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:21.000 [info] circpad_event_callback(): 1570621521998148 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034531 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034561 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034569 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034576 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034582 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034588 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034595 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522034601 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039318 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039349 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039358 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039365 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039387 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039395 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522039401 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522076013 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522076063 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522076077 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522076087 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522076110 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080645 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080685 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080693 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080699 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080705 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080712 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080720 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080744 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080752 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080761 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080778 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080785 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080791 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080797 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080804 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522080811 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522112945 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522112976 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522112984 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522112992 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522112999 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113019 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113420 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113439 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113446 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113452 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113458 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113465 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113470 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522113493 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522137943 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522137967 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522137975 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522137982 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522137990 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146555 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146580 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146588 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146594 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146601 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146608 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146614 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146634 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146678 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146690 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146698 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146706 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146715 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146725 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522146734 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522149523 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522149543 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156771 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156803 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156812 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156818 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156824 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156830 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156836 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156866 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156876 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156883 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156889 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156895 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156901 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156907 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522156921 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522178037 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522178078 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522178262 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522178342 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522178372 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186268 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186296 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186301 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186305 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186310 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186314 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522186319 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:22.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:22.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522203905 4 connection_ap_handshake_send_begin apis.google.com
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522203911 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522223110 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522223143 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522223151 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522223158 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522223166 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522223350 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:22.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:22.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522264745 4 connection_ap_handshake_send_begin www.google.sk
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522264752 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522529794 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522531094 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522531123 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522613717 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522615068 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522615113 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522740668 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522740712 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522740720 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522740727 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522740734 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522740741 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522741961 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522742721 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522814479 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522814504 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522814511 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522814517 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522814523 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522814530 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522815808 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:22.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:22.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522816985 4 connection_ap_handshake_send_begin ocsp.pki.goog
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522816999 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:22.000 [info] circpad_event_callback(): 1570621522923824 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523035092 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523035156 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523035496 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523126686 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523126731 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523128365 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523128440 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523128470 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523231831 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523231879 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523233529 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523233590 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523317757 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412204 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412245 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412255 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412262 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412270 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412277 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523412284 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449127 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449168 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449178 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449185 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449194 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449211 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449218 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449225 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523449301 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523462965 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523462993 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463010 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463017 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463031 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463039 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463052 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463086 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463097 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463104 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463111 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463117 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463124 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463131 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463137 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463189 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463202 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463209 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463216 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463222 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463229 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463235 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523463252 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523464120 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523464134 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523464141 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523464148 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523464153 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523486131 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523486157 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523486164 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523486171 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523486177 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493331 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493352 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493359 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493365 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493371 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493378 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523493384 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499835 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499851 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499858 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499864 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499870 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499876 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499882 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499888 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499916 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523499926 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522741 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522771 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522778 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522784 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522791 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522797 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522803 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523522822 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523523002 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536185 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536235 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536244 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536252 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536258 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536264 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536271 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523536739 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537322 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537337 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537344 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537350 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537356 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537363 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537369 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537401 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523537410 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523552846 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559690 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559707 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559713 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559718 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559723 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559727 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559731 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559741 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523559759 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596456 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596499 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596506 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596513 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596519 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596525 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596532 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523596552 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633064 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633106 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633128 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633135 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633141 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633148 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633155 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633163 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523633414 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:23.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:23.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523705704 4 connection_ap_handshake_send_begin adservice.google.com
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523705712 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:23.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:23.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523708216 4 connection_ap_handshake_send_begin ogs.google.com
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523708223 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523811657 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523812050 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523893307 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523894703 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523894751 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523971638 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523972950 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:23.000 [info] circpad_event_callback(): 1570621523972984 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524017518 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524133741 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524133785 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524133794 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524133801 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524133809 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219259 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219303 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219312 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219328 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219335 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219341 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524219348 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524255838 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524258014 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524258264 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524258295 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524344107 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524344153 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524344162 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524344169 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524344477 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524458321 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524458636 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561701 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561747 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561756 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561763 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561771 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561778 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561785 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561814 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524561825 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562904 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562930 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562939 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562947 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562954 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562960 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562967 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562986 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524562994 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524564169 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524564396 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524564430 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524572329 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524572374 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524572383 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524598445 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524598485 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524598492 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524598499 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524598505 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524598511 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639367 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639408 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639415 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639422 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639428 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639435 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524639673 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524873238 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524873284 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524873293 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524873596 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524873792 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:24.000 [info] rep_hist_note_used_port(): New port prediction added. Will continue predictive circ building for 2625 more seconds.
+Oct 09 11:45:24.000 [info] exit circ (length 3): $85A3AC041E3FCD796AF5D653953D5E27A56E3719(open) $53134D9637D9FBE565FA1E3AF82B23CC964C56D6(open) $DAB96CEA61CC039A803217035293FAB32645FDDA(open)
+Oct 09 11:45:24.000 [info] pathbias_count_use_attempt(): Used circuit 4 is already in path state use succeeded. Circuit is a General-purpose client currently open.
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524879116 4 connection_ap_handshake_send_begin adservice.google.sk
+Oct 09 11:45:24.000 [info] circpad_event_callback(): 1570621524879135 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525136029 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525137373 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525137417 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525335238 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525335280 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525335289 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525335295 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525335302 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525335309 4 circpad_cell_event_nonpadding_received
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525336216 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525336653 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:25.000 [info] circpad_event_callback(): 1570621525336688 4 circpad_cell_event_nonpadding_sent
+Oct 09 11:45:25.000 [notice] Owning controller connection has closed -- exiting now.
+Oct 09 11:45:25.000 [notice] Catching signal TERM, exiting cleanly.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 1) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 9) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 8) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 7) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 6) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 5) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 4) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 3) has been freed.
+Oct 09 11:45:25.000 [info] circuit_free_(): Circuit 0 (id: 2) has been freed.

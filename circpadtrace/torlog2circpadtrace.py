@@ -32,16 +32,16 @@ def main():
         sys.exit("yay")
 
     if not os.path.isdir(args["i"]):
-        sys.exit("{} is not a directory".format(args["i"]))
+        sys.exit(f"{args['i']} is not a directory")
     if not os.path.isdir(args["o"]):
-        sys.exit("{} is not a directory".format(args["o"]))
+        sys.exit(f"{args['o']} is not a directory")
 
     for fname in os.listdir(args["i"]):
         infname = os.path.join(args["i"], fname)
         outfname = os.path.join(args["o"], fname)
 
         if os.path.exists(outfname):
-            sys.exit("output file {} already exists".format(outfname))
+            sys.exit(f"output file {outfname} already exists")
 
         # create dictionary with circuit_id -> [(timestamp, event)]
         circuits = {}
@@ -64,7 +64,7 @@ def main():
                 del circuits[cid]
 
         if len(circuits) == 0:
-            sys.exit("no circuits left after filtering for {}".format(infname))
+            sys.exit(f"no circuits left after filtering for {infname}")
 
         # figure out which circuit has the most events, keeping tabs of the rest
         longest_cid = -1
@@ -89,7 +89,7 @@ def main():
         
         for cid in smaller_cids:
             if len(circuits[cid]) > CONST_OTHER_MAX_EVENTS_WARNING:
-                print("warning: found extra circuit with {} events in {}".format(len(circuits[cid]), infname))
+                print(f"warning: found extra circuit with {len(circuits[cid])} events in {infname}")
 
 def extract_callback(line):
     parts = line.split()

@@ -8,6 +8,7 @@
 #include "test/log_test_helpers.h"
 #include "core/or/circuitpadding.h"
 
+#include "lib/string/compat_string.h"
 #include "lib/defs/time.h"
 #include "core/mainloop/netstatus.h"
 
@@ -42,12 +43,16 @@
                                TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC)
 
 
+// our testing trace if none is provided
+#define CIRCPAD_SIM_TEST_TRACE_FILE "circpad_sim_test_trace.inc"
+#define CIRCPAD_SIM_MAX_TRACE_SIZE 5*1024*1024
+
 #ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
 DISABLE_GCC_WARNING(overlength-strings)
 /* We allow huge string constants in the unit tests, but not in the code
  * at large. */
 #endif
-#include "circpad_sim_test_trace.inc"
+#include CIRCPAD_SIM_TEST_TRACE_FILE
 #ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
 ENABLE_GCC_WARNING(overlength-strings)
 #endif
@@ -72,7 +77,7 @@ static void nodes_init(void);
 static void circpad_event_callback_mock(const char *event, 
                                         uint32_t circuit_identifier);
 
-// simulation-related functions
+// simulation-related functions and structs
 void test_circuitpadding_sim_main(void *arg);
 MOCK_DECL(STATIC void, helper_add_client_machine, (void));
 MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
@@ -81,7 +86,39 @@ static void helper_add_relay_machine_mock(void);
 void* create_test_env(const struct testcase_t *testcase);
 int cleanup_test_env(const struct testcase_t *testcase, void *env);
 
-// testing-related variables
+typedef struct circpad_sim_env {
+  const char *trace;
+} circpad_sim_env;
+
+typedef struct circpad_sim_event {
+  int64_t timestamp;
+  const char *event;
+} circpad_sim_event;
+
+// The possible types of events this simulator cares about, values found in
+// circpadtrace files, as instrumented in src/or/core/circuitpadding.c.
+#define CIRCPAD_SIM_CELL_EVENT_PADDING_SENT "circpad_cell_event_padding_sent"
+#define CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT "circpad_cell_event_nonpadding_sent"
+#define CIRCPAD_SIM_CELL_EVENT_PADDING_RECV "circpad_cell_event_padding_received"
+#define CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV "circpad_cell_event_nonpadding_received"
+#define CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP "circpad_machine_event_circ_added_hop"
+#define CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT "circpad_machine_event_circ_built"
+#define CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS "circpad_machine_event_circ_has_streams"
+#define CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS "circpad_machine_event_circ_has_no_streams"
+#define CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED "circpad_machine_event_circ_purpose_changed"
+#define CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY "circpad_machine_event_circ_has_no_relay_early"
+
+
+
+// related sim functions
+static int trace_get_next(circpad_sim_env* env, circpad_sim_event *e);
+static int find_circpad_sim_event(char* line, circpad_sim_event *e);
+
+/*
+* Core simulation function
+*/
+
+// testing-related variables to make the mocking of the rest of tor work
 static channel_t dummy_channel;
 static circuit_t *client_side;
 static circuit_t *relay_side;
@@ -93,21 +130,24 @@ static int n_client_cells = 0;
 static int n_relay_cells = 0;
 static int deliver_negotiated = 1;
 
-/*
-* Core simulation, its argument (environment) and main function
-*/
-
-struct env {
-    const char *trace;
-};
+// sim-specific
+char* circpad_sim_trace_buffer = 0;
+char* circpad_sim_trace_read_rest;
 
 void
 test_circuitpadding_sim_main(void *arg)
 {
-  struct env *env = arg;
+  circpad_sim_env *env = arg;
   tt_assert(env);
 
   (void)CIRCPAD_SIM_TEST_TRACE; // FIXME
+
+  circpad_sim_event e;
+
+  int i = 0;
+  while(trace_get_next(env, &e))
+    i++;
+  printf("got %d events", i);
 
   /*
   * The simulator works as follows:
@@ -188,6 +228,8 @@ test_circuitpadding_sim_main(void *arg)
     UNMOCK(circuitmux_attach_circuit);
     UNMOCK(helper_add_relay_machine);
     UNMOCK(helper_add_client_machine);
+    tor_free(circpad_sim_trace_buffer);
+
 }
 
 /*
@@ -197,7 +239,7 @@ test_circuitpadding_sim_main(void *arg)
 void*
 create_test_env(const struct testcase_t *testcase)
 {
-  struct env *env = calloc(sizeof(*env), 1);
+  struct circpad_sim_env *env = calloc(sizeof(*env), 1);
   if (!env)
       return NULL;
     env->trace = testcase->setup_data;
@@ -224,7 +266,7 @@ struct testcase_setup_t env_setup = {
 struct testcase_t circuitpadding_sim_tests[] = {
   //REPLACE-simulation-traces-goes-here-REPLACE
   TEST_CIRCUITPADDING_SIM(circuitpadding_sim_main, TT_FORK, 
-                          "test-trace.circpadtrace"),
+                          CIRCPAD_SIM_TEST_TRACE_FILE),
   END_OF_TESTCASES
 };
 
@@ -253,6 +295,86 @@ circpad_event_callback_mock(const char *event,
   int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
                (int64_t)(now.tv_usec);
   printf("%ld %d %s\n", us, circuit_identifier, event);
+}
+
+// reads the next event from env, returns 1 on success, 0 on EOF or error
+static int
+trace_get_next(circpad_sim_env* env, circpad_sim_event *e)
+{
+  char *line;
+
+  // first time: have to read in trace
+  if (!circpad_sim_trace_buffer) {
+    circpad_sim_trace_buffer = tor_malloc(CIRCPAD_SIM_MAX_TRACE_SIZE);
+    if (strcmp(env->trace, CIRCPAD_SIM_TEST_TRACE_FILE) == 0) {
+      tor_assert(strlcpy(circpad_sim_trace_buffer, 
+              CIRCPAD_SIM_TEST_TRACE, 
+              CIRCPAD_SIM_MAX_TRACE_SIZE) < CIRCPAD_SIM_MAX_TRACE_SIZE);
+    } else {
+      // TODO: read external trace file from env->trace into buffer
+    }
+    circpad_sim_trace_read_rest = circpad_sim_trace_buffer;
+  }
+
+  // search line-by-line until we find an event we care about
+  do {
+    line = tor_strtok_r_impl(circpad_sim_trace_read_rest, "\n", 
+                              &circpad_sim_trace_read_rest);
+    if (!line) return 0; // EOF
+  } while(!find_circpad_sim_event(line, e));
+  e->timestamp = strtol(line, NULL, 10);
+
+  return 1; 
+}
+
+static int
+find_circpad_sim_event(char* line, circpad_sim_event *e)
+{
+  // verbose but quick, in order of likely events
+  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV)) {
+    e->event = CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT)) {
+    e->event = CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_RECV)) {
+    e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_RECV;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_SENT)) {
+    e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_SENT;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP)) {
+    e->event = CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT)) {
+    e->event = CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS)) {
+    e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS)) {
+    e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED)) {
+    e->event = CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED;
+    return 1;
+  }
+  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY)) {
+    e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY;
+    return 1;
+  }
+
+  // FIXME: add line to raw output
+
+  return 0;
 }
 
 /*

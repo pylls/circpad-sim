@@ -28,7 +28,7 @@ def main():
     '''
 
     if not os.path.isdir(args["i"]):
-        sys.exit("{} is not a directory".format(args["i"]))
+        sys.exit(f"{args['i']} is not a directory")
 
     bw_sent_total = []
     bw_recv_total = []
@@ -44,9 +44,9 @@ def main():
             sent_padding, recv_padding = common.circpad_get_padding_times(trace)
 
             if len(sent_nonpadding) == 0:
-                sys.exit("{} sent 0 nonpadding cells, broken trace?".format(infname))
+                sys.exit(f"{infname} sent 0 nonpadding cells, broken trace?")
             if len(recv_nonpadding) == 0:
-                sys.exit("{} recv 0 nonpadding cells, broken trace?".format(infname))
+                sys.exit(f"{infname} recv 0 nonpadding cells, broken trace?")
 
             total_sent = len(sent_padding + sent_nonpadding)
             total_recv = len(recv_padding + recv_nonpadding)
@@ -56,24 +56,20 @@ def main():
             bw_recv_overhead.append(float(total_recv) / float(len(recv_nonpadding)))
 
     total_sent = sum(bw_sent_total) + sum(bw_recv_total)
-    print("for {} traces, {} cells in total, {} sent ({:.0%}) and {} recv ({:.0%})".format(
-        len(bw_sent_overhead), 
-        total_sent, 
-        sum(bw_sent_total), 
-        float(sum(bw_sent_total))/float(total_sent),
-        sum(bw_recv_total), 
-        float(sum(bw_recv_total))/float(total_sent)
-    ))
+    print(
+        f"for {len(bw_sent_overhead)} traces, {total_sent} cells in total, "
+        f"{sum(bw_sent_total)} sent "
+        f"({float(sum(bw_sent_total))/float(total_sent):.0%}) and "
+        f"{sum(bw_recv_total)} recv "
+        f"({float(sum(bw_recv_total))/float(total_sent):.0%})"
+    )
 
-    print("\t- average sent bandwidth:\t{:.0%}".format(
-        float(sum(bw_sent_overhead)/float(len(bw_sent_overhead)))
-    ))
-    print("\t- average recv bandwidth:\t{:.0%}".format(
-        float(sum(bw_recv_overhead)/float(len(bw_recv_overhead)))
-    ))
-    print("\t- average total bandwidth:\t{:.0%}".format(
-        float(sum(bw_sent_overhead) + sum(bw_recv_overhead))/float(len(bw_sent_overhead) + len(bw_recv_overhead))
-    ))
+    avg_sent = float(sum(bw_sent_overhead)/float(len(bw_sent_overhead)))
+    avg_recv = float(sum(bw_recv_overhead)/float(len(bw_recv_overhead)))
+    avg_total = float(sum(bw_sent_overhead) + sum(bw_recv_overhead))/float(len(bw_sent_overhead) + len(bw_recv_overhead))
+    print(f"\t- average sent bandwidth:\t{avg_sent:.0%}")
+    print(f"\t- average recv bandwidth:\t{avg_recv:.0%}")
+    print(f"\t- average total bandwidth:\t{avg_total:.0%}")
 
 if __name__ == "__main__":
     main()

@@ -28,9 +28,6 @@ def main():
     has more than CONST_OTHER_MAX_EVENTS_WARNING events as well in the log.
     '''
 
-    if args["ip"]:
-        sys.exit("yay")
-
     if not os.path.isdir(args["i"]):
         sys.exit(f"{args['i']} is not a directory")
     if not os.path.isdir(args["o"]):

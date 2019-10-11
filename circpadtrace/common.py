@@ -43,3 +43,11 @@ def circpad_get_padding_times(trace):
             recv_padding.append(split[0])
     
     return sent_padding, recv_padding
+
+def circpad_parse_line(line):
+    split = line.split()
+    assert(len(split) >= 2)
+    event = split[1]
+    timestamp = 123
+
+    return event, timestamp

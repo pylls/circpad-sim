@@ -137,7 +137,7 @@ index e9eb32c61..34f49c174 100644
  STATIC void  machine_spec_free_(circpad_machine_spec_t *m);
  #define machine_spec_free(chan) \
 diff --git a/src/test/include.am b/src/test/include.am
-index 2dd4d8c58..916f39b93 100644
+index 2dd4d8c58..2043d1cd4 100644
 --- a/src/test/include.am
 +++ b/src/test/include.am
 @@ -117,6 +117,7 @@ src_test_test_SOURCES += \
@@ -148,6 +148,16 @@ index 2dd4d8c58..916f39b93 100644
  	src/test/test_channeltls.c \
  	src/test/test_checkdir.c \
  	src/test/test_circuitlist.c \
+@@ -353,7 +354,8 @@ noinst_HEADERS+= \
+ 	src/test/ed25519_vectors.inc \
+ 	src/test/test_descriptors.inc \
+ 	src/test/test_hs_descriptor.inc \
+-	src/test/vote_descriptors.inc
++	src/test/vote_descriptors.inc \
++	src/test/circpad_sim_test_trace.inc
+ 
+ noinst_PROGRAMS+= src/test/test-ntor-cl
+ noinst_PROGRAMS+= src/test/test-hs-ntor-cl
 diff --git a/src/test/test.c b/src/test/test.c
 index 65e169b38..48c9b2c6c 100644
 --- a/src/test/test.c

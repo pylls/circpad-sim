@@ -48,6 +48,6 @@ def circpad_parse_line(line):
     split = line.split()
     assert(len(split) >= 2)
     event = split[1]
-    timestamp = 123
+    timestamp = int(split[0])
 
     return event, timestamp

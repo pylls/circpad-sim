@@ -44,18 +44,8 @@
 
 
 // our testing trace if none is provided
-#define CIRCPAD_SIM_TEST_TRACE_FILE "circpad_sim_test_trace.inc"
-#define CIRCPAD_SIM_MAX_TRACE_SIZE 5*1024*1024
-
-#ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
-DISABLE_GCC_WARNING(overlength-strings)
-/* We allow huge string constants in the unit tests, but not in the code
- * at large. */
-#endif
-#include CIRCPAD_SIM_TEST_TRACE_FILE
-#ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
-ENABLE_GCC_WARNING(overlength-strings)
-#endif
+#define CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE "src/test/circpad_sim_test_trace_client.inc"
+#define CIRCPAD_SIM_TEST_TRACE_RELAY_FILE "src/test/circpad_sim_test_trace_relay.inc"
 
 // mocked functions and helpers, mostly lifted from test_circuitpadding.c
 static void
@@ -125,12 +115,9 @@ static int n_relay_cells = 0;
 static int deliver_negotiated = 1;
 
 // sim-specific
-char* circpad_sim_trace_buffer = 0;
-char* circpad_sim_trace_read_rest;
-
 // FIXME: make into args or replaceable
-const char *client_trace_loc = CIRCPAD_SIM_TEST_TRACE_FILE;
-const char *relay_trace_loc;
+const char *client_trace_loc = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
+const char *relay_trace_loc = CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
 
 // the core working queues of traces
 static smartlist_t *client_trace = NULL;
@@ -149,6 +136,8 @@ test_circuitpadding_sim_main(void *arg)
 
   tt_assert(get_circpad_trace(client_trace_loc, client_trace));
   printf("\nread %d client trace events\n", smartlist_len(client_trace));
+  tt_assert(get_circpad_trace(relay_trace_loc, relay_trace));
+  printf("read %d relay trace events\n", smartlist_len(relay_trace));
 
   /*
   * The simulator works as follows:
@@ -229,7 +218,6 @@ test_circuitpadding_sim_main(void *arg)
     UNMOCK(circuitmux_attach_circuit);
     UNMOCK(helper_add_relay_machine);
     UNMOCK(helper_add_client_machine);
-    tor_free(circpad_sim_trace_buffer);
     SMARTLIST_FOREACH(client_trace, 
                       circpad_sim_event *, ev, tor_free(ev));
     SMARTLIST_FOREACH(relay_trace, 
@@ -270,19 +258,8 @@ circpad_event_callback_mock(const char *event,
 int 
 get_circpad_trace(const char* loc, smartlist_t* trace)
 {
-  char *line;
-  circpad_sim_trace_buffer = tor_malloc(CIRCPAD_SIM_MAX_TRACE_SIZE);
-
-  // Read in the entire file at once, trading memory for less back-and-forth
-  // calls. There's an assert if the internal buffer (of
-  // CIRCPAD_SIM_MAX_TRACE_SIZE) is too small to fit a trace.
-  if (strcmp(loc, CIRCPAD_SIM_TEST_TRACE_FILE) == 0) {
-    tor_assert(strlcpy(circpad_sim_trace_buffer, 
-            CIRCPAD_SIM_TEST_TRACE, 
-            CIRCPAD_SIM_MAX_TRACE_SIZE) < CIRCPAD_SIM_MAX_TRACE_SIZE);
-  } else {
-    // TODO: read external trace file into buffer
-  }
+  char *line, *circpad_sim_trace_buffer, *circpad_sim_trace_read_rest;
+  circpad_sim_trace_buffer = read_file_to_str(loc, 0, NULL);
   circpad_sim_trace_read_rest = circpad_sim_trace_buffer;
 
   while (1) {
@@ -303,6 +280,7 @@ get_circpad_trace(const char* loc, smartlist_t* trace)
     }
   }
 
+  tor_free(circpad_sim_trace_buffer);
   return smartlist_len(trace) > 0;  // success if we found something to read
 }
 

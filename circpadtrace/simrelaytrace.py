@@ -30,12 +30,6 @@ def main():
     The simulation estimates the latency between client-relay based on the
     timestamps in the log. This will at best be an approximation. Only use these
     generated tracers if you account for the impact of this approximation.
-
-    Creating padding machines that defend against traffic analysis attacks can
-    be viewed as an optimisation problem, and we're in a sense "overfitting" if
-    machines work with specific timings between client and a relay. It's also a
-    risk if we end up with such fragile machines, because an attacker could
-    subtly shape tor traffic with low probability of detection.
     '''
 
     if not os.path.isdir(args["i"]):

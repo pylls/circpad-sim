@@ -115,7 +115,8 @@ static int n_relay_cells = 0;
 static int deliver_negotiated = 1;
 
 // sim-specific
-// FIXME: make into args or replaceable
+// FIXME: make into args or replaceable, get the path from the test
+// or something like that
 const char *client_trace_loc = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
 const char *relay_trace_loc = CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
 
@@ -128,11 +129,8 @@ test_circuitpadding_sim_main(void *arg)
 {
   (void)arg;
 
-
   client_trace = smartlist_new();
   relay_trace = smartlist_new();
-
-  // FIXME: make client and relay traces
 
   tt_assert(get_circpad_trace(client_trace_loc, client_trace));
   printf("\nread %d client trace events\n", smartlist_len(client_trace));
@@ -194,18 +192,13 @@ test_circuitpadding_sim_main(void *arg)
   tt_str_op(relay_side->padding_machine[0]->name, OP_EQ,
             CIRCPAD_SIM_RELAY_MACHINE);
 
-  // read input file (make output file to figure out format, prob time event)
-  // estimate RTT, use it and arg on variance (?) to sample later
+  // estimate RTT
 
   // re-use instrumentation in circpad_cell_event_* and circpad_machine_event_*
   // callbacks to create our output, use the MOCK functionality, leave empty for
   // now, create empty patch. We want to inject events we not recognize (like
   // address resolve in the loop to maintain those in output)
 
-  // core loop going moving time forward
-  // - one machine can have at most one timer scheduled
-  // - ordering between client and relay a problem when factoring in time and
-  //   events?
 
   done:
     free_fake_origin_circuit(TO_ORIGIN_CIRCUIT(client_side));

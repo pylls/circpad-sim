@@ -83,16 +83,11 @@ MOCK_DECL(STATIC void, helper_add_client_machine, (void));
 MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
 static void helper_add_client_machine_mock(void);
 static void helper_add_relay_machine_mock(void);
-void* create_test_env(const struct testcase_t *testcase);
-int cleanup_test_env(const struct testcase_t *testcase, void *env);
-
-typedef struct circpad_sim_env {
-  const char *trace;
-} circpad_sim_env;
 
 typedef struct circpad_sim_event {
   int64_t timestamp;
   const char *event;
+  int smartlist_idx; // position in smartlist
 } circpad_sim_event;
 
 // The possible types of events this simulator cares about, values found in
@@ -108,11 +103,10 @@ typedef struct circpad_sim_event {
 #define CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED "circpad_machine_event_circ_purpose_changed"
 #define CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY "circpad_machine_event_circ_has_no_relay_early"
 
-
-
 // related sim functions
-static int trace_get_next(circpad_sim_env* env, circpad_sim_event *e);
+int get_circpad_trace(const char* loc, smartlist_t* trace);
 static int find_circpad_sim_event(char* line, circpad_sim_event *e);
+static int compare_circpad_sim_event(const void *_a, const void *_b);
 
 /*
 * Core simulation function
@@ -134,20 +128,27 @@ static int deliver_negotiated = 1;
 char* circpad_sim_trace_buffer = 0;
 char* circpad_sim_trace_read_rest;
 
+// FIXME: make into args or replaceable
+const char *client_trace_loc = CIRCPAD_SIM_TEST_TRACE_FILE;
+const char *relay_trace_loc;
+
+// the core working queues of traces
+static smartlist_t *client_trace = NULL;
+static smartlist_t *relay_trace = NULL;
+
 void
 test_circuitpadding_sim_main(void *arg)
 {
-  circpad_sim_env *env = arg;
-  tt_assert(env);
+  (void)arg;
 
-  (void)CIRCPAD_SIM_TEST_TRACE; // FIXME
 
-  circpad_sim_event e;
+  client_trace = smartlist_new();
+  relay_trace = smartlist_new();
 
-  int i = 0;
-  while(trace_get_next(env, &e))
-    i++;
-  printf("got %d events", i);
+  // FIXME: make client and relay traces
+
+  tt_assert(get_circpad_trace(client_trace_loc, client_trace));
+  printf("\nread %d client trace events\n", smartlist_len(client_trace));
 
   /*
   * The simulator works as follows:
@@ -229,46 +230,15 @@ test_circuitpadding_sim_main(void *arg)
     UNMOCK(helper_add_relay_machine);
     UNMOCK(helper_add_client_machine);
     tor_free(circpad_sim_trace_buffer);
-
+    SMARTLIST_FOREACH(client_trace, 
+                      circpad_sim_event *, ev, tor_free(ev));
+    SMARTLIST_FOREACH(relay_trace, 
+                      circpad_sim_event *, ev, tor_free(ev));
 }
 
 /*
-* Defining the tests and the machines
+* Defining the machines
 */
-
-void*
-create_test_env(const struct testcase_t *testcase)
-{
-  struct circpad_sim_env *env = calloc(sizeof(*env), 1);
-  if (!env)
-      return NULL;
-    env->trace = testcase->setup_data;
-    return env;
-}
-
-int
-cleanup_test_env(const struct testcase_t *testcase, void *env)
-{
-  (void)testcase;
-  (void)env;
-
-  return 1;
-}
-
-struct testcase_setup_t env_setup = {
-  create_test_env,
-  cleanup_test_env
-};
-
-#define TEST_CIRCUITPADDING_SIM(name, flags, trace) \
-  { #name, test_##name, (flags), &env_setup, (void*)trace }
-
-struct testcase_t circuitpadding_sim_tests[] = {
-  //REPLACE-simulation-traces-goes-here-REPLACE
-  TEST_CIRCUITPADDING_SIM(circuitpadding_sim_main, TT_FORK, 
-                          CIRCPAD_SIM_TEST_TRACE_FILE),
-  END_OF_TESTCASES
-};
 
 // The client machine to test. Can be generated, e.g., from a python script.
 MOCK_IMPL(STATIC void, helper_add_client_machine, (void))
@@ -297,37 +267,43 @@ circpad_event_callback_mock(const char *event,
   printf("%ld %d %s\n", us, circuit_identifier, event);
 }
 
-// reads the next event from env, returns 1 on success, 0 on EOF or error
-static int
-trace_get_next(circpad_sim_env* env, circpad_sim_event *e)
+int 
+get_circpad_trace(const char* loc, smartlist_t* trace)
 {
   char *line;
+  circpad_sim_trace_buffer = tor_malloc(CIRCPAD_SIM_MAX_TRACE_SIZE);
 
-  // We have to read in the trace the first time. Read in the entire file at
-  // once, trading memory for less back-and-forth calls. There's an assert if
-  // the internal buffer (of CIRCPAD_SIM_MAX_TRACE_SIZE) is too small to fit a
-  // trace.
-  if (!circpad_sim_trace_buffer) {
-    circpad_sim_trace_buffer = tor_malloc(CIRCPAD_SIM_MAX_TRACE_SIZE);
-    if (strcmp(env->trace, CIRCPAD_SIM_TEST_TRACE_FILE) == 0) {
-      tor_assert(strlcpy(circpad_sim_trace_buffer, 
-              CIRCPAD_SIM_TEST_TRACE, 
-              CIRCPAD_SIM_MAX_TRACE_SIZE) < CIRCPAD_SIM_MAX_TRACE_SIZE);
-    } else {
-      // TODO: read external trace file from env->trace into buffer
-    }
-    circpad_sim_trace_read_rest = circpad_sim_trace_buffer;
+  // Read in the entire file at once, trading memory for less back-and-forth
+  // calls. There's an assert if the internal buffer (of
+  // CIRCPAD_SIM_MAX_TRACE_SIZE) is too small to fit a trace.
+  if (strcmp(loc, CIRCPAD_SIM_TEST_TRACE_FILE) == 0) {
+    tor_assert(strlcpy(circpad_sim_trace_buffer, 
+            CIRCPAD_SIM_TEST_TRACE, 
+            CIRCPAD_SIM_MAX_TRACE_SIZE) < CIRCPAD_SIM_MAX_TRACE_SIZE);
+  } else {
+    // TODO: read external trace file into buffer
   }
+  circpad_sim_trace_read_rest = circpad_sim_trace_buffer;
 
-  // search line-by-line until we find an event we care about
-  do {
+  while (1) {
     line = tor_strtok_r_impl(circpad_sim_trace_read_rest, "\n", 
                               &circpad_sim_trace_read_rest);
-    if (!line) return 0; // EOF
-  } while(!find_circpad_sim_event(line, e));
-  e->timestamp = strtol(line, NULL, 10);
+    if (!line) 
+      break; // EOF
 
-  return 1; 
+    circpad_sim_event e;
+    if (find_circpad_sim_event(line, &e)) {
+      circpad_sim_event *event = tor_malloc_zero(sizeof(circpad_sim_event));
+      event->event = e.event;
+      event->timestamp = strtol(line, NULL, 10);
+      smartlist_pqueue_add(trace,
+                            compare_circpad_sim_event,
+                            offsetof(circpad_sim_event, smartlist_idx),
+                            event);
+    }
+  }
+
+  return smartlist_len(trace) > 0;  // success if we found something to read
 }
 
 static int
@@ -375,9 +351,19 @@ find_circpad_sim_event(char* line, circpad_sim_event *e)
     return 1;
   }
 
-  // FIXME: add line to raw output
-
   return 0;
+}
+
+static int
+compare_circpad_sim_event(const void *_a, const void *_b)
+{
+  const circpad_sim_event *a = _a, *b = _b;
+  if (a->timestamp < b->timestamp)
+    return -1;
+  else if (a->timestamp == b->timestamp)
+    return 0;
+  else
+    return 1;
 }
 
 /*
@@ -635,3 +621,12 @@ helper_add_relay_machine_mock(void)
   circpad_register_padding_machine(circ_relay_machine,
                                    relay_padding_machines);
 }
+
+#define TEST_CIRCUITPADDING_SIM(name, flags) \
+  { #name, test_##name, (flags), NULL, NULL }
+
+
+struct testcase_t circuitpadding_sim_tests[] = {
+  TEST_CIRCUITPADDING_SIM(circuitpadding_sim_main, TT_FORK), 
+  END_OF_TESTCASES
+};

@@ -7,6 +7,8 @@
 #include "test/test.h"
 #include "test/log_test_helpers.h"
 #include "core/or/circuitpadding.h"
+#include "lib/math/fp.h"
+#include "lib/math/prob_distr.h"
 
 #include "lib/string/compat_string.h"
 #include "lib/defs/time.h"
@@ -61,7 +63,7 @@ circid_t get_unique_circ_id_by_chan(channel_t *chan);
 static void free_fake_origin_circuit(origin_circuit_t *circ);
 static void simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
                            int padding);
-static void timers_advance_and_run(int64_t msec_update);
+static void timers_advance_and_run(int64_t nsec_update);
 static const node_t * node_get_by_id_mock(const char *identity_digest);
 static void nodes_init(void);
 static void circpad_event_callback_mock(const char *event, 
@@ -73,6 +75,10 @@ MOCK_DECL(STATIC void, helper_add_client_machine, (void));
 MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
 static void helper_add_client_machine_mock(void);
 static void helper_add_relay_machine_mock(void);
+static void circpad_sim_estimate_latency(void);
+static int64_t circpad_sim_sample_latency(void);
+static void circpad_sim_build_circuit(void);
+static void circpadsim_app_loop(void);
 
 typedef struct circpad_sim_event {
   int64_t timestamp;
@@ -93,10 +99,11 @@ typedef struct circpad_sim_event {
 #define CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED "circpad_machine_event_circ_purpose_changed"
 #define CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY "circpad_machine_event_circ_has_no_relay_early"
 
-// related sim functions
+// related sim functions for parsing the trace
 int get_circpad_trace(const char* loc, smartlist_t* trace);
 static int find_circpad_sim_event(char* line, circpad_sim_event *e);
 static int compare_circpad_sim_event(const void *_a, const void *_b);
+static int circpad_sim_next_event(const char *event, int *cur, smartlist_t *trace);
 
 /*
 * Core simulation function
@@ -113,7 +120,7 @@ static int64_t actual_mocked_monotime_start;
 static int n_client_cells = 0;
 static int n_relay_cells = 0;
 static int deliver_negotiated = 1;
-
+static int64_t sim_latency_mean;
 // sim-specific
 // FIXME: make into args or replaceable, get the path from the test
 // or something like that
@@ -137,19 +144,10 @@ test_circuitpadding_sim_main(void *arg)
   tt_assert(get_circpad_trace(relay_trace_loc, relay_trace));
   printf("read %d relay trace events\n", smartlist_len(relay_trace));
 
-  /*
-  * The simulator works as follows:
-  * - setup by reading input file, estimate RTT
-  * - re-use instrumentation in circpad_cell_event_* and circpad_machine_event_*
-  *   callbacks to create our output by using mock
-  * - create a client and relay with a mocked circuit, fully negotiated
-  * - core simulation loop
-  */
-
-  // we provide mocked machines for testing, enabling the simulator to do some
-  // basic tests of itself
+  // mocked machines for testing, enabling the simulator to test itself
   MOCK(helper_add_client_machine, helper_add_client_machine_mock);
   MOCK(helper_add_relay_machine, helper_add_relay_machine_mock);
+  
   // FIXME: mock input and output as well, add a final check on the output
   // somehow
   MOCK(circpad_event_callback, circpad_event_callback_mock);
@@ -181,10 +179,21 @@ test_circuitpadding_sim_main(void *arg)
   helper_add_relay_machine();
   set_network_participation(1);
 
-  // build a 3-hop circuit
-  simulate_single_hop_extend(client_side, relay_side, 1);
-  simulate_single_hop_extend(client_side, relay_side, 1);
-  simulate_single_hop_extend(client_side, relay_side, 1);
+  /*
+  * The simulation works in three steps:
+  * 1. Estimate the latency between client and relay, so that we can estimate
+  *    the time it takes to send/receive padding cells injected by the machines.
+  * 2. Build the circuit, taking account the time information in the provided
+  *    traces and the estimated latency, including for handshake.
+  * 3. The application data loop, everything else once a circuit is built and
+  *    has streams attached (both covered before).
+  */
+
+  circpad_sim_estimate_latency();
+
+  // FIXME: sanity check on estimated latency
+
+  circpad_sim_build_circuit();
 
   // verify that our sim machines got negotiated
   tt_str_op(client_side->padding_machine[0]->name, OP_EQ,
@@ -192,13 +201,9 @@ test_circuitpadding_sim_main(void *arg)
   tt_str_op(relay_side->padding_machine[0]->name, OP_EQ,
             CIRCPAD_SIM_RELAY_MACHINE);
 
-  // estimate RTT
+  circpadsim_app_loop();
 
-  // re-use instrumentation in circpad_cell_event_* and circpad_machine_event_*
-  // callbacks to create our output, use the MOCK functionality, leave empty for
-  // now, create empty patch. We want to inject events we not recognize (like
-  // address resolve in the loop to maintain those in output)
-
+  // FIXME: sanity check on resulting trace
 
   done:
     free_fake_origin_circuit(TO_ORIGIN_CIRCUIT(client_side));
@@ -215,6 +220,110 @@ test_circuitpadding_sim_main(void *arg)
                       circpad_sim_event *, ev, tor_free(ev));
     SMARTLIST_FOREACH(relay_trace, 
                       circpad_sim_event *, ev, tor_free(ev));
+}
+
+static void
+circpad_sim_estimate_latency(void)
+{
+  /* The goal is to update sim_latency_mean based on observed RTT.
+  *
+  * We expect a trace like this:
+  * 0000000000000000 circpad_machine_event_circ_added_hop
+  * 0000000000000044 circpad_cell_event_nonpadding_sent
+  * 0000000000063518 circpad_cell_event_nonpadding_received
+  * 0000000000063803 circpad_machine_event_circ_added_hop
+  * 0000000000063861 circpad_cell_event_nonpadding_sent
+  * 0000000000176671 circpad_cell_event_nonpadding_received
+  * 0000000000176992 circpad_machine_event_circ_added_hop
+  * 
+  * Potentially, there are padding cells or other events between.
+  */
+  circpad_sim_event *event;
+
+  // check for three circpad_machine_event_circ_added_hop events
+  int num_added_hop_events = 0, next = -1, i = 0;
+  while(i < smartlist_len(client_trace)) {
+    event = smartlist_get(client_trace, i);
+    if (strcmp(event->event, CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP) == 0) {
+      num_added_hop_events++;
+      if (next == -1)
+        next = i;
+    }
+    i++;
+  }
+  tt_int_op(num_added_hop_events, OP_EQ, 3);
+
+  // find next circpad_cell_event_nonpadding_sent
+  tt_assert(circpad_sim_next_event(CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT, 
+                                  &next, client_trace));
+  event = smartlist_get(client_trace, next);
+  int64_t sent = event->timestamp;
+
+  // find circpad_cell_event_nonpadding_received
+  tt_assert(circpad_sim_next_event(CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV, 
+                                  &next, client_trace));
+  event = smartlist_get(client_trace, next);
+  int64_t recv = event->timestamp;
+
+  // RTT between client and middle is recv-sent microseconds
+  sim_latency_mean = (recv-sent) * TOR_NSEC_PER_USEC / 2;
+  // FIXME: consider also that we get client-exit RRT? More noise there though.
+  // FIXME: support sim for other than middle
+
+  done:
+  ;
+}
+
+static int
+circpad_sim_next_event(const char *event, int *cur, smartlist_t *trace)
+{
+  circpad_sim_event *e;
+  while(*cur <= smartlist_len(trace)) {
+    e = smartlist_get(client_trace, *cur);
+    if (strcmp(e->event, event) == 0)
+      return *cur;
+
+    (*cur)++;
+  }
+  return 0;
+}
+
+static int64_t 
+circpad_sim_sample_latency(void)
+{
+  // FIXME: this is completely wrong
+  const struct logistic my_logistic = {
+    .base = LOGISTIC(my_logistic),
+    .mu = sim_latency_mean,
+    .sigma = 100, 
+  };
+
+  return MAX(0, tor_llround(dist_sample(&my_logistic.base)));
+}
+
+static void
+circpad_sim_build_circuit(void)
+{
+  // client->guard
+  simulate_single_hop_extend(client_side, relay_side, 1);
+
+  timers_advance_and_run(10*TOR_NSEC_PER_MSEC);
+
+  // client->guard->middle
+  simulate_single_hop_extend(client_side, relay_side, 1);
+
+   
+  //timers_advance_and_run(10*TOR_NSEC_PER_MSEC);
+  timers_advance_and_run(circpad_sim_sample_latency());
+
+  // // client->guard-middle->exit
+  simulate_single_hop_extend(client_side, relay_side, 1);
+}
+
+static void
+circpadsim_app_loop(void)
+{
+
 }
 
 /*
@@ -241,11 +350,12 @@ static void
 circpad_event_callback_mock(const char *event, 
                             uint32_t circuit_identifier)
 {
-  struct timeval now;
-  tor_gettimeofday(&now);
-  int64_t us = (int64_t)(now.tv_sec) * (int64_t)1000000 + 
-               (int64_t)(now.tv_usec);
-  printf("%ld %d %s\n", us, circuit_identifier, event);
+  // correct output
+  //printf("%016ld %d %s\n", curr_mocked_time, circuit_identifier, event);
+
+  // FIXME: easy debug print below
+  printf("%ld %d %s\n", curr_mocked_time, circuit_identifier, event);
+  
 }
 
 int 
@@ -359,23 +469,25 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
 {
   (void)cell; (void)on_stream; (void)filename; (void)lineno;
 
+  printf("%s", "circuit_package_relay_cell_mock called, ");
   if (circ == client_side) {
+    printf("%s\n", "for circ==client");
     if (cell->payload[0] == RELAY_COMMAND_PADDING_NEGOTIATE) {
       // Deliver to relay
       circpad_handle_padding_negotiate(relay_side, cell);
     } else {
-
       int is_target_hop = circpad_padding_is_from_expected_hop(circ,
                                                              layer_hint);
       tt_int_op(cell_direction, OP_EQ, CELL_DIRECTION_OUT);
       tt_int_op(is_target_hop, OP_EQ, 1);
 
-      // Receive padding cell at middle
+      // Receive padding cell at relay
       circpad_deliver_recognized_relay_cell_events(relay_side,
               cell->payload[0], NULL);
     }
     n_client_cells++;
   } else if (circ == relay_side) {
+    printf("%s\n", "for circ==relay_side");
     tt_int_op(cell_direction, OP_EQ, CELL_DIRECTION_IN);
 
     if (cell->payload[0] == RELAY_COMMAND_PADDING_NEGOTIATED) {
@@ -384,8 +496,6 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
         circpad_handle_padding_negotiated(client_side, cell,
                                           TO_ORIGIN_CIRCUIT(client_side)
                                              ->cpath->next);
-    } else if (cell->payload[0] == RELAY_COMMAND_PADDING_NEGOTIATE) {
-      circpad_handle_padding_negotiate(client_side, cell);
     } else {
       // Receive padding cell at client
       circpad_deliver_recognized_relay_cell_events(client_side,
@@ -397,7 +507,7 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
   }
 
  done:
-  timers_advance_and_run(1);
+  timers_advance_and_run(1*TOR_NSEC_PER_MSEC);
   return 0;
 }
 
@@ -465,7 +575,7 @@ simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
   monotime_coarse_set_mock_time_nsec(curr_mocked_time);
   monotime_set_mock_time_nsec(curr_mocked_time);
 
-  // Receive extended cell at middle
+  // Send extended cell at middle
   circpad_cell_event_nonpadding_sent(mid_relay);
 
   // Receive extended cell at first hop
@@ -505,9 +615,9 @@ free_fake_origin_circuit(origin_circuit_t *circ)
 }
 
 static void
-timers_advance_and_run(int64_t msec_update)
+timers_advance_and_run(int64_t nsec_update)
 {
-  curr_mocked_time += msec_update*TOR_NSEC_PER_MSEC;
+  curr_mocked_time += nsec_update;
   monotime_coarse_set_mock_time_nsec(curr_mocked_time);
   monotime_set_mock_time_nsec(curr_mocked_time);
   timers_run_pending();
@@ -558,9 +668,11 @@ helper_add_client_machine_mock(void)
   circ_origin_machine->states[CIRCPAD_STATE_BURST].
       iat_dist.type = CIRCPAD_DIST_UNIFORM;
   circ_origin_machine->states[CIRCPAD_STATE_BURST].
-      iat_dist.param1 = 0;
+      iat_dist.param1 = 1000*TOR_NSEC_PER_MSEC;
   circ_origin_machine->states[CIRCPAD_STATE_BURST].
-      iat_dist.param2 = 100*1000;
+      iat_dist.param2 = 1000*TOR_NSEC_PER_MSEC;
+  circ_origin_machine->states[CIRCPAD_STATE_BURST].
+      dist_max_sample_usec = 2000*TOR_NSEC_PER_MSEC;
 
   circ_origin_machine->machine_num = smartlist_len(origin_padding_machines);
   circpad_register_padding_machine(circ_origin_machine,
@@ -580,13 +692,13 @@ helper_add_relay_machine_mock(void)
   // sends one padding cell after 100 ms, then just idles
    circpad_machine_states_init(circ_relay_machine, 2);
    circ_relay_machine->states[CIRCPAD_STATE_START].
-      next_state[CIRCPAD_EVENT_NONPADDING_RECV] = CIRCPAD_STATE_BURST;
-  circ_relay_machine->states[CIRCPAD_STATE_START].
-      iat_dist.type = CIRCPAD_DIST_UNIFORM;
-  circ_relay_machine->states[CIRCPAD_STATE_START].
-      iat_dist.param1 = 0;
+      next_state[CIRCPAD_EVENT_PADDING_RECV] = CIRCPAD_STATE_BURST;
   circ_relay_machine->states[CIRCPAD_STATE_BURST].
-      iat_dist.param2 = 100*1000;
+      iat_dist.type = CIRCPAD_DIST_UNIFORM;
+  circ_relay_machine->states[CIRCPAD_STATE_BURST].
+      iat_dist.param1 = 1000*TOR_NSEC_PER_MSEC;
+  circ_relay_machine->states[CIRCPAD_STATE_BURST].
+      iat_dist.param2 = 1000*TOR_NSEC_PER_MSEC;
 
   circ_relay_machine->machine_num = smartlist_len(relay_padding_machines);
   circpad_register_padding_machine(circ_relay_machine,

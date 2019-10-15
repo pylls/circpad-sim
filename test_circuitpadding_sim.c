@@ -304,6 +304,11 @@ circpad_sim_sample_latency(void)
 static void
 circpad_sim_build_circuit(void)
 {
+  // in circuit_package_relay_cell_mock, queue up circpad events, 
+  // - also consider RELAY_COMMAND_PADDING_NEGOTIATE and
+  //   RELAY_COMMAND_PADDING_NEGOTIATED events in circpad loop? no, sample delay
+  //   right away?
+
   // client->guard
   simulate_single_hop_extend(client_side, relay_side, 1);
 
@@ -316,8 +321,12 @@ circpad_sim_build_circuit(void)
   //timers_advance_and_run(10*TOR_NSEC_PER_MSEC);
   timers_advance_and_run(circpad_sim_sample_latency());
 
-  // // client->guard-middle->exit
+  // client->guard-middle->exit
   simulate_single_hop_extend(client_side, relay_side, 1);
+
+
+  // pop all the way up to and including circpad_machine_event_circ_built and
+  // circpad_machine_event_circ_has_streams
 }
 
 static void

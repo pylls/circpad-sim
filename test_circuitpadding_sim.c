@@ -69,20 +69,27 @@ static void nodes_init(void);
 static void circpad_event_callback_mock(const char *event, 
                                         uint32_t circuit_identifier);
 
-// simulation-related functions and structs
-void test_circuitpadding_sim_main(void *arg);
-MOCK_DECL(STATIC void, helper_add_client_machine, (void));
-MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
-static void helper_add_client_machine_mock(void);
-static void helper_add_relay_machine_mock(void);
-static void circpad_sim_estimate_latency(void);
-static int64_t circpad_sim_sample_latency(void);
-static void circpad_sim_build_circuit(void);
-static void circpadsim_app_loop(void);
+typedef enum {
+  CELL_EVENT_UNKNOWN = 0,
+  CELL_EVENT_PADDING_SENT = 1,
+  CELL_EVENT_NONPADDING_SENT = 2,
+  CELL_EVENT_PADDING_RECV = 3,
+  CELL_EVENT_NONPADDING_RECV = 4,
+  MACHINE_EVENT_ADDED_HOP = 5,
+  MACHINE_EVENT_CIRC_BUILT = 6,
+  MACHINE_EVENT_HAS_STREAMS = 7,
+  MACHINE_EVENT_HAS_NO_STREAMS = 8,
+  MACHINE_EVENT_PURPOSE_CHANGED = 9,
+  MACHINE_EVENT_HAS_NO_RELAY_EARLY = 10,
+  CIRCPAD_SIM_INTERNAL_EVENT_NEGOTIATE = 11,
+  CIRCPAD_SIM_INTERNAL_EVENT_NEGOTIATED = 12
+} circpad_sim_event_t;
 
 typedef struct circpad_sim_event {
+  circpad_sim_event_t type; // type, extracted from event
   int64_t timestamp;
   const char *event;
+  void *internal; // depends on event, simulator internal
   int smartlist_idx; // position in smartlist
 } circpad_sim_event;
 
@@ -99,7 +106,7 @@ typedef struct circpad_sim_event {
 #define CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED "circpad_machine_event_circ_purpose_changed"
 #define CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY "circpad_machine_event_circ_has_no_relay_early"
 
-// related sim functions for parsing the trace
+// related sim functions
 int get_circpad_trace(const char* loc, smartlist_t* trace);
 static int find_circpad_sim_event(char* line, circpad_sim_event *e);
 static int compare_circpad_sim_event(const void *_a, const void *_b);
@@ -107,6 +114,16 @@ static int circpad_sim_next_event(const char *event, int *cur, smartlist_t *trac
 static circpad_sim_event* circpad_sim_pop_event(smartlist_t *trace);
 static void circpad_sim_push_event(circpad_sim_event *event, smartlist_t *trace);
 static circpad_sim_event* circpad_sim_peak_event(smartlist_t *trace, int);
+static int circpad_sim_continue(circpad_sim_event**, circuit_t**);
+
+void test_circuitpadding_sim_main(void *arg);
+MOCK_DECL(STATIC void, helper_add_client_machine, (void));
+MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
+static void helper_add_client_machine_mock(void);
+static void helper_add_relay_machine_mock(void);
+static void circpad_sim_estimate_latency(void);
+static int64_t circpad_sim_sample_latency(void);
+static void circpad_sim_main_loop(void);
 
 /*
 * Core simulation function
@@ -198,29 +215,35 @@ test_circuitpadding_sim_main(void *arg)
   tt_int_op(sim_latency_mean, OP_GT, 0);
   tt_int_op(sim_latency_mean, OP_LT, 1*TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC);
 
-  circpad_sim_build_circuit();
+  circpad_sim_main_loop();
 
   // verify that our sim machines got negotiated
+  tt_assert(client_side->padding_machine[0]);
+  tt_assert(relay_side->padding_machine[0]);
   tt_str_op(client_side->padding_machine[0]->name, OP_EQ,
             CIRCPAD_SIM_CLIENT_MACHINE);
   tt_str_op(relay_side->padding_machine[0]->name, OP_EQ,
             CIRCPAD_SIM_RELAY_MACHINE);
 
-  circpadsim_app_loop();
 
   // FIXME: sanity check on resulting trace
   
-  printf("\n\n ## out_client_trace ##\n");
-  SMARTLIST_FOREACH(out_client_trace, 
-                      circpad_sim_event *, ev, 
-                      printf("%ld %s\n", 
-                      ev->timestamp, ev->event));
+  printf("client input trace has %d events, output %d\n", 
+    smartlist_len(client_trace), smartlist_len(out_client_trace));
+  printf("relay input trace has %d events, output %d\n", 
+    smartlist_len(relay_trace), smartlist_len(out_relay_trace));
 
-  printf("\n\n ## out_relay_trace ##\n");
-  SMARTLIST_FOREACH(out_relay_trace, 
-                      circpad_sim_event *, ev, 
-                      printf("%ld %s\n", 
-                      ev->timestamp, ev->event));
+  // printf("\n\n ## out_client_trace ##\n");
+  // SMARTLIST_FOREACH(out_client_trace, 
+  //                     circpad_sim_event *, ev, 
+  //                     printf("%ld %s\n", 
+  //                     ev->timestamp, ev->event));
+
+  // printf("\n\n ## out_relay_trace ##\n");
+  // SMARTLIST_FOREACH(out_relay_trace, 
+  //                     circpad_sim_event *, ev, 
+  //                     printf("%ld %s\n", 
+  //                     ev->timestamp, ev->event));
 
   printf("\n");
   done:
@@ -266,7 +289,7 @@ circpad_sim_estimate_latency(void)
   int num_added_hop_events = 0, next = -1, i = 0;
   while(i < smartlist_len(client_trace)) {
     event = circpad_sim_peak_event(client_trace, i);
-    if (strcmp(event->event, CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP) == 0) {
+    if (event->type == MACHINE_EVENT_ADDED_HOP) {
       num_added_hop_events++;
       if (next == -1)
         next = i;
@@ -346,47 +369,112 @@ circpad_sim_push_event(circpad_sim_event *event, smartlist_t *trace)
                             event);
 }
 
-static void
-circpad_sim_build_circuit(void)
-{
-  // in circuit_package_relay_cell_mock, queue up circpad events, 
-  // - also consider RELAY_COMMAND_PADDING_NEGOTIATE and
-  //   RELAY_COMMAND_PADDING_NEGOTIATED events in circpad loop? no, sample delay
-  //   right away?
+static int
+circpad_sim_continue(circpad_sim_event **next_event, circuit_t **next_side) {
+  // goal: update next_event and next_side, if we should continue
+  if (smartlist_len(client_trace) > 0 && smartlist_len(relay_trace) > 0) {
+    if (circpad_sim_peak_event(client_trace, 0)->timestamp <
+          circpad_sim_peak_event(relay_trace, 0)->timestamp) {
+      *next_event = circpad_sim_pop_event(client_trace);
+      *next_side = client_side;
+    } else {
+      *next_event = circpad_sim_pop_event(relay_trace);
+      *next_side = relay_side;
+    }
+    return 1;
+  } else if (smartlist_len(client_trace) > 0) {
+    *next_event = circpad_sim_pop_event(client_trace);
+    *next_side = client_side;
+    return 1;
+  } else if (smartlist_len(relay_trace) > 0) {
+    *next_event = circpad_sim_pop_event(relay_trace);
+    *next_side = relay_side;
+    return 1;
+  } else {
+    // FIXME: check machines for timers (if any), and global max
+  }
 
-  // here we start popping the traces: events are consumed
-
-  circpad_sim_event *event;
-
-  event = circpad_sim_pop_event(client_trace);
-  printf("%s\n", event->event);
-  event = circpad_sim_pop_event(client_trace);
-  printf("%s\n", event->event);
-
-  // client->guard
-  simulate_single_hop_extend(client_side, relay_side, 1);
-
-  timers_advance_and_run(10*TOR_NSEC_PER_MSEC);
-
-  // client->guard->middle
-  simulate_single_hop_extend(client_side, relay_side, 1);
-
-   
-  //timers_advance_and_run(10*TOR_NSEC_PER_MSEC);
-  timers_advance_and_run(circpad_sim_sample_latency());
-
-  // client->guard-middle->exit
-  simulate_single_hop_extend(client_side, relay_side, 1);
-
-
-  // pop all the way up to and including circpad_machine_event_circ_built and
-  // circpad_machine_event_circ_has_streams
+  return 0;
 }
 
 static void
-circpadsim_app_loop(void)
+circpad_sim_main_loop(void)
 {
+  /* The goal is to build a circuit for the mocked circuitpadding framework
+  * while using as much as possible of the input traces and injecting as few
+  * simulated entries in the output as possible. Typically, the instrumented
+  * traces from a Tor client will (i) miss cells for extending the circuit to
+  * the guard and (ii) have significant delay between the circuit being built
+  * (EVENT_CIRC_BUILT) and used (EVENT_HAS_STREAMS). We don't want to change
+  * this due to how the simulator works.
+  */
 
+  circpad_sim_event *next_event;
+  circuit_t *next_side;
+  (void)next_event;
+  (void)next_side;
+
+  // FIXME: more clean condition check
+  // FIXME: update all comments here and in test file
+  while (circpad_sim_continue(&next_event, &next_side)) {    
+    //printf("%ld %s\n", next_event->timestamp, next_event->event);
+
+    // we move time forward until the next event
+    timers_advance_and_run(next_event->timestamp * TOR_NSEC_PER_USEC);
+
+    // act on the event
+    switch (next_event->type) {
+      case MACHINE_EVENT_ADDED_HOP:
+        simulate_single_hop_extend(client_side, relay_side, 1);
+        circpad_machine_event_circ_added_hop(TO_ORIGIN_CIRCUIT(next_side));
+        break;
+      case MACHINE_EVENT_HAS_STREAMS:
+        circpad_machine_event_circ_has_streams(TO_ORIGIN_CIRCUIT(next_side));
+        break;
+      case MACHINE_EVENT_HAS_NO_STREAMS:
+        circpad_machine_event_circ_has_no_streams(
+          TO_ORIGIN_CIRCUIT(next_side));
+        break;
+      case MACHINE_EVENT_PURPOSE_CHANGED:
+        circpad_machine_event_circ_purpose_changed(
+          TO_ORIGIN_CIRCUIT(next_side));
+        break;
+      case MACHINE_EVENT_HAS_NO_RELAY_EARLY:
+        circpad_machine_event_circ_has_no_relay_early(
+          TO_ORIGIN_CIRCUIT(next_side));
+        break;
+      case CELL_EVENT_PADDING_SENT:
+        circpad_cell_event_padding_sent(next_side);
+        break;
+      case CELL_EVENT_NONPADDING_SENT:
+        circpad_cell_event_nonpadding_sent(next_side);
+        break;
+      case CELL_EVENT_PADDING_RECV:
+        circpad_cell_event_padding_received(next_side);
+        break;
+      case CELL_EVENT_NONPADDING_RECV:
+        circpad_cell_event_nonpadding_received(next_side);
+        break;
+      case CIRCPAD_SIM_INTERNAL_EVENT_NEGOTIATE:
+        printf("%s\n", "WOO");
+        circpad_handle_padding_negotiate(relay_side, next_event->internal);
+        break;
+      case CIRCPAD_SIM_INTERNAL_EVENT_NEGOTIATED:
+        printf("%s\n", "WOO-D");
+        circpad_handle_padding_negotiated(client_side, next_event->internal,
+                                TO_ORIGIN_CIRCUIT(client_side)->cpath->next);
+        break;
+      case MACHINE_EVENT_CIRC_BUILT:
+        circpad_machine_event_circ_built(TO_ORIGIN_CIRCUIT(next_side));
+        break;
+      case CELL_EVENT_UNKNOWN:
+      default:
+        tt_fail_msg("unknown sim event type, this should never happen");
+    }
+
+    tor_free(next_event->internal);
+    tor_free(next_event);
+  }
 }
 
 /*
@@ -414,7 +502,9 @@ circpad_event_callback_mock(const char *event,
                             uint32_t circuit_identifier)
 {
   circpad_sim_event *e = tor_malloc_zero(sizeof(circpad_sim_event));
-  e->event = event;
+  tor_assert(find_circpad_sim_event((char*)event, e));
+
+  // FIXME: make timestamp relative
   e->timestamp = curr_mocked_time;
 
   // relay-side has identifier 0, clients > 0
@@ -425,7 +515,7 @@ circpad_event_callback_mock(const char *event,
   }
 
   // FIXME: easy debug print below
-  printf("%ld %d %s\n", curr_mocked_time, circuit_identifier, event);
+  //printf("%ld %d %s\n", curr_mocked_time, circuit_identifier, event);
  // correct output
   //printf("%016ld %d %s\n", curr_mocked_time, circuit_identifier, event); 
 }
@@ -446,6 +536,7 @@ get_circpad_trace(const char* loc, smartlist_t* trace)
     circpad_sim_event e;
     if (find_circpad_sim_event(line, &e)) {
       circpad_sim_event *event = tor_malloc_zero(sizeof(circpad_sim_event));
+      event->type = e.type;
       event->event = e.event;
       event->timestamp = strtol(line, NULL, 10);
       circpad_sim_push_event(event, trace);
@@ -461,42 +552,52 @@ find_circpad_sim_event(char* line, circpad_sim_event *e)
 {
   // verbose but quick, in order of likely events
   if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV)) {
+    e->type = CELL_EVENT_NONPADDING_RECV;
     e->event = CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT)) {
+    e->type = CELL_EVENT_NONPADDING_SENT;
     e->event = CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_RECV)) {
+    e->type = CELL_EVENT_PADDING_RECV;
     e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_RECV;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_SENT)) {
+    e->type = CELL_EVENT_PADDING_SENT;
     e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_SENT;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP)) {
+    e->type = MACHINE_EVENT_ADDED_HOP;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT)) {
+    e->type = MACHINE_EVENT_CIRC_BUILT;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS)) {
+    e->type = MACHINE_EVENT_HAS_STREAMS;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS)) {
+    e->type = MACHINE_EVENT_HAS_NO_STREAMS;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED)) {
+    e->type = MACHINE_EVENT_PURPOSE_CHANGED;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED;
     return 1;
   }
   if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY)) {
+    e->type = MACHINE_EVENT_HAS_NO_RELAY_EARLY;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY;
     return 1;
   }
@@ -538,22 +639,33 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
 {
   (void)cell; (void)on_stream; (void)filename; (void)lineno;
 
+  circpad_sim_event *e = tor_malloc_zero(sizeof(circpad_sim_event));
+
   printf("%s", "circuit_package_relay_cell_mock called, ");
   if (circ == client_side) {
     printf("%s\n", "for circ==client");
     if (cell->payload[0] == RELAY_COMMAND_PADDING_NEGOTIATE) {
-      // Deliver to relay
-      circpad_handle_padding_negotiate(relay_side, cell);
+      e->type = CIRCPAD_SIM_INTERNAL_EVENT_NEGOTIATE;
+      // save a copy of the cell
+      e->internal = tor_malloc_zero(sizeof(cell_t));
+      memcpy(e->internal, cell, sizeof(cell_t));
+      //circpad_handle_padding_negotiate(relay_side, cell);
     } else {
+      e->type = CELL_EVENT_PADDING_RECV;
+      e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_RECV;
+
       int is_target_hop = circpad_padding_is_from_expected_hop(circ,
                                                              layer_hint);
       tt_int_op(cell_direction, OP_EQ, CELL_DIRECTION_OUT);
       tt_int_op(is_target_hop, OP_EQ, 1);
-
-      // Receive padding cell at relay
-      circpad_deliver_recognized_relay_cell_events(relay_side,
-              cell->payload[0], NULL);
+    
+      //circpad_deliver_recognized_relay_cell_events(relay_side,
+      //        cell->payload[0], NULL);
     }
+
+    // schedule event at relay at some point in the future
+    e->timestamp = circpad_sim_sample_latency();
+    circpad_sim_push_event(e, relay_trace);
     n_client_cells++;
   } else if (circ == relay_side) {
     printf("%s\n", "for circ==relay_side");
@@ -561,22 +673,34 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
 
     if (cell->payload[0] == RELAY_COMMAND_PADDING_NEGOTIATED) {
       // XXX: blah need right layer_hint..
-      if (deliver_negotiated)
-        circpad_handle_padding_negotiated(client_side, cell,
-                                          TO_ORIGIN_CIRCUIT(client_side)
-                                             ->cpath->next);
+      // FIXME: we don't care about this, right? 
+      if (deliver_negotiated) {
+        e->type = CIRCPAD_SIM_INTERNAL_EVENT_NEGOTIATED;
+        // save a copy of the cell
+        e->internal = tor_malloc_zero(sizeof(cell_t));
+        memcpy(e->internal, cell, sizeof(cell_t));
+        //circpad_handle_padding_negotiated(client_side, cell,
+        //                                  TO_ORIGIN_CIRCUIT(client_side)
+        //                                     ->cpath->next);
+      }
     } else {
       // Receive padding cell at client
-      circpad_deliver_recognized_relay_cell_events(client_side,
-              cell->payload[0],
-              TO_ORIGIN_CIRCUIT(client_side)->cpath->next);
+      e->type = CELL_EVENT_PADDING_RECV;
+      e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_RECV;
+      // circpad_deliver_recognized_relay_cell_events(client_side,
+      //         cell->payload[0],
+      //         TO_ORIGIN_CIRCUIT(client_side)->cpath->next);
     }
 
+    // schedule event at client at some point in the future
+    e->timestamp = circpad_sim_sample_latency();
+    circpad_sim_push_event(e, client_trace);
     n_relay_cells++;
   }
 
  done:
-  timers_advance_and_run(1*TOR_NSEC_PER_MSEC);
+  ;
+
   return 0;
 }
 
@@ -629,26 +753,10 @@ static void
 simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
                            int padding)
 {
+  (void)mid_relay;
   char whatevs_key[CPATH_KEY_MATERIAL_LEN];
   char digest[DIGEST_LEN];
   tor_addr_t addr;
-
-  // Pretend a non-padding cell was sent
-  circpad_cell_event_nonpadding_sent(client);
-
-  // Receive extend cell at middle
-  circpad_cell_event_nonpadding_received(mid_relay);
-
-  // Advance time a tiny bit so we can calculate an RTT
-  curr_mocked_time += 10 * TOR_NSEC_PER_MSEC;
-  monotime_coarse_set_mock_time_nsec(curr_mocked_time);
-  monotime_set_mock_time_nsec(curr_mocked_time);
-
-  // Send extended cell at middle
-  circpad_cell_event_nonpadding_sent(mid_relay);
-
-  // Receive extended cell at first hop
-  circpad_cell_event_nonpadding_received(client);
 
   // Add a hop to cpath
   crypt_path_t *hop = tor_malloc_zero(sizeof(crypt_path_t));
@@ -670,9 +778,6 @@ simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
 
   hop->package_window = circuit_initial_package_window();
   hop->deliver_window = CIRCWINDOW_START;
-
-  // Signal that the hop was added
-  circpad_machine_event_circ_added_hop(TO_ORIGIN_CIRCUIT(client));
 }
 
 static void

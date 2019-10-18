@@ -64,3 +64,5 @@ before sim half-works.
   right now, maybe turn into a main? Ask for help? Ideally we want: 
   
   ./sim <input> <output> <optional params>
+
+FIXME: make a new patch for add-torlog-output.patch

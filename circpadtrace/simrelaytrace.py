@@ -90,27 +90,27 @@ def estimate_latency_in_us(infname):
     to eff.org:
 
     0000000000000000 circpad_machine_event_circ_added_hop
-    0000000000000044 circpad_cell_event_nonpadding_sent
-    0000000000063518 circpad_cell_event_nonpadding_received
-    0000000000063803 circpad_machine_event_circ_added_hop
-    0000000000063861 circpad_cell_event_nonpadding_sent
-    0000000000176671 circpad_cell_event_nonpadding_received
-    0000000000176992 circpad_machine_event_circ_added_hop
-    0000000000176997 circpad_machine_event_circ_built
-    0000000005780959 circpad_machine_event_circ_has_streams
-    0000000005780976 connection_ap_handshake_send_begin eff.org
-    0000000005780998 circpad_cell_event_nonpadding_sent
+    0000000000084278 circpad_cell_event_nonpadding_sent
+    0000000080279314 circpad_cell_event_nonpadding_received
+    0000000080577754 circpad_machine_event_circ_added_hop
+    0000000080635312 circpad_cell_event_nonpadding_sent
+    0000000228976335 circpad_cell_event_nonpadding_received
+    0000000229672419 circpad_machine_event_circ_added_hop
+    0000000229680174 circpad_machine_event_circ_built
+    0000003116580616 circpad_machine_event_circ_has_streams
+    0000003116598049 connection_ap_handshake_send_begin eff.org
+    0000003116607777 circpad_cell_event_nonpadding_sent
 
     The first line we get is when the connection to the guard is completed, due
     to how events are hooked in tor. On lines 2-4 the client extends the circuit
     to the middle relay, followed by completing the circuit to the exit on lines
-    5-8. About five seconds later, on lines 9-11, is the cirucit used to connect
-    to instruct the exit to connect to eff.org.
+    5-8. Slightly less than three seconds later, on lines 9-11, is the cirucit
+    used to connect to instruct the exit to connect to eff.org.
 
     This gives us that the duration between lines 2-3 is a RTT between client
     and middle relay. We assume that this is the mean of a normal distribution
     with variance LATENCY_NOISE_VARIANCE. More realistic network measurements
-    show a multimodal distribution, a truncated normal distribution, or a pareto 
+    show a multimodal distribution, a truncated normal distribution, or a pareto
     distribution depending on who you ask.
     '''
     

@@ -450,10 +450,11 @@ circpad_sim_continue(circpad_sim_event **next_event, circuit_t **next_side) {
   // should occur before the next "TICK" in Tor's internal timers. 
 
   // the SIM_TICK_TIME is significantly faster then Tor's internal timers
-  int64_t SIM_TICK_TIME = TOR_NSEC_PER_USEC;
+  int64_t SIM_TICK_TIME = TOR_NSEC_PER_USEC*50; // USEC_PER_TICK is 100
 
   while (circpad_sim_any_machine_has_padding_scheduled() &&
-        (circpad_sim_get_earliest_trace_time() - curr_mocked_time) > SIM_TICK_TIME*2) {
+        (actual_mocked_monotime_start + circpad_sim_get_earliest_trace_time() - 
+          curr_mocked_time) > SIM_TICK_TIME) {
           timers_advance_and_run(SIM_TICK_TIME);
   }
 

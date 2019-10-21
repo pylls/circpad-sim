@@ -49,6 +49,8 @@
 #define CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED_STR "circpad_machine_event_circ_purpose_changed"
 #define CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY_STR "circpad_machine_event_circ_has_no_relay_early"
 
+#define CIRCPAD_SIM_FORMAT_TIMESTAMP_LEN 16
+
 // The strings of events are mapped to the below type by the simulator when we
 // parse the input traces, with support for unknown events. The unknown events
 // are passed through the simulator as-is to the output. This is useful, e.g.,
@@ -79,7 +81,7 @@ typedef struct circpad_sim_event {
   int64_t timestamp;
   // a string representation of the event as provided in the input trace
   const char *event;
-  // simulator internal, right now only for cells
+  // simulator internal, used for cells and unknown events
   void *internal;
   // position in smartlist, used for storing traces in a queue
   int smartlist_idx;
@@ -88,6 +90,7 @@ typedef struct circpad_sim_event {
 // functions for parsing input circpadtrace files
 int get_circpad_trace(const char* loc, smartlist_t* trace);
 static int find_circpad_sim_event(char* line, circpad_sim_event *e);
+static void circpad_sim_event_free(circpad_sim_event *event);
 
 // We store input and output traces as queues of circpad_sim_event, sorted by
 // the timestamp. Functions below for working with the queues. 
@@ -306,20 +309,20 @@ test_circuitpadding_sim_main(void *arg)
   printf("relay input trace has %d events, output %d events\n", 
     relay_trace_start_len, smartlist_len(out_relay_trace));
 
-  // printf("\n\n ## out combined trace ##\n");
-  // int n = 20;
-  // for (int i = 0; i < n; i++) {
-  //   circpad_sim_event *ev;
-  //  if (circpad_sim_peak_event(out_client_trace)->timestamp < 
-  //     circpad_sim_peak_event(out_relay_trace)->timestamp) {
-  //       ev = circpad_sim_pop_event(out_client_trace);
-  //       printf("%012ld c %s\n", ev->timestamp, ev->event);
-  //     } else {
-  //       ev = circpad_sim_pop_event(out_relay_trace);
-  //       printf("%012ld r %s\n", ev->timestamp, ev->event);
-  //     }
-  //     tor_free(ev);
-  // }
+  printf("\n\n ## out combined trace ##\n");
+  int n = 20;
+  for (int i = 0; i < n; i++) {
+    circpad_sim_event *ev;
+   if (circpad_sim_peak_event(out_client_trace)->timestamp < 
+      circpad_sim_peak_event(out_relay_trace)->timestamp) {
+        ev = circpad_sim_pop_event(out_client_trace);
+        printf("%012ld c %s\n", ev->timestamp, ev->event);
+      } else {
+        ev = circpad_sim_pop_event(out_relay_trace);
+        printf("%012ld r %s\n", ev->timestamp, ev->event);
+      }
+      tor_free(ev);
+  }
 
   printf("\n");
   done:
@@ -334,17 +337,29 @@ test_circuitpadding_sim_main(void *arg)
     UNMOCK(helper_add_relay_machine);
     UNMOCK(helper_add_client_machine);
     SMARTLIST_FOREACH(client_trace, 
-                      circpad_sim_event *, ev, tor_free(ev));
+                      circpad_sim_event *, ev, circpad_sim_event_free(ev));
     SMARTLIST_FOREACH(relay_trace, 
-                      circpad_sim_event *, ev, tor_free(ev));
+                      circpad_sim_event *, ev, circpad_sim_event_free(ev));
     SMARTLIST_FOREACH(out_client_trace, 
-                      circpad_sim_event *, ev, tor_free(ev));
+                      circpad_sim_event *, ev, circpad_sim_event_free(ev));
     SMARTLIST_FOREACH(out_relay_trace, 
-                      circpad_sim_event *, ev, tor_free(ev));
+                      circpad_sim_event *, ev, circpad_sim_event_free(ev));
     smartlist_free(client_trace);
     smartlist_free(relay_trace);
     smartlist_free(out_client_trace);
     smartlist_free(out_relay_trace);
+}
+
+static void
+circpad_sim_event_free(circpad_sim_event *event) 
+{
+  // For unknown event, we allocate a copy of the event string, other types of
+  // events use our internal defines. To avoid compiler warnings, the internal
+  // pointer also points to the event without the const prefix.
+  if (event->type == CIRCPAD_SIM_CELL_EVENT_UNKNOWN)
+    tor_free(event->internal);
+
+  tor_free(event);
 }
 
 static void
@@ -518,7 +533,7 @@ circpad_sim_continue(circpad_sim_event **next_event, circuit_t **next_side) {
 static void
 circpad_sim_main_loop(void)
 {
-  circpad_sim_event *next_event;
+  circpad_sim_event *next_event, *copied_event;
   circuit_t *next_side;
   cell_t *cell;
 
@@ -586,7 +601,14 @@ circpad_sim_main_loop(void)
                                 TO_ORIGIN_CIRCUIT(client_side)->cpath->next);
         break;
       case CIRCPAD_SIM_CELL_EVENT_UNKNOWN:
-        // FIXME: pass-through goes here
+        // we just add unknown events to the output in a copied event
+        copied_event = tor_memdup(next_event, sizeof(circpad_sim_event));
+        next_event->internal = NULL; // keeping for copy, not free below
+        if (next_side == client_side)
+          circpad_sim_push_event(copied_event, out_client_trace);
+        else
+          circpad_sim_push_event(copied_event, out_relay_trace);
+        break;
       default:
         tor_assertf(0, "unknown sim event type, this should never happen");
     }
@@ -646,10 +668,8 @@ get_circpad_trace(const char* loc, smartlist_t* trace)
       circpad_sim_event *event = tor_malloc_zero(sizeof(circpad_sim_event));
       event->type = e.type;
       event->event = e.event;
-      event->timestamp = strtol(line, NULL, 10);
+      event->timestamp = e.timestamp;
       circpad_sim_push_event(event, trace);
-    } else {
-      // FIXME: make pass-through event that continues into out traces
     }
   }
 
@@ -660,59 +680,63 @@ get_circpad_trace(const char* loc, smartlist_t* trace)
 static int
 find_circpad_sim_event(char* line, circpad_sim_event *e)
 {
+  // check if it can be an event
+  if (strlen(line) < CIRCPAD_SIM_FORMAT_TIMESTAMP_LEN+1)
+    return 0;
+  
+  // attempt to parse timestamp
+  e->timestamp = strtol(line, NULL, 10);
+  if (e->timestamp < 0)
+    return 0;
+
   // verbose but quick, in order of likely events
   if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV_STR)) {
     e->type = CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV;
     e->event = CIRCPAD_SIM_CELL_EVENT_NONPADDING_RECV_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT_STR)) {
     e->type = CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT;
     e->event = CIRCPAD_SIM_CELL_EVENT_NONPADDING_SENT_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_RECV_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_RECV_STR)) {
     e->type = CIRCPAD_SIM_CELL_EVENT_PADDING_RECV;
     e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_RECV_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_SENT_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_CELL_EVENT_PADDING_SENT_STR)) {
     e->type = CIRCPAD_SIM_CELL_EVENT_PADDING_SENT;
     e->event = CIRCPAD_SIM_CELL_EVENT_PADDING_SENT_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP_STR)) {
     e->type = CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_ADDED_HOP_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT_STR)) {
     e->type = CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_CIRC_BUILT_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS_STR)) {
     e->type = CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_STREAMS_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS_STR)) {
     e->type = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_STREAMS_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED_STR)) {
     e->type = CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_PURPOSE_CHANGED_STR;
-    return 1;
   }
-  if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY_STR)) {
+  else if(strstr(line, CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY_STR)) {
     e->type = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY;
     e->event = CIRCPAD_SIM_MACHINE_EVENT_HAS_NO_RELAY_EARLY_STR;
-    return 1;
+  } else {
+    // probably an unknown event, allocate a raw copy to carry it into output
+    e->type = CIRCPAD_SIM_CELL_EVENT_UNKNOWN;
+    e->event = tor_strdup((char*)(line+CIRCPAD_SIM_FORMAT_TIMESTAMP_LEN+1));
+    e->internal = (char*)e->event;
   }
 
-  return 0;
+  return 1;  
 }
 
 static int

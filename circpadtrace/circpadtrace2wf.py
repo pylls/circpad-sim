@@ -12,6 +12,8 @@ ap.add_argument("-t", required=False,
     help="override output filetype (.cells, .timecells, .dirtime, .pkl)")
 ap.add_argument("-p", required=False, type=bool,
     help="don't store results in output, but in one pickle file")
+
+# FIXME: consider having a noise parameter to randomize the environment
 args = vars(ap.parse_args())
 
 def main():

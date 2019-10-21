@@ -30,12 +30,6 @@
 #include "feature/nodelist/networkstatus_st.h"
 #include "feature/nodelist/node_st.h"
 
-/* Start our monotime mocking at 1 second past whatever monotime_init()
- * thought the actual wall clock time was, for platforms with bad resolution
- * and weird timevalues during monotime_init() before mocking. */
-#define MONOTIME_MOCK_START (monotime_absolute_nsec()+\
-                               TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC)
-
 // our testing trace if none is provided
 #define CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE "src/test/circpad_sim_test_trace_client.inc"
 #define CIRCPAD_SIM_TEST_TRACE_RELAY_FILE "src/test/circpad_sim_test_trace_relay.inc"
@@ -91,33 +85,62 @@ typedef struct circpad_sim_event {
   int smartlist_idx;
 } circpad_sim_event;
 
-// related sim functions
+// functions for parsing input circpadtrace files
 int get_circpad_trace(const char* loc, smartlist_t* trace);
 static int find_circpad_sim_event(char* line, circpad_sim_event *e);
+
+// We store input and output traces as queues of circpad_sim_event, sorted by
+// the timestamp. Functions below for working with the queues. 
 static int compare_circpad_sim_event(const void *_a, const void *_b);
 static circpad_sim_event* circpad_sim_pop_event(smartlist_t *trace);
 static void circpad_sim_push_event(circpad_sim_event *event, smartlist_t *trace);
 static circpad_sim_event* circpad_sim_peak_event(smartlist_t *trace);
-static int circpad_sim_continue(circpad_sim_event**, circuit_t**);
 
-void test_circuitpadding_sim_main(void *arg);
+// Machines to simulate should be defined in helper_add_client_machine and
+// helper_add_relay_machine. We provide two mocked implementations with testing
+// machines for the simulator to be able to perform some basic self-tests.
 MOCK_DECL(STATIC void, helper_add_client_machine, (void));
 MOCK_DECL(STATIC void, helper_add_relay_machine, (void));
 static void helper_add_client_machine_mock(void);
 static void helper_add_relay_machine_mock(void);
+
+// The main function for the simulator, implemented as a test in tor's unit
+// testing framework. It contains of two parts.
+void test_circuitpadding_sim_main(void *arg);
+
+// The first part is for estimating and later sampling the latency between the
+// client and relay running the padding machines. We need to estimate this
+// latency based on the input traces, because the simulator will inject new
+// padding- and negotiate-cells. We could make the simulator more complex here
+// by also properly modellling things like queuing delay and link
+// characterstics.
 static void circpad_sim_estimate_latency(void);
 static int64_t circpad_sim_sample_latency(void);
-static void circpad_sim_main_loop(void);
 
-// mocked functions and helpers, mostly lifted from test_circuitpadding.c
-static void
-circuitmux_attach_circuit_mock(circuitmux_t *cmux, circuit_t *circ,
-                               cell_direction_t direction);
-static int
-circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
+// The second part of the main function, the main loop of events consumed from
+// the input queues. When consuming events we need to factor in that the padding
+// machines may inject new events as time progresses.
+static void circpad_sim_main_loop(void);
+static int circpad_sim_continue(circpad_sim_event**, circuit_t**);
+
+// One of the most important mocked functions: here we inject padding cells and
+// negotiation-related cells between clients and relays as the mocked function
+// is called by the circuitpadding framework.
+static int circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
                            cell_direction_t cell_direction,
                            crypt_path_t *layer_hint, streamid_t on_stream,
                            const char *filename, int lineno);
+
+// The circuidpadding framework is patched for the simulator to generate events
+// to the torlog as input to the simulator. Here we re-use the same function to
+// generate the output of the simulator into two queues. 
+static void circpad_event_callback_mock(const char *event, 
+                                        uint32_t circuit_identifier);
+
+// mocked functions and helpers to get the circuitpadding framework to work in
+// the unit testing framework, 99% copied directly from test_circuitpadding.c
+static void circuitmux_attach_circuit_mock(circuitmux_t *cmux, circuit_t *circ,
+                                          cell_direction_t direction);
 static or_circuit_t * new_fake_orcirc(channel_t *nchan, channel_t *pchan);
 circid_t get_unique_circ_id_by_chan(channel_t *chan);
 static void free_fake_origin_circuit(origin_circuit_t *circ);
@@ -126,8 +149,6 @@ static void simulate_single_hop_extend(circuit_t *client, circuit_t *mid_relay,
 static void timers_advance_and_run(int64_t nsec_update);
 static const node_t * node_get_by_id_mock(const char *identity_digest);
 static void nodes_init(void);
-static void circpad_event_callback_mock(const char *event, 
-                                        uint32_t circuit_identifier);
 
 /*
 * Defining the machines
@@ -155,11 +176,20 @@ static circuit_t *client_side;
 static circuit_t *relay_side;
 static node_t padding_node;
 static node_t non_padding_node;
+
+// Mocking time is central to the simulation. Below we have the current time,
+// the starting time when we started our simulation, and the estimated mean
+// latency between client and relay. 
 static int64_t curr_mocked_time;
 static int64_t actual_mocked_monotime_start;
 static int64_t sim_latency_mean;
+/* Start our monotime mocking at 1 second past whatever monotime_init()
+ * thought the actual wall clock time was, for platforms with bad resolution
+ * and weird timevalues during monotime_init() before mocking. */
+#define MONOTIME_MOCK_START (monotime_absolute_nsec()+\
+                               TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC)
 
-// sim-specific
+
 // FIXME: make into args or replaceable, get the path from the test
 // or something like that
 const char *client_trace_loc = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
@@ -171,6 +201,7 @@ static smartlist_t *relay_trace = NULL;
 static smartlist_t *out_client_trace = NULL;
 static smartlist_t *out_relay_trace = NULL;
 
+// debug flags
 static int circpad_sim_debug_n = 0;
 static int circpad_sim_debug_n_max = 40;
 

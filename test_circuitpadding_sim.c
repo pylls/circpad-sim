@@ -30,20 +30,11 @@
 #include "feature/nodelist/networkstatus_st.h"
 #include "feature/nodelist/node_st.h"
 
-/*
-* To find the code to replace for the sim, search for REPLACE. Note that the
-* machines you generate / create MUST have the names as defined below. The
-* simulator checks that machines with the names got negotiated.
-*/
-#define CIRCPAD_SIM_CLIENT_MACHINE "circpad_sim_client_machine"
-#define CIRCPAD_SIM_RELAY_MACHINE "circpad_sim_relay_machine"
-
 /* Start our monotime mocking at 1 second past whatever monotime_init()
  * thought the actual wall clock time was, for platforms with bad resolution
  * and weird timevalues during monotime_init() before mocking. */
 #define MONOTIME_MOCK_START (monotime_absolute_nsec()+\
                                TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC)
-
 
 // our testing trace if none is provided
 #define CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE "src/test/circpad_sim_test_trace_client.inc"
@@ -893,7 +884,7 @@ helper_add_client_machine_mock(void)
   circpad_machine_spec_t *circ_origin_machine
       = tor_malloc_zero(sizeof(circpad_machine_spec_t));
 
-  circ_origin_machine->name = CIRCPAD_SIM_CLIENT_MACHINE;
+  circ_origin_machine->name = "circpad_sim_example_client_machine";
   circ_origin_machine->conditions.min_hops = 2;
   circ_origin_machine->conditions.state_mask = CIRCPAD_CIRC_STREAMS;
   circ_origin_machine->conditions.purpose_mask = CIRCPAD_PURPOSE_ALL;
@@ -928,7 +919,7 @@ helper_add_relay_machine_mock(void)
   circpad_machine_spec_t *circ_relay_machine
       = tor_malloc_zero(sizeof(circpad_machine_spec_t));
 
-  circ_relay_machine->name = CIRCPAD_SIM_RELAY_MACHINE;
+  circ_relay_machine->name = "circpad_sim_example_relay_machine";
   circ_relay_machine->target_hopnum = 2;
   circ_relay_machine->is_origin_side = 0;
 

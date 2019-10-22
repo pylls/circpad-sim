@@ -30,6 +30,8 @@
 #include "feature/nodelist/networkstatus_st.h"
 #include "feature/nodelist/node_st.h"
 
+#include "test/circuitpadding_sim_arg.h"
+
 // our testing trace if none is provided
 #define CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE "src/test/circpad_sim_test_trace_client.inc"
 #define CIRCPAD_SIM_TEST_TRACE_RELAY_FILE "src/test/circpad_sim_test_trace_relay.inc"
@@ -192,34 +194,69 @@ static int64_t sim_latency_mean;
 #define MONOTIME_MOCK_START (monotime_absolute_nsec()+\
                                TOR_NSEC_PER_USEC*TOR_USEC_PER_SEC)
 
-
-// FIXME: make into args or replaceable, get the path from the test
-// or something like that
-const char *client_trace_loc = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
-const char *relay_trace_loc = CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
-
 // the core working queues of traces, input and output
 static smartlist_t *client_trace = NULL;
 static smartlist_t *relay_trace = NULL;
 static smartlist_t *out_client_trace = NULL;
 static smartlist_t *out_relay_trace = NULL;
 
-// debug flags
-static int circpad_sim_debug_n = 0;
-static int circpad_sim_debug_n_max = 40;
+static void
+circpad_sim_print_trace(smartlist_t *trace, int n)
+{
+  smartlist_t* tmp = smartlist_new();
+  for (int i = 0; i < n && i < smartlist_len(trace); i++) {
+    circpad_sim_event *ev = circpad_sim_pop_event(trace);
+    smartlist_add(tmp, ev);
+    log_debug(LD_CIRC, "%012ld %s", ev->timestamp, ev->event);
+  }
+  SMARTLIST_FOREACH(tmp, 
+                    circpad_sim_event *, ev, circpad_sim_push_event(ev, trace));
+  smartlist_free(tmp);
+}
+
+static void
+circpad_sim_print_combined_trace(smartlist_t *t1, smartlist_t *t2, int n)
+{
+  smartlist_t *t1_tmp = smartlist_new(), *t2_tmp = smartlist_new();
+  for (int i = 0; i < n; i++) {
+    circpad_sim_event *ev;
+    if (circpad_sim_peak_event(t1)->timestamp < circpad_sim_peak_event(t2)->timestamp) {
+      ev = circpad_sim_pop_event(t1);
+      log_debug(LD_CIRC, "%012ld c %s", ev->timestamp, ev->event);
+      smartlist_add(t1_tmp, ev);
+    } else {
+      ev = circpad_sim_pop_event(t2);
+      log_debug(LD_CIRC, "%012ld r %s", ev->timestamp, ev->event);
+      smartlist_add(t2_tmp, ev);
+    }
+  }
+  SMARTLIST_FOREACH(t1_tmp, 
+                    circpad_sim_event *, ev, circpad_sim_push_event(ev, t1));
+  SMARTLIST_FOREACH(t2_tmp, 
+                    circpad_sim_event *, ev, circpad_sim_push_event(ev, t2));
+  smartlist_free(t1_tmp);
+  smartlist_free(t2_tmp);
+}
 
 void
 test_circuitpadding_sim_main(void *arg)
 {
   (void)arg;
+  if(circpad_sim_arg_client_trace && circpad_sim_arg_relay_trace) {
+    log_info(LD_CIRC, "got args %s %s", circpad_sim_arg_client_trace, circpad_sim_arg_relay_trace);
+  } else {
+    log_info(LD_CIRC, "no args, testing mode");
+    circpad_sim_arg_client_trace = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
+    circpad_sim_arg_relay_trace =  CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
+  }
 
   client_trace = smartlist_new();
   relay_trace = smartlist_new();
   out_client_trace = smartlist_new();
   out_relay_trace = smartlist_new();
 
-  tt_assert(get_circpad_trace(client_trace_loc, client_trace));
-  tt_assert(get_circpad_trace(relay_trace_loc, relay_trace));
+  tt_assert(get_circpad_trace(circpad_sim_arg_client_trace, client_trace));
+  tt_assert(get_circpad_trace(circpad_sim_arg_relay_trace, relay_trace));
   int client_trace_start_len = smartlist_len(client_trace);
   int relay_trace_start_len = smartlist_len(relay_trace);
 
@@ -271,28 +308,11 @@ test_circuitpadding_sim_main(void *arg)
   *    triggers.
   */
 
-  printf("\n\n ## in_client_trace ##\n");
-  smartlist_t* tmp = smartlist_new();
-  for (int i = 0; i < 12; i++) {
-    circpad_sim_event *ev = circpad_sim_pop_event(client_trace);
-    smartlist_add(tmp, ev);
-    printf("%012ld %s\n", ev->timestamp, ev->event);
-  }
-  SMARTLIST_FOREACH(tmp, 
-                    circpad_sim_event *, ev, circpad_sim_push_event(ev, client_trace));
-  smartlist_free(tmp);
+  log_debug(LD_CIRC, "## in_client_trace ##");
+  circpad_sim_print_trace(client_trace, 12);
   
-  printf("\n\n ## in_relay_trace ##\n");
-  tmp = smartlist_new();
-  for (int i = 0; i < 12; i++) {
-    circpad_sim_event *ev = circpad_sim_pop_event(relay_trace);
-    smartlist_add(tmp, ev);
-    printf("%012ld %s\n", ev->timestamp, ev->event);
-  }
-  SMARTLIST_FOREACH(tmp, 
-                    circpad_sim_event *, ev, circpad_sim_push_event(ev, relay_trace));
-  smartlist_free(tmp);
-  printf("%s\n", "");
+  log_debug(LD_CIRC, "## in_relay_trace ##");
+  circpad_sim_print_trace(relay_trace, 12);
 
   circpad_sim_estimate_latency();
 
@@ -304,27 +324,14 @@ test_circuitpadding_sim_main(void *arg)
 
   // FIXME: sanity check on resulting trace
   
-  printf("\nclient input trace has %d events, output %d events\n", 
+  log_info(LD_CIRC, "client input trace has %d events, output %d events", 
     client_trace_start_len, smartlist_len(out_client_trace));
-  printf("relay input trace has %d events, output %d events\n", 
+  log_info(LD_CIRC, "relay input trace has %d events, output %d events", 
     relay_trace_start_len, smartlist_len(out_relay_trace));
 
-  printf("\n\n ## out combined trace ##\n");
-  int n = 20;
-  for (int i = 0; i < n; i++) {
-    circpad_sim_event *ev;
-   if (circpad_sim_peak_event(out_client_trace)->timestamp < 
-      circpad_sim_peak_event(out_relay_trace)->timestamp) {
-        ev = circpad_sim_pop_event(out_client_trace);
-        printf("%012ld c %s\n", ev->timestamp, ev->event);
-      } else {
-        ev = circpad_sim_pop_event(out_relay_trace);
-        printf("%012ld r %s\n", ev->timestamp, ev->event);
-      }
-      tor_free(ev);
-  }
+  log_debug(LD_CIRC, "## out combined trace ##");
+  circpad_sim_print_combined_trace(out_client_trace, out_relay_trace, 20);
 
-  printf("\n");
   done:
     free_fake_origin_circuit(TO_ORIGIN_CIRCUIT(client_side));
     circuitmux_detach_all_circuits(dummy_channel.cmux, NULL);
@@ -636,14 +643,11 @@ circpad_event_callback_mock(const char *event,
   // relay-side has identifier 0, clients > 0
   if (circuit_identifier) {
     circpad_sim_push_event(e, out_client_trace);
-    if (circpad_sim_debug_n < circpad_sim_debug_n_max)
-      printf("%012ld c %s\n", e->timestamp, e->event);
+    log_debug(LD_CIRC, "%012ld c %s", e->timestamp, e->event);
   } else {
     circpad_sim_push_event(e, out_relay_trace);
-    if (circpad_sim_debug_n < circpad_sim_debug_n_max)
-      printf("%012ld r %s\n", e->timestamp, e->event);
+    log_debug(LD_CIRC, "%012ld r %s", e->timestamp, e->event);
   }
-  circpad_sim_debug_n++;
 
   // we always move the timer ahead by the least possible after each event
   // to keep an accurate order for newly injected simulated events
@@ -785,7 +789,7 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
     e->timestamp = (curr_mocked_time-actual_mocked_monotime_start) + 
                    circpad_sim_sample_latency();
     circpad_sim_push_event(e, relay_trace);
-    printf("%012ld INTERNAL_RELAY %s to relay_trace at %ld\n", 
+    log_debug(LD_CIRC, "%012ld mock relay %s to relay_trace at %ld", 
       curr_mocked_time-actual_mocked_monotime_start, e->event, e->timestamp);
   } else if (circ == relay_side) {
     tt_int_op(cell_direction, OP_EQ, CELL_DIRECTION_IN);
@@ -804,7 +808,7 @@ circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
     e->timestamp = (curr_mocked_time-actual_mocked_monotime_start) + 
                    circpad_sim_sample_latency();
     circpad_sim_push_event(e, client_trace);
-    printf("%012ld INTERNAL_RELAY %s to client_trace at %ld\n", 
+    log_debug(LD_CIRC, "%012ld mock relay %s to client_trace at %ld", 
       curr_mocked_time-actual_mocked_monotime_start, e->event, e->timestamp);
   }
 

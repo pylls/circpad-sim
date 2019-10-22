@@ -15,6 +15,31 @@ This is very much a *work in progress*, not ready for use just yet.
 - `make`
 - `./src/test/test circuitpadding_sim/..`
 
+## Usage
+To run with a client and relay trace of your choice:
+
+`./src/test/test --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/..`
+
+Adding the `--debug` flag provides a lot of output:
+
+`./src/test/test --debug --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/..`
+
+To get the simulated client and relay traces, first filter for
+`circpad_event_callback_mock()`, e.g., using a pipe and grep: 
+
+`./src/test/test --debug --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/.. | grep circpad_event_callback_mock`
+
+This gives output of the following format:
+
+```
+Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008839685843 r circpad_cell_event_nonpadding_sent
+Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008839696482 r circpad_cell_event_nonpadding_sent
+Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008839706401 r circpad_cell_event_nonpadding_sent
+Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008856522970 c circpad_cell_event_nonpadding_received
+Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008856585487 c circpad_cell_event_nonpadding_received
+```
+The `r` is for the relay trace and the `c` for the client trace.
+
 ## Sketchpad during development
 Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)
 

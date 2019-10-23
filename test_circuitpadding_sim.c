@@ -138,9 +138,15 @@ static int circuit_package_relay_cell_mock(cell_t *cell, circuit_t *circ,
 
 // The circuidpadding framework is patched for the simulator to generate events
 // to the torlog as input to the simulator. Here we re-use the same function to
-// generate the output of the simulator into two queues. 
+// collect the output of the simulator into two queues. 
 static void circpad_event_callback_mock(const char *event, 
                                         uint32_t circuit_identifier);
+// Once we've collected the output, the end of the simulation calls two
+// functions to output the client and relay traces using Tor's logging
+// framework. The framework prefixes each line with the function it's called
+// from, so this way it's easy to "grep" for the respective output.
+static void circpad_sim_results_trace_relay(void);
+static void circpad_sim_results_trace_client(void);
 
 // mocked functions and helpers to get the circuitpadding framework to work in
 // the unit testing framework, 99% copied directly from test_circuitpadding.c
@@ -238,6 +244,28 @@ circpad_sim_print_combined_trace(smartlist_t *t1, smartlist_t *t2, int n)
   smartlist_free(t2_tmp);
 }
 
+static void
+circpad_sim_results_trace_client(void)
+{
+  circpad_sim_event *event;
+  while (smartlist_len(out_client_trace)) {
+    event = circpad_sim_pop_event(out_client_trace);
+    log_info(LD_CIRC, "%012ld %s", event->timestamp, event->event);
+    circpad_sim_event_free(event);
+  }
+}
+
+static void
+circpad_sim_results_trace_relay(void)
+{
+  circpad_sim_event *event;
+  while (smartlist_len(out_relay_trace)) {
+    event = circpad_sim_pop_event(out_relay_trace);
+    log_info(LD_CIRC, "%012ld %s", event->timestamp, event->event);
+    circpad_sim_event_free(event);
+  }
+}
+
 void
 test_circuitpadding_sim_main(void *arg)
 {
@@ -308,11 +336,12 @@ test_circuitpadding_sim_main(void *arg)
   *    triggers.
   */
 
-  log_debug(LD_CIRC, "## in_client_trace ##");
-  circpad_sim_print_trace(client_trace, 12);
-  
-  log_debug(LD_CIRC, "## in_relay_trace ##");
-  circpad_sim_print_trace(relay_trace, 12);
+  if (get_min_log_level() == LOG_DEBUG) {
+    log_debug(LD_CIRC, "## first 20 of in_client_trace ##");
+    circpad_sim_print_trace(client_trace, 20);
+    log_debug(LD_CIRC, "## first 20 of in_relay_trace ##");
+    circpad_sim_print_trace(relay_trace, 20);
+  }
 
   circpad_sim_estimate_latency();
 
@@ -329,8 +358,14 @@ test_circuitpadding_sim_main(void *arg)
   log_info(LD_CIRC, "relay input trace has %d events, output %d events", 
     relay_trace_start_len, smartlist_len(out_relay_trace));
 
-  log_debug(LD_CIRC, "## out combined trace ##");
-  circpad_sim_print_combined_trace(out_client_trace, out_relay_trace, 20);
+  if (get_min_log_level() == LOG_DEBUG) {
+    log_debug(LD_CIRC, "## out combined trace ##");
+    circpad_sim_print_combined_trace(out_client_trace, out_relay_trace, 20);
+  }
+
+  // print results
+  circpad_sim_results_trace_client();
+  circpad_sim_results_trace_relay();
 
   done:
     free_fake_origin_circuit(TO_ORIGIN_CIRCUIT(client_side));

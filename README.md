@@ -25,21 +25,22 @@ Adding the `--debug` flag provides a lot of output:
 
 `./src/test/test --debug --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/..`
 
-To get the simulated client and relay traces, first filter for
-`circpad_event_callback_mock()`, e.g., using a pipe and grep: 
+The `--info` flag is enough to get the resulting simulated traces as part of the
+output. To get the client traces, filter by `circpad_sim_results_trace_client`
+and for the relay traces filter by `circpad_sim_results_trace_relay`. Below
+shows an example of client traces:
 
-`./src/test/test --debug --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/.. | grep circpad_event_callback_mock`
+`./src/test/test --info --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/.. | grep circpad_sim_results_trace_client`
 
 This gives output of the following format:
 
 ```
-Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008839685843 r circpad_cell_event_nonpadding_sent
-Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008839696482 r circpad_cell_event_nonpadding_sent
-Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008839706401 r circpad_cell_event_nonpadding_sent
-Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008856522970 c circpad_cell_event_nonpadding_received
-Oct 22 23:59:14.036 [debug] circpad_event_callback_mock(): 008856585487 c circpad_cell_event_nonpadding_received
+Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000000000000 circpad_machine_event_circ_added_hop
+Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000000084278 circpad_cell_event_nonpadding_sent
+Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000080279314 circpad_cell_event_nonpadding_received
+Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000080577754 circpad_machine_event_circ_added_hop
+Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000080635312 circpad_cell_event_nonpadding_sent
 ```
-The `r` is for the relay trace and the `c` for the client trace.
 
 ## Sketchpad during development
 Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)

@@ -1,18 +1,124 @@
 diff --git a/src/core/or/circuitpadding.c b/src/core/or/circuitpadding.c
-index 178f066ba..0e7e10c38 100644
+index 178f066ba..76bbba25c 100644
 --- a/src/core/or/circuitpadding.c
 +++ b/src/core/or/circuitpadding.c
-@@ -3094,3 +3094,10 @@ circpad_string_to_machine(const char *str)
+@@ -1791,6 +1791,10 @@ circpad_estimate_circ_rtt_on_send(circuit_t *circ,
+ void
+ circpad_cell_event_nonpadding_sent(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_nonpadding_sent", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
++
+   /* Update global cell count */
+   circpad_global_nonpadding_sent++;
+ 
+@@ -1881,6 +1885,10 @@ circpad_check_received_cell(cell_t *cell, circuit_t *circ,
+ void
+ circpad_cell_event_nonpadding_received(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_nonpadding_received", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
++
+   FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
+     /* First, update any timestamps */
+     on_circ->padding_info[i]->last_cell_time_sec = approx_time();
+@@ -1902,6 +1910,10 @@ circpad_cell_event_nonpadding_received(circuit_t *on_circ)
+ void
+ circpad_cell_event_padding_sent(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_padding_sent", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
++
+   FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
+     /* Check to see if we've run out of tokens for this state already,
+      * and if not, check for other state transitions */
+@@ -1928,6 +1940,10 @@ circpad_cell_event_padding_sent(circuit_t *on_circ)
+ void
+ circpad_cell_event_padding_received(circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_cell_event_padding_received", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
++
+   /* identical to padding sent */
+   FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
+     on_circ->padding_info[i]->last_cell_time_sec = approx_time();
+@@ -2196,6 +2212,9 @@ circpad_add_matching_machines(origin_circuit_t *on_circ,
+ void
+ circpad_machine_event_circ_added_hop(origin_circuit_t *on_circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_added_hop",
++                         on_circ->global_identifier);
++
+   /* Since our padding conditions do not specify a max_hops,
+    * all we can do is add machines here */
+   circpad_add_matching_machines(on_circ, origin_padding_machines);
+@@ -2210,6 +2229,8 @@ circpad_machine_event_circ_added_hop(origin_circuit_t *on_circ)
+ void
+ circpad_machine_event_circ_built(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_built",
++                         circ->global_identifier);
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2223,6 +2244,9 @@ circpad_machine_event_circ_built(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_purpose_changed(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_purpose_changed",
++                         circ->global_identifier);
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2237,6 +2261,9 @@ circpad_machine_event_circ_purpose_changed(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_has_no_relay_early(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_has_no_relay_early",
++                         circ->global_identifier);
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2252,6 +2279,9 @@ circpad_machine_event_circ_has_no_relay_early(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_has_streams(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_has_streams",
++                         circ->global_identifier);
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -2267,6 +2297,9 @@ circpad_machine_event_circ_has_streams(origin_circuit_t *circ)
+ void
+ circpad_machine_event_circ_has_no_streams(origin_circuit_t *circ)
+ {
++  circpad_event_callback("circpad_machine_event_circ_has_no_streams",
++                         circ->global_identifier);
++
+   circpad_shutdown_old_machines(circ);
+   circpad_add_matching_machines(circ, origin_padding_machines);
+ }
+@@ -3041,6 +3074,13 @@ circpad_free_all(void)
+   }
  }
  
- #endif /* 0 */
-+
 +MOCK_IMPL(void,
 +circpad_event_callback,(const char *event, uint32_t circuit_identifier))
 +{
 +  (void)event;
 +  (void)circuit_identifier;
 +}
++
+ /* Serialization */
+ // TODO: Should we use keyword=value here? Are there helpers for that?
+ #if 0
 diff --git a/src/core/or/circuitpadding.h b/src/core/or/circuitpadding.h
 index a5c46b439..75672b139 100644
 --- a/src/core/or/circuitpadding.h

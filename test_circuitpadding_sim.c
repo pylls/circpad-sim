@@ -271,9 +271,9 @@ test_circuitpadding_sim_main(void *arg)
 {
   (void)arg;
   if(circpad_sim_arg_client_trace && circpad_sim_arg_relay_trace) {
-    log_info(LD_CIRC, "got args %s %s", circpad_sim_arg_client_trace, circpad_sim_arg_relay_trace);
+    log_notice(LD_CIRC, "got args %s %s", circpad_sim_arg_client_trace, circpad_sim_arg_relay_trace);
   } else {
-    log_info(LD_CIRC, "no args, testing mode");
+    log_notice(LD_CIRC, "no args, testing mode");
     circpad_sim_arg_client_trace = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
     circpad_sim_arg_relay_trace =  CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
   }
@@ -353,9 +353,9 @@ test_circuitpadding_sim_main(void *arg)
 
   // FIXME: sanity check on resulting trace
   
-  log_info(LD_CIRC, "client input trace has %d events, output %d events", 
+  log_notice(LD_CIRC, "client input trace has %d events, output %d events", 
     client_trace_start_len, smartlist_len(out_client_trace));
-  log_info(LD_CIRC, "relay input trace has %d events, output %d events", 
+  log_notice(LD_CIRC, "relay input trace has %d events, output %d events", 
     relay_trace_start_len, smartlist_len(out_relay_trace));
 
   if (get_min_log_level() == LOG_DEBUG) {

@@ -13,7 +13,15 @@ ap.add_argument("-t", required=False,
 ap.add_argument("-p", required=False, type=bool,
     help="don't store results in output, but in one pickle file")
 
-# FIXME: consider having a noise parameter to randomize the environment
+# FIXME: consider having a noise parameter to randomize the environment 
+
+# FIXME: we have to randomize the client traces when producing the WF output,
+# because otherwise we run the risk of having time-based classifiers getting too
+# accurate timings from the client ("+mikeperry | pulls: if the framework allows
+# this as the default/easiest way to use it, that is what attack papers will
+# use.. and then they will conclude these attacks are indefensible because
+# (surprise) deep learning is able to classify pages based on CPU and memory
+# usage timings on a local machine (no surprise, really)")
 args = vars(ap.parse_args())
 
 def main():

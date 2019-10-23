@@ -1,3 +1,12 @@
+#ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
+/* Some of the ASM here is very long strings. */
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Woverlength-strings"
+#else
+#pragma GCC diagnostic ignored "-Woverlength-strings"
+#endif
+#endif
+
 static char* CIRCPAD_SIM_TEST_TRACE_CLIENT_DATA =
 "0000000000000000 circpad_machine_event_circ_added_hop\n"
 "0000000000084278 circpad_cell_event_nonpadding_sent\n"

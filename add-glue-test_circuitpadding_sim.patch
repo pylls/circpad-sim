@@ -6,8 +6,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_nonpadding_sent(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_nonpadding_sent", 
-+                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++  circpad_event_callback("circpad_cell_event_nonpadding_sent",
++                         CIRCUIT_IS_ORIGIN(on_circ) ?
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    /* Update global cell count */
@@ -17,8 +17,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_nonpadding_received(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_nonpadding_received", 
-+                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++  circpad_event_callback("circpad_cell_event_nonpadding_received",
++                         CIRCUIT_IS_ORIGIN(on_circ) ?
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
@@ -28,8 +28,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_padding_sent(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_padding_sent", 
-+                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++  circpad_event_callback("circpad_cell_event_padding_sent",
++                         CIRCUIT_IS_ORIGIN(on_circ) ?
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
@@ -39,8 +39,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_padding_received(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_padding_received", 
-+                         CIRCUIT_IS_ORIGIN(on_circ) ? 
++  circpad_event_callback("circpad_cell_event_padding_received",
++                         CIRCUIT_IS_ORIGIN(on_circ) ?
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    /* identical to padding sent */

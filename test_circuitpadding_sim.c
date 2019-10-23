@@ -276,6 +276,10 @@ test_circuitpadding_sim_main(void *arg)
     log_notice(LD_CIRC, "no args, testing mode");
     circpad_sim_arg_client_trace = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
     circpad_sim_arg_relay_trace =  CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
+
+    // mocked machines for testing, enabling the simulator to test itself
+    MOCK(helper_add_client_machine, helper_add_client_machine_mock);
+    MOCK(helper_add_relay_machine, helper_add_relay_machine_mock);
   }
 
   client_trace = smartlist_new();
@@ -288,10 +292,6 @@ test_circuitpadding_sim_main(void *arg)
   int client_trace_start_len = smartlist_len(client_trace);
   int relay_trace_start_len = smartlist_len(relay_trace);
 
-  // mocked machines for testing, enabling the simulator to test itself
-  MOCK(helper_add_client_machine, helper_add_client_machine_mock);
-  MOCK(helper_add_relay_machine, helper_add_relay_machine_mock);
-  
   // we hook all instrumented output of the framework to create our output
   MOCK(circpad_event_callback, circpad_event_callback_mock);
 

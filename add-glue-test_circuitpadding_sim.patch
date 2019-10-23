@@ -1,5 +1,20 @@
+diff --git a/src/core/or/circuitpadding.c b/src/core/or/circuitpadding.c
+index 178f066ba..0e7e10c38 100644
+--- a/src/core/or/circuitpadding.c
++++ b/src/core/or/circuitpadding.c
+@@ -3094,3 +3094,10 @@ circpad_string_to_machine(const char *str)
+ }
+ 
+ #endif /* 0 */
++
++MOCK_IMPL(void,
++circpad_event_callback,(const char *event, uint32_t circuit_identifier))
++{
++  (void)event;
++  (void)circuit_identifier;
++}
 diff --git a/src/core/or/circuitpadding.h b/src/core/or/circuitpadding.h
-index 683ac95de..ea34dacdf 100644
+index a5c46b439..75672b139 100644
 --- a/src/core/or/circuitpadding.h
 +++ b/src/core/or/circuitpadding.h
 @@ -750,6 +750,11 @@ circpad_decision_t circpad_send_padding_cell_for_callback(
@@ -59,7 +74,7 @@ index 76c4c0ec7..ac644e15f 100644
  extern struct testcase_t checkdir_tests[];
  extern struct testcase_t circuitbuild_tests[];
 diff --git a/src/test/testing_common.c b/src/test/testing_common.c
-index ff6028ddb..def43a107 100644
+index e14a16940..e24d253ae 100644
 --- a/src/test/testing_common.c
 +++ b/src/test/testing_common.c
 @@ -28,6 +28,7 @@
@@ -70,13 +85,13 @@ index ff6028ddb..def43a107 100644
  
  #include <stdio.h>
  #ifdef HAVE_FCNTL_H
-@@ -283,6 +284,15 @@ main(int c, const char **v)
+@@ -286,6 +287,15 @@ main(int c, const char **v)
        loglevel = LOG_DEBUG;
      } else if (!strcmp(v[i], "--accel")) {
        accel_crypto = 1;
 +    } else if (!strcmp(v[i], "--circpadsim")) {
 +      if (i + 3 > c) {
-+        printf("not enough arguments for --circpadsim, expect %s %s, exiting.\n", 
++        printf("not enough arguments for --circpadsim, expect %s %s, exiting.\n",
 +          v[0], " --circpadsim <client-trace> <relay-trace>");
 +        return 1;
 +      }

@@ -1,5 +1,4 @@
 #ifdef HAVE_CFLAG_WOVERLENGTH_STRINGS
-/* Some of the ASM here is very long strings. */
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Woverlength-strings"
 #else
@@ -7,7 +6,7 @@
 #endif
 #endif
 
-static char* CIRCPAD_SIM_TEST_TRACE_CLIENT_DATA =
+static const char* CIRCPAD_SIM_TEST_TRACE_CLIENT_DATA =
 "0000000000000000 circpad_machine_event_circ_added_hop\n"
 "0000000000084278 circpad_cell_event_nonpadding_sent\n"
 "0000000080279314 circpad_cell_event_nonpadding_received\n"
@@ -5324,7 +5323,7 @@ static char* CIRCPAD_SIM_TEST_TRACE_CLIENT_DATA =
 "0000009396742689 circpad_cell_event_nonpadding_received\n"
 "0000009396820205 circpad_cell_event_nonpadding_received\n";
 
-static char* CIRCPAD_SIM_TEST_TRACE_RELAY_DATA =
+static const char* CIRCPAD_SIM_TEST_TRACE_RELAY_DATA =
 "0000000040181795 circpad_cell_event_nonpadding_received\n"
 "0000000040181797 circpad_cell_event_nonpadding_sent\n"
 "0000000120732829 circpad_cell_event_nonpadding_received\n"

@@ -30,11 +30,11 @@
 #include "feature/nodelist/networkstatus_st.h"
 #include "feature/nodelist/node_st.h"
 
+// arguments to the simulation from testing_common.c
 #include "test/circuitpadding_sim_arg.h"
 
-// our testing trace if none is provided
-#define CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE "src/test/circpad_sim_test_trace_client.inc"
-#define CIRCPAD_SIM_TEST_TRACE_RELAY_FILE "src/test/circpad_sim_test_trace_relay.inc"
+// testing traces if no arguments are provided
+#include "circuitpadding_sim_test_traces.inc"
 
 // The circuitpadding framework of Tor is patched for our simulation to generate
 // events that are logged to the torlog and later extracted into circpadtraces.
@@ -270,14 +270,12 @@ void
 test_circuitpadding_sim_main(void *arg)
 {
   (void)arg;
-  if(circpad_sim_arg_client_trace && circpad_sim_arg_relay_trace) {
-    log_notice(LD_CIRC, "got args %s %s", circpad_sim_arg_client_trace, circpad_sim_arg_relay_trace);
+  if (circpad_sim_arg_client_trace && circpad_sim_arg_relay_trace) {
+    log_notice(LD_CIRC, "got args %s %s",
+               circpad_sim_arg_client_trace, circpad_sim_arg_relay_trace);
   } else {
-    log_notice(LD_CIRC, "no args, testing mode");
-    circpad_sim_arg_client_trace = CIRCPAD_SIM_TEST_TRACE_CLIENT_FILE;
-    circpad_sim_arg_relay_trace =  CIRCPAD_SIM_TEST_TRACE_RELAY_FILE;
-
     // mocked machines for testing, enabling the simulator to test itself
+    log_notice(LD_CIRC, "no args, testing mode");
     MOCK(helper_add_client_machine, helper_add_client_machine_mock);
     MOCK(helper_add_relay_machine, helper_add_relay_machine_mock);
   }
@@ -693,7 +691,15 @@ int
 get_circpad_trace(const char* loc, smartlist_t* trace)
 {
   char *line, *circpad_sim_trace_buffer, *circpad_sim_trace_read_rest;
-  circpad_sim_trace_buffer = read_file_to_str(loc, 0, NULL);
+  if (circpad_sim_arg_client_trace && circpad_sim_arg_relay_trace) {
+    circpad_sim_trace_buffer = read_file_to_str(loc, 0, NULL);
+  } else {
+    if (trace == client_trace)
+      circpad_sim_trace_buffer = tor_strdup(CIRCPAD_SIM_TEST_TRACE_CLIENT_DATA);
+    else
+      circpad_sim_trace_buffer = tor_strdup(CIRCPAD_SIM_TEST_TRACE_RELAY_DATA);
+
+  }
   circpad_sim_trace_read_rest = circpad_sim_trace_buffer;
 
   while (1) {

@@ -6,8 +6,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_nonpadding_sent(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_nonpadding_sent",
-+                         CIRCUIT_IS_ORIGIN(on_circ) ?
++  circpad_event_callback("circpad_cell_event_nonpadding_sent", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    /* Update global cell count */
@@ -17,8 +17,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_nonpadding_received(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_nonpadding_received",
-+                         CIRCUIT_IS_ORIGIN(on_circ) ?
++  circpad_event_callback("circpad_cell_event_nonpadding_received", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
@@ -28,8 +28,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_padding_sent(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_padding_sent",
-+                         CIRCUIT_IS_ORIGIN(on_circ) ?
++  circpad_event_callback("circpad_cell_event_padding_sent", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    FOR_EACH_ACTIVE_CIRCUIT_MACHINE_BEGIN(i, on_circ) {
@@ -39,8 +39,8 @@ index 178f066ba..76bbba25c 100644
  void
  circpad_cell_event_padding_received(circuit_t *on_circ)
  {
-+  circpad_event_callback("circpad_cell_event_padding_received",
-+                         CIRCUIT_IS_ORIGIN(on_circ) ?
++  circpad_event_callback("circpad_cell_event_padding_received", 
++                         CIRCUIT_IS_ORIGIN(on_circ) ? 
 +                         TO_ORIGIN_CIRCUIT(on_circ)->global_identifier : 0);
 +
    /* identical to padding sent */
@@ -136,7 +136,7 @@ index a5c46b439..75672b139 100644
  STATIC void  machine_spec_free_(circpad_machine_spec_t *m);
  #define machine_spec_free(chan) \
 diff --git a/src/test/include.am b/src/test/include.am
-index d8e25dea9..650f53f3e 100644
+index d8e25dea9..b9b7ab840 100644
 --- a/src/test/include.am
 +++ b/src/test/include.am
 @@ -118,6 +118,7 @@ src_test_test_SOURCES += \
@@ -147,11 +147,12 @@ index d8e25dea9..650f53f3e 100644
  	src/test/test_channeltls.c \
  	src/test/test_checkdir.c \
  	src/test/test_circuitlist.c \
-@@ -338,6 +339,7 @@ src_test_test_timers_LDFLAGS = $(src_test_test_LDFLAGS)
+@@ -338,6 +339,8 @@ src_test_test_timers_LDFLAGS = $(src_test_test_LDFLAGS)
  
  # ADD_C_FILE: INSERT HEADERS HERE.
  noinst_HEADERS+= \
 +	src/test/circuitpadding_sim_arg.h \
++	src/test/circuitpadding_sim_test_traces.inc \
  	src/test/fakechans.h \
  	src/test/hs_test_helpers.h \
  	src/test/log_test_helpers.h \

@@ -6,9 +6,7 @@ This is very much a *work in progress*, not ready for use just yet.
 - clone this repo, cd this directory
 - `git clone https://git.torproject.org/tor.git`
 - `cp add-glue-test_circuitpadding_sim.patch tor/`
-- `cp test_circuitpadding_sim.c tor/src/test/`
-- - `cp circuitpadding_sim_arg.h tor/src/test/`
-- `cp *trace*inc tor/src/test/`
+- `cp *circuitpadding_sim*.c tor/src/test/`
 - `cd tor`
 - `git apply add-test_circuitpadding_sim.patch`
 - `./autogen.sh`

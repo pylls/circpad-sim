@@ -65,8 +65,7 @@ Extract the traces from the log and then simulate the relay traces:
 ```
 
 ```
-mkdir example
-mkdir example/log example/client example/relay
+mkdir example example/log example/client example/relay
 cd tor
 ./src/test/test circuitpadding_sim/.. --circpadsim ../data/circpadtrace-example/eff.org.log ../data/sim-relay-circpadtrace-example/eff.org.log --info > ../example/log/eff.log
 cd ..

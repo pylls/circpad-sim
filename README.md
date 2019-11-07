@@ -3,15 +3,8 @@ A minimal simulator for padding machines in Tor's circuit padding framework.
 This is very much a *work in progress*, not ready for use just yet. 
 
 ## Setup
-- clone this repo, cd this directory
-- `git clone https://git.torproject.org/tor.git`
-- `cp *circuitpadding_sim* tor/src/test/`
-- `cd tor`
-- `git apply ../add-simulator-glue.patch`
-- `./autogen.sh`
-- `./configure`
-- `make`
-- `./src/test/test circuitpadding_sim/..`
+- git clone https://github.com/mikeperry-tor/tor/commits/circpad-sim-squashed2
+- build tor as normal
 
 ## Usage
 To run with a client and relay trace of your choice:
@@ -86,12 +79,9 @@ value to encourage machines to be conservative in their timers. About 1/4 of the
 RRT is the time it takes for a (non-)padding cell to traverse to/from the client
 to/from the relay.
 
-### input collection
-To collect one trace from a modified TB:
-- do setup steps described above
-- copy `apply add-torlog-output.patch`to the tor directory
-- git apply add-torlog-output.patch`
-- `make`
+### Trace collection
+This is the lazy way with a simulated relay trace. To collect one trace from a
+modified TB:
 - copy `src/app/tor` and replace `tor` at `Browser/TorBrowser/Tor` of TB
 - in torrc of TB (`TorBrowser/Data/Tor`), add ``Log [circ]info notice stdout''
 - run TB with `/Browser/start-tor-browser --log hello.log`

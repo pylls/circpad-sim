@@ -72,7 +72,9 @@ mkdir example example/log example/client example/relay
 ```
 
 If you compare `example/client/eff.log` and
-`data/circpadtrace-example/eff.org.log` they should be close to identical.
+`data/circpadtrace-example/eff.org.log` they should be identical. Note that the
+simulated relay traces may differ a bit due to the simulated latency between
+client and relay.
 
 ## Sketchpad during development
 Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)

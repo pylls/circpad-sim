@@ -100,7 +100,7 @@ now, the simulator does one test per trace. For parallelism, run the�
 many times. Likely workflow will be dominated by evaluation, including deep
 learning training.
 
-### Limitations
+### Limitations
 Unfortunately, timers for sending padding cells are unreliable, 0-10 ms extra
 delay [#31653](https://trac.torproject.org/projects/tor/ticket/31653). We
 currently only document how to simulate traces from a relay, no collection.

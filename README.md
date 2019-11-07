@@ -3,26 +3,42 @@ A minimal simulator for padding machines in Tor's circuit padding framework.
 This is very much a *work in progress*, not ready for use just yet. 
 
 ## Setup
-- git clone https://github.com/mikeperry-tor/tor.git 
-- cd tor
-- git checkout -t origin/circpad-sim-v2
-- build tor as normal
+The branch of the simulator is kept in another repo:
 
-## Usage
-To run with a client and relay trace of your choice:
+```
+git clone https://github.com/mikeperry-tor/tor.git
+cd tor
+git checkout -t origin/circpad-sim-v2
+```
 
-`./src/test/test --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/..`
+Then build tor as normal. The simulator is tested as part of tor's unit testing
+framework, you can check for it as follows:
 
-Adding the `--debug` flag provides a lot of output:
+```
+$ ./src/test/test circuitpadding_sim/.. 
+circuitpadding_sim/circuitpadding_sim_main: [forking] OK
+1 tests ok.  (0 skipped)
+```
 
-`./src/test/test --debug --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/..`
+## Example Usage
+To run with a client and relay trace from `tor/`:
+
+```
+./src/test/test circuitpadding_sim/.. --circpadsim ../data/circpadtrace-example/eff.org.log ../data/sim-relay-circpadtrace-example/eff.org.log
+```
+
+Adding the `--debug` flag provides extra torlog output:
+
+```
+./src/test/test circuitpadding_sim/.. --circpadsim ../data/circpadtrace-example/eff.org.log ../data/sim-relay-circpadtrace-example/eff.org.log --debug
+```
 
 The `--info` flag is enough to get the resulting simulated traces as part of the
-output. To get the client traces, filter by `circpad_sim_results_trace_client`
-and for the relay traces filter by `circpad_sim_results_trace_relay`. Below
-shows an example of client traces:
+output. To get the resulting simulated client output, filter by `circpad_trace`:
 
-`./src/test/test --info --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/.. | grep circpad_trace_event`
+```
+./src/test/test circuitpadding_sim/.. --circpadsim ../data/circpadtrace-example/eff.org.log ../data/sim-relay-circpadtrace-example/eff.org.log --info | grep circpad_trace
+```
 
 This gives output of the following format:
 
@@ -33,6 +49,33 @@ Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1731854076 source=cl
 Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1731901343 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_sent
 Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1952113125 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_received
 ```
+
+There are helper python scripts in `circpadtrace/`. Below shows how to use the
+scripts to recreate some of the example data in the repo.
+
+Cleanup:
+```
+rm data/circpadtrace-example/* data/sim-relay-circpadtrace-example/*
+```
+
+Extract the traces from the log and then simulate the relay traces:
+```
+./circpadtrace/torlog2circpadtrace.py -i data/torlog-example/ -o data/circpadtrace-example/
+./circpadtrace/simrelaytrace.py -i data/circpadtrace-example/ -o data/sim-relay-circpadtrace-example/
+```
+
+```
+mkdir example
+mkdir example/log example/client example/relay
+cd tor
+./src/test/test circuitpadding_sim/.. --circpadsim ../data/circpadtrace-example/eff.org.log ../data/sim-relay-circpadtrace-example/eff.org.log --info > ../example/log/eff.log
+cd ..
+./circpadtrace/torlog2circpadtrace.py -i example/log/ -o example/client/
+./circpadtrace/simrelaytrace.py -i example/client/ -o example/relay/
+```
+
+If you compare `example/client/eff.log` and
+`data/circpadtrace-example/eff.org.log` they should be close to identical.
 
 ## Sketchpad during development
 Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)

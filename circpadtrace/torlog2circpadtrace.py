@@ -16,12 +16,16 @@ ap.add_argument('--ip', default=False, action='store_true',
 args = vars(ap.parse_args())
 
 CONST_OTHER_MAX_EVENTS_WARNING = 100
-CONST_CIRCPAD_EVENT_STR = "circpad_event_callback():"
+CONST_CIRCPAD_TRACE = "circpad_trace_event"
+CONST_CIRCPAD_TRACE_TIMESTAMP = "timestamp="
+CONST_CIRCPAD_TRACE_CIRC_ID = "client_circ_id="
+CONST_CIRCPAD_TRACE_EVENT = "event="
 
 blacklisted_addresses = ["aus1.torproject.org"]
 
 def main():
-    '''Given an input folder of logs from instrumented tor to log circuitpad traces to its global log, transforms the logs circpadtrace files. 
+    '''Given an input folder of logs from instrumented tor to log circuitpad traces 
+    to its global log, transforms the logs circpadtrace files. 
 
     The script will determine the circuit with the most circpad events in the
     log and extract them. A warning is written to stdout if any _other_ circuit
@@ -44,8 +48,8 @@ def main():
         circuits = {}
         with open(infname, 'r') as f:
             for line in f:
-                if CONST_CIRCPAD_EVENT_STR in line:
-                    cid, timestamp, event = extract_callback(line)
+                if CONST_CIRCPAD_TRACE in line:
+                    cid, timestamp, event = extract_trace(line)
                     if cid in circuits.keys():
                         circuits[cid] = circuits.get(cid) + [(timestamp, event)]
                     else:
@@ -88,25 +92,16 @@ def main():
             if len(circuits[cid]) > CONST_OTHER_MAX_EVENTS_WARNING:
                 print(f"warning: found extra circuit with {len(circuits[cid])} events in {infname}")
 
-def extract_callback(line):
-    parts = line.split()
+def extract_trace(line):
+    n = line.index(CONST_CIRCPAD_TRACE_TIMESTAMP)+len(CONST_CIRCPAD_TRACE_TIMESTAMP)
+    timestamp = line[n:].split(" ", maxsplit=1)[0]
+    n = line.index(CONST_CIRCPAD_TRACE_CIRC_ID)+len(CONST_CIRCPAD_TRACE_CIRC_ID)
+    cid = line[n:].split(" ", maxsplit=1)[0]
 
-    # find where the event line starts, log format (prefix) of tor could change
-    start = -1
-    for i, p in enumerate(parts):
-        if p == CONST_CIRCPAD_EVENT_STR:
-            start = i
-            break  
-    if start == -1:
-        sys.exit("bug: malformed circpad line")
+    # an event is the last part, no need to split on space like we did earlier
+    n = line.index(CONST_CIRCPAD_TRACE_EVENT)+len(CONST_CIRCPAD_TRACE_EVENT)
+    event = line[n:]
     
-    timestamp = parts[start+1]
-    cid = parts[start+2]
-    # an event can have one or more parts
-    event = ""
-    for p in parts[start+3:]:
-        event += " " + p
-
     return cid, timestamp, event
 
 def blacklist_hit(d):

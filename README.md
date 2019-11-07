@@ -3,7 +3,7 @@ A minimal simulator for padding machines in Tor's circuit padding framework.
 This is very much a *work in progress*, not ready for use just yet. 
 
 ## Setup
-- git clone https://github.com/mikeperry-tor/tor/commits/circpad-sim-squashed2
+- git clone https://github.com/mikeperry-tor/tor.git and checkout the `circpad-sim-squashed2` branch
 - build tor as normal
 
 ## Usage

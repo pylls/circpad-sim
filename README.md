@@ -20,7 +20,7 @@ circuitpadding_sim/circuitpadding_sim_main: [forking] OK
 1 tests ok.  (0 skipped)
 ```
 
-## Example Usage
+## Example usage
 To run with a client and relay trace from `tor/`:
 
 ```

@@ -76,59 +76,36 @@ If you compare `example/client/eff.log` and
 simulated relay traces may differ a bit due to the simulated latency between
 client and relay.
 
-## Sketchpad during development
-Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)
-
-### ideas right now
-- Ideally the simulator should be part of the unit test framework of Tor and
-  callable from a standalone executable with arguments for specifying the input
-  traces. When called from the standalone executable, disable all test-cases we
-  have to disable and write resulting traces to disk or stdout. When called as a
-  test, ship one or more traces with one or more machines and do heavy checks
-  that we get exactly the trace we expect.
-- Once input (during simulation, not testing) and output are sorted, clean up
-  checks and add more tests. 
-- Write a python script (`circpadtrace/circpadtrace2wf.py`) that uses client
-  (and possible relay) traces to generate the cell traces for WF attacks,
-  supporting different formats. Here we could have parameters for placing the
-  attacker at different places between client and middle, add jitter etc as
-  well.
-
-### design considerations
-The intended workflow is "modify machines -> sim many (order 1k-10k+) traces ->
-evaluate -> repeat". Embarrassingly parallel: either spawn one instance of the
-test per trace or write more c to to sim a folder of input. Probably better to
-KISS in C, workflow loop will be dominated by evaluation (deep learning
-training). Timers for sending padding cells are unreliable, 0-10 ms extra delay
-([#31653](https://trac.torproject.org/projects/tor/ticket/31653)), so we ignore
-detailed time for now, only want to get cell ordering right.
-
-### How to format our input and output
-A comprehensive sim framework should have input also from the relay (and guard
-according to Mike, see
-[#31788](https://trac.torproject.org/projects/tor/ticket/31788) comments). This
-is because we also need to accurately simulate the events at the relay-side
-padding machine, and correctly simulate the delay between relay-client. We
-choose to be lazy here, since our time is short and timers are unreliable as-is
-(see design considerations above). 
-
-A circuit looks like this:
-
-client - guard - middle - exit - destination
-
-Our goal is to, from a trace of events with timestamps at the client, infer
-events at the middle relay. We do this by estimating the RTT from the timestamps
-of cells sent and then received, then adding some significant randomness to this
-value to encourage machines to be conservative in their timers. About 1/4 of the
-RRT is the time it takes for a (non-)padding cell to traverse to/from the client
-to/from the relay.
-
-### Trace collection
-This is the lazy way with a simulated relay trace. To collect one trace from a
-modified TB:
+## Trace collection
+This is the lazy way with a simulated relay trace. To collect one trace using
+Tor Browser (TB):
 - copy `src/app/tor` and replace `tor` at `Browser/TorBrowser/Tor` of TB
 - in torrc of TB (`TorBrowser/Data/Tor`), add ``Log [circ]info notice stdout''
-- run TB with `/Browser/start-tor-browser --log hello.log`
-- use `circuitpadtrace/torlog2circpadtrace.py` to transform to circpadtrace format
-- use `circuitpadtrace/simrelaytrace.py` to simulate a relay trace from the
-  client trace
+- run TB with `/Browser/start-tor-browser --log example.log` 
+
+Use the tools from `circpadtrace/` as in the example above to run it with the
+simulator.
+
+## Details
+Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)
+
+TODOs:
+- complete `circpad-sim-evaluator.py` as an example of how to use this thing
+- consider writing some tests for the simulator
+
+### Usage considerations
+The intended workflow is "modify machines -> sim many (order 1k-10k+) traces ->
+evaluate -> repeat". Embarrassingly parallel problem to sim many traces. For
+now, the simulator does one test per trace. For parallelism, run the simulator
+many times. Likely workflow will be dominated by evaluation, including deep
+learning training.
+
+### Limitations
+Unfortunately, timers for sending padding cells are unreliable, 0-10 ms extra
+delay [#31653](https://trac.torproject.org/projects/tor/ticket/31653). We
+currently only document how to simulate traces from a relay, no collection.
+This is a flawed approximation, we encourage researchers to carefully consider
+the implications of this. Ideally, the community will provide carefully
+collected traces in the future with accurate timestamps at both clients and
+relays. The real variability of tor's internal timers will remain a problem
+though in the simulation.

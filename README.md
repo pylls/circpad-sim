@@ -20,16 +20,16 @@ output. To get the client traces, filter by `circpad_sim_results_trace_client`
 and for the relay traces filter by `circpad_sim_results_trace_relay`. Below
 shows an example of client traces:
 
-`./src/test/test --info --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/.. | grep circpad_sim_results_trace_client`
+`./src/test/test --info --circpadsim src/test/circpad_sim_test_trace_client.inc src/test/circpad_sim_test_trace_relay.inc circuitpadding_sim/.. | grep circpad_trace_event`
 
 This gives output of the following format:
 
 ```
-Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000000000000 circpad_machine_event_circ_added_hop
-Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000000084278 circpad_cell_event_nonpadding_sent
-Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000080279314 circpad_cell_event_nonpadding_received
-Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000080577754 circpad_machine_event_circ_added_hop
-Oct 23 16:01:25.493 [info] circpad_sim_results_trace_client(): 000080635312 circpad_cell_event_nonpadding_sent
+Nov 07 16:22:59.000 [info] circpad_trace_event(): timestamp=1668564966 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_sent
+Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1731585868 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_received
+Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1731854076 source=client client_circ_id=2 event=circpad_machine_event_circ_added_hop
+Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1731901343 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_sent
+Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1952113125 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_received
 ```
 
 ## Sketchpad during development

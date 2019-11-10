@@ -111,15 +111,15 @@ def main():
 def remove_blacklisted_events(trace):
     # three cases: no argument, filter client, or filter relay
     result = []
-    remove_blacklisted_counter = 0
+    ignore_next_events = 0
 
     for line in trace:
         # we always filter blacklisted events
         if not any(b in line for b in blacklisted_events):
-            if remove_blacklisted_counter > 0:
-                remove_blacklisted_counter -= 1
-            else:
+            if ignore_next_events == 0:
                 result.append(line)
+            else:
+                ignore_next_events -= 1
 
     '''
     For the client, we assume a list as follows:
@@ -130,7 +130,7 @@ def remove_blacklisted_events(trace):
     On observing (blacklisted) event 1, we ignore the following 2 events
     '''
     if args["fnc"] and "circpad_negotiate_padding" in line:
-        remove_blacklisted_counter = 2
+        ignore_next_events = 2
 
     '''
     For the relay, we assume a list as followes:
@@ -140,7 +140,7 @@ def remove_blacklisted_events(trace):
     On observing (blacklisted) event 2, we ignore the following 1 event
     '''
     if args["fnr"] and "circpad_padding_negotiated" in line:
-        remove_blacklisted_counter = 1
+        ignore_next_events = 1
 
     return result
 

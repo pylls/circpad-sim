@@ -59,13 +59,12 @@ def main():
         circuits = {}
         with open(infname, 'r') as f:
             for line in f:
-                cid, timestamp, event, ok = extract_trace(line)
-                if not ok:
-                    continue
-                if cid in circuits.keys():
-                    circuits[cid] = circuits.get(cid) + [(timestamp, event)]
-                else:
-                    circuits[cid] = [(timestamp, event)]
+                if CONST_CIRCPAD_TRACE in line:
+                    cid, timestamp, event = extract_trace(line)
+                    if cid in circuits.keys():
+                        circuits[cid] = circuits.get(cid) + [(timestamp, event)]
+                    else:
+                        circuits[cid] = [(timestamp, event)]
 
         # filter out circuits with blacklisted addresses
         for cid in list(circuits.keys()):
@@ -145,13 +144,6 @@ def remove_blacklisted_events(trace):
     return result
 
 def extract_trace(line):
-    if CONST_CIRCPAD_TRACE not in line:
-        return False, False, False, False
-
-    for b in blacklisted_events:
-        if b in line:
-            return False, False, False, False
-
     n = line.index(CONST_CIRCPAD_TRACE_TIMESTAMP)+len(CONST_CIRCPAD_TRACE_TIMESTAMP)
     timestamp = line[n:].split(" ", maxsplit=1)[0]
     n = line.index(CONST_CIRCPAD_TRACE_CIRC_ID)+len(CONST_CIRCPAD_TRACE_CIRC_ID)
@@ -161,7 +153,7 @@ def extract_trace(line):
     n = line.index(CONST_CIRCPAD_TRACE_EVENT)+len(CONST_CIRCPAD_TRACE_EVENT)
     event = line[n:]
     
-    return cid, timestamp, event, True
+    return cid, timestamp, event
 
 def blacklist_hit(d):
     for a in common.circpad_get_all_addresses(d):

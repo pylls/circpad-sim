@@ -50,8 +50,8 @@ Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1731901343 source=cl
 Nov 07 16:23:00.000 [info] circpad_trace_event(): timestamp=1952113125 source=client client_circ_id=2 event=circpad_cell_event_nonpadding_received
 ```
 
-There are helper python scripts in `circpadtrace/`. Below shows how to use the
-scripts to recreate some of the example data in the repo.
+There are helper python scripts in the repo. Below shows how to use the scripts
+to recreate some of the example data in the repo.
 
 Cleanup:
 ```
@@ -60,15 +60,15 @@ rm data/circpadtrace-example/* data/sim-relay-circpadtrace-example/*
 
 Extract the traces from the log and then simulate the relay traces:
 ```
-./circpadtrace/torlog2circpadtrace.py -i data/torlog-example/ -o data/circpadtrace-example/
-./circpadtrace/simrelaytrace.py -i data/circpadtrace-example/ -o data/sim-relay-circpadtrace-example/
+./torlog2circpadtrace.py -i data/torlog-example/ -o data/circpadtrace-example/
+./simrelaytrace.py -i data/circpadtrace-example/ -o data/sim-relay-circpadtrace-example/
 ```
 
 ```
 mkdir example example/log example/client example/relay
 ./tor/src/test/test circuitpadding_sim/.. --circpadsim data/circpadtrace-example/eff.org.log data/sim-relay-circpadtrace-example/eff.org.log --info > example/log/eff.log
-./circpadtrace/torlog2circpadtrace.py -i example/log/ -o example/client/
-./circpadtrace/simrelaytrace.py -i example/client/ -o example/relay/
+./torlog2circpadtrace.py -i example/log/ -o example/client/
+./simrelaytrace.py -i example/client/ -o example/relay/
 ```
 
 If you compare `example/client/eff.log` and
@@ -83,8 +83,7 @@ Tor Browser (TB):
 - in torrc of TB (`TorBrowser/Data/Tor`), add ``Log [circ]info notice stdout''
 - run TB with `/Browser/start-tor-browser --log example.log` 
 
-Use the tools from `circpadtrace/` as in the example above to run it with the
-simulator.
+Use the scripts as in the example above to run it with the simulator.
 
 ## Details
 Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)

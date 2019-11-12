@@ -66,6 +66,13 @@ def circpad_parse_line(line):
 
     return event, timestamp
 
+def circpad_lines_to_trace(lines):
+    trace = []
+    for l in lines:
+        event, timestamp = circpad_parse_line(l)
+        trace.append((timestamp, event))
+    return trace
+
 def circpad_extract_log_traces(
     log_lines,
     source_client=True,
@@ -192,3 +199,36 @@ def circpad_only_ips_in_trace(trace):
         if not is_ipv4(a) and not is_ipv6(a):
             return False
     return True
+
+def circpad_wf_cells(trace):
+    result = []
+    for l in trace:
+        if CIRCPAD_EVENT_NONPADDING_SENT in l[1] or \
+           CIRCPAD_EVENT_PADDING_SENT in l[1]:
+            result.append("1") # outgoing is positive
+        if CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
+           CIRCPAD_EVENT_PADDING_RECV in l[1]:
+            result.append("-1") # incoming is negative
+    return result
+
+def circpad_wf_timecells(trace):
+    result = []
+    for l in trace:
+        if CIRCPAD_EVENT_NONPADDING_SENT in l[1] or \
+           CIRCPAD_EVENT_PADDING_SENT in l[1]:
+            result.append(f"{l[0]} 1") # outgoing is positive
+        if CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
+           CIRCPAD_EVENT_PADDING_RECV in l[1]:
+            result.append(f"{l[0]} -1") # incoming is negative
+    return result
+
+def circpad_wf_dirtime(trace):
+    result = []
+    for l in trace:
+        if CIRCPAD_EVENT_NONPADDING_SENT in l[1] or \
+           CIRCPAD_EVENT_PADDING_SENT in l[1]:
+            result.append(f"{l[0]}") # outgoing is positive
+        if CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
+           CIRCPAD_EVENT_PADDING_RECV in l[1]:
+            result.append(f"{l[0]*-1}") # incoming is negative
+    return result

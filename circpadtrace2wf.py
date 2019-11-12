@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import argparse
+import sys
+import os
 import common
 
 ap = argparse.ArgumentParser()
@@ -48,14 +50,46 @@ def main():
     encourage you to think twice about disabling this, results will likely be
     too optimistic if your attack uses time.
 
-    If a relay folder is provided with the corresponding relay traces, the
+    TODO: If a relay folder is provided with the corresponding relay traces, the
     timestamp calculation is changed to as advantageous as we can make them to
     the attacker. This will be stronger than the typical WF attacker that only
     observes network traffic at one location, e.g., at a guard or middle relay,
     or at client's ISP. For cells sent, 
     '''
+    if not os.path.isdir(args["i"]):
+        sys.exit(f"{args['i']} is not a directory")
+    if not os.path.isdir(args["o"]):
+        sys.exit(f"{args['o']} is not a directory")
 
-    print("hello world")
+    WF_TYPES = [
+        "cells",
+        "timecells",
+        "dirtime"
+    ]
 
+    if not any(t in args["t"] for t in WF_TYPES):
+        sys.exit(f"invalid type, has to be one of {WF_TYPES}")
+
+    for fname in os.listdir(args["i"]):
+        infname = os.path.join(args["i"], fname)
+        outfname = os.path.join(args["o"], fname)
+
+        if os.path.exists(outfname):
+            sys.exit(f"output file {outfname} already exists")
+        
+        wf_out = []
+        with open(infname, 'r') as f:
+            trace = common.circpad_lines_to_trace(f.readlines())
+            if args["t"] == "cells":
+                wf_out = common.circpad_wf_cells(trace)
+            elif args["t"] == "timecells":
+                wf_out = common.circpad_wf_timecells(trace)
+            elif args["t"] == "dirtime":
+                wf_out = common.circpad_wf_dirtime(trace)
+
+        with open(outfname, 'w') as f:
+            for l in wf_out:
+                f.write(f"{l}\n")
+        
 if __name__ == "__main__":
     main()

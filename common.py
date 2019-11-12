@@ -23,7 +23,6 @@ CIRCPAD_BLACKLISTED_EVENTS = [
     "circpad_padding_negotiated"
 ]
 
-
 def circpad_get_all_addresses(trace):
     addresses = []
     for l in trace:

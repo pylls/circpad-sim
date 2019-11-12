@@ -66,12 +66,12 @@ Extract the traces from the log and then simulate the relay traces:
 
 ```
 mkdir example example/log example/client example/relay
-./tor/src/test/test circuitpadding_sim/.. --circpadsim data/circpadtrace-example/eff.org.log data/sim-relay-circpadtrace-example/eff.org.log --info > example/log/eff.log
+./tor/src/test/test circuitpadding_sim/.. --circpadsim data/circpadtrace-example/eff.org.log data/sim-relay-circpadtrace-example/eff.org.log --info > example/log/eff.org.log
 ./torlog2circpadtrace.py -i example/log/ -o example/client/
 ./simrelaytrace.py -i example/client/ -o example/relay/
 ```
 
-If you compare `example/client/eff.log` and
+If you compare `example/client/eff.org.log` and
 `data/circpadtrace-example/eff.org.log` they should be identical. Note that the
 simulated relay traces may differ a bit due to the simulated latency between
 client and relay.

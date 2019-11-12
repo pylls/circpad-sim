@@ -65,10 +65,21 @@ def main():
 
     add_machines(client_machine, relay_machine)
     client_sim, relay_sim = simulate_traces(client_traces, relay_traces)
-
     print(f"got {len(client_sim)} client and {len(relay_sim)} relay traces")
     
-    # cleanup, restore source file and re-build tor
+    # for WF, can also use:
+    # - common.circpad_wf_timecells for time and cells
+    # - common.circpad_wf_dirtime for directional timestamps
+    # TODO: update calls when we have a better way to deal with time
+    client_wf = common.circpad_wf_cells(client_sim[0])
+    relay_wf = common.circpad_wf_cells(relay_sim[0])
+    print(f"{len(client_wf)} client and {len(relay_wf)} relay WF cells")
+
+    # next, use a ML attack here to train and test on client_wf or relay_wf
+
+    # Based on what you learned from the attack evaluation, update your machines
+    # and repeat. We don't do that here though, so just cleanup by restoring the
+    # source file for tor and re-building tor
     with open(circpad_sim_loc, "w") as f:
         f.write(circpadsim_src)
     make_tor()

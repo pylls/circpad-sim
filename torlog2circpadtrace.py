@@ -67,7 +67,9 @@ def main():
                 longest_cid = cid
                 longest_cid_len = len(circuits[cid])
 
-        # all done, time to save results and warn 
+        # all done, time to save results
+        # we make the time relative here from the selected circuit, in common
+        # it's relative to the first event in the first circuit
         base = -1
         with open(outfname, 'w') as f:
             for l in circuits[longest_cid]:

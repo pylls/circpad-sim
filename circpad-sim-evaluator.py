@@ -5,6 +5,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import common
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-c", required=True, 
@@ -12,7 +13,7 @@ ap.add_argument("-c", required=True,
 ap.add_argument("-r", required=True, 
     help="input folder of relay circpadtrace files")
 ap.add_argument("-t", required=True, 
-    help="path to tor folder (bob/tor/, not bob/tor/src)")
+    help="path to tor folder (bob/tor, not bob/tor/src)")
 
 args = vars(ap.parse_args())
 
@@ -31,7 +32,7 @@ def main():
     '''A brief example with mostly comments of how one could evaluate padding 
     machines with the circuitpadding simulator.
 
-    View this as a first outline in absense of more complete evaluators
+    View this as a first outline in absence of more complete evaluators
     hopefully done by researchers in the near future. We only outline the
     general approach and implement the parts that relate directly with how the
     simulator works. The rest is future work. 
@@ -51,9 +52,8 @@ def main():
         sys.exit(f"{args['c']} is not a directory")
     if not os.path.isdir(args["r"]):
         sys.exit(f"{args['r']} is not a directory")
-    #client_traces = [os.path.join(args["c"], i) for i in os.listdir(args["c"])]
+
     client_traces = os.listdir(args["c"])
-    #relay_traces = [os.path.join(args["r"], i) for i in os.listdir(args["r"])]
     relay_traces = os.listdir(args["r"])
     client_traces.sort()
     relay_traces.sort()
@@ -64,50 +64,47 @@ def main():
     relay_machine = ""
 
     add_machines(client_machine, relay_machine)
-    client_sim_dir, relay_sim_dir = simulate_traces(client_traces, relay_traces)
+    client_sim, relay_sim = simulate_traces(client_traces, relay_traces)
 
-    # parse to WF traces
-    print(f"client_sim_dir has {len(os.listdir(client_sim_dir))}")
-    print(f"relay_sim_dir has {len(os.listdir(relay_sim_dir))}")
-    # FIXME: use common transform functions
-
-    # cleanup tmp simmed dirs
-    shutil.rmtree(client_sim_dir)
-    shutil.rmtree(relay_sim_dir)
-
-    # cleanup, restore source file
+    print(f"got {len(client_sim)} client and {len(relay_sim)} relay traces")
+    
+    # cleanup, restore source file and re-build tor
     with open(circpad_sim_loc, "w") as f:
         f.write(circpadsim_src)
-    
+    make_tor()
+
     print("all done, exiting")
 
 def simulate_traces(client, relay):
-    client_sim_dir, relay_sim_dir = tempfile.mkdtemp(), tempfile.mkdtemp()
+    out_client, out_relay = [], []
     for i, c in enumerate(client):
+        # run the simulation
         cmd = TOR_CIRCPADSIM_CMD_FORMAT.format(
             os.path.join(args["c"], c),
             os.path.join(args["r"], relay[i]),
         )
         result = subprocess.run(cmd, capture_output=True, text=True, shell=True)
         assert(result.returncode == 0)
-        client_sim, relay_sim = [], []
-        for line in result.stdout.split("\n"):
-            index = line.find("circpad_sim_results_trace_client()")
-            if index > -1:
-                client_sim.append(line[index:])
-            index = line.find("circpad_sim_results_trace_relay()")
-            if index > -1:
-                relay_sim.append(line[index:])
-        print(f"client len {len(client_sim)} and relay len {len(relay_sim)}")
 
-        with open(os.path.join(client_sim_dir, c), 'w') as f:
-            for l in client_sim:
-                f.write(l)
-        with open(os.path.join(relay_sim_dir, relay[i]), 'w') as f:
-            for l in relay_sim:
-                f.write(l)
+        # parse out the simulated logs, get client and relay traces
+        log = result.stdout.split("\n")
+        client_sim = common.circpad_extract_log_traces(log, 
+            source_client=True, source_relay=False)
+        relay_sim = common.circpad_extract_log_traces(log, 
+            source_client=False, source_relay=True, allow_ips=True)
 
-    return client_sim_dir, relay_sim_dir
+        # for simulated traces, expect exactly one circuit
+        assert(len(client_sim) == 1)
+        assert(len(relay_sim) == 1)
+        _, client_sim = client_sim.popitem()
+        _, relay_sim = relay_sim.popitem()
+
+        print(f"client len {len(client_sim)}, relay len {len(relay_sim)}")
+
+        out_client.append(client_sim)
+        out_relay.append(relay_sim)
+
+    return out_client, out_relay
 
 def add_machines(client, relay):
     # read source if we haven't already
@@ -127,6 +124,9 @@ def add_machines(client, relay):
         f.write(modified_src)
 
     # make
+    make_tor()
+
+def make_tor():
     cmd = f"cd {args['t']} && make"
     result = subprocess.run(cmd, stdout=subprocess.DEVNULL, shell=True)
     assert(result.returncode == 0)

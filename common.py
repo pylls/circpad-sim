@@ -92,9 +92,10 @@ def circpad_extract_log_traces(
         n = line.index(CIRCPAD_LOG_EVENT)+len(CIRCPAD_LOG_EVENT)
         event = line[n:]
         
-        return cid, timestamp, event
+        return cid, int(timestamp), event
 
     circuits = {}
+    base = -1
     for line in log_lines:
         if CIRCPAD_LOG in line:
             # skip client/relay if they shouldn't be part of the trace
@@ -102,7 +103,14 @@ def circpad_extract_log_traces(
                 continue
             if not source_relay and "source=relay" in line:
                 continue
+
+            # extract trace and make timestamps relative
             cid, timestamp, event = extract_from_line(line)
+            if base == -1:
+                base = timestamp
+            timestamp = timestamp - base
+
+            # store trace
             if cid in circuits.keys():
                 circuits[cid] = circuits.get(cid) + [(timestamp, event)]
             else:

@@ -11,6 +11,10 @@ ap.add_argument("-i", required=True,
 ap.add_argument("-o", required=True, 
     help="output folder to store circpadtrace files in")
 
+ap.add_argument('-c', default=True, action='store_true',
+    help="include trace events with source client")
+ap.add_argument('-r', default=True, action='store_true',
+    help="include trace events with source relay")
 ap.add_argument('--ip', default=False, action='store_true',
     help="don't filter out circuits with only ipv4 or ipv6 addresses")
 ap.add_argument('--fnc', default=False, action='store_true',
@@ -44,7 +48,10 @@ def main():
             sys.exit(f"output file {outfname} already exists")
 
         # create dictionary with circuit_id -> [(timestamp, event)]
-        circuits = common.circpad_extract_log_traces(infname, args["ip"])
+        circuits = {}
+        with open(infname, 'r') as f:
+            circuits = common.circpad_extract_log_traces(f.readlines(),
+                args["c"], args["r"], args["ip"], args["fnc"], args["fnr"])
 
         if len(circuits) == 0:
             sys.exit(f"no valid circuits found for {infname}")

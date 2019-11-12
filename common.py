@@ -67,8 +67,10 @@ def circpad_parse_line(line):
     return event, timestamp
 
 def circpad_extract_log_traces(
-    log_file, 
-    allow_ips=False, 
+    log_lines,
+    source_client=True,
+    source_relay=True,
+    allow_ips=False,
     filter_client_negotiate=False,
     filter_relay_negotiate=False
     ):
@@ -93,14 +95,18 @@ def circpad_extract_log_traces(
         return cid, timestamp, event
 
     circuits = {}
-    with open(log_file, 'r') as f:
-        for line in f:
-            if CIRCPAD_LOG in line:
-                cid, timestamp, event = extract_from_line(line)
-                if cid in circuits.keys():
-                    circuits[cid] = circuits.get(cid) + [(timestamp, event)]
-                else:
-                    circuits[cid] = [(timestamp, event)]
+    for line in log_lines:
+        if CIRCPAD_LOG in line:
+            # skip client/relay if they shouldn't be part of the trace
+            if not source_client and "source=client" in line:
+                continue
+            if not source_relay and "source=relay" in line:
+                continue
+            cid, timestamp, event = extract_from_line(line)
+            if cid in circuits.keys():
+                circuits[cid] = circuits.get(cid) + [(timestamp, event)]
+            else:
+                circuits[cid] = [(timestamp, event)]
 
     # filter out circuits with blacklisted addresses
     for cid in list(circuits.keys()):

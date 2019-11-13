@@ -96,7 +96,7 @@ def circpad_extract_log_traces(
         n = line.index(CIRCPAD_LOG_EVENT)+len(CIRCPAD_LOG_EVENT)
         event = line[n:]
         
-        return cid, int(timestamp), event
+        return int(cid), int(timestamp), event
 
     circuits = {}
     base = -1

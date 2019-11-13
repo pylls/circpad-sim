@@ -8,7 +8,7 @@ The branch of the simulator is kept in another repo:
 ```
 git clone https://github.com/mikeperry-tor/tor.git
 cd tor
-git checkout -t origin/circpad-sim-v2
+git checkout -t origin/circpad-sim-v3
 ```
 
 Then build tor as normal. The simulator is tested as part of tor's unit testing

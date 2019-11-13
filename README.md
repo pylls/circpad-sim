@@ -85,6 +85,15 @@ Tor Browser (TB):
 
 Use the scripts as in the example above to run it with the simulator.
 
+## Running experiments
+In `circpad-sim-exp.py` you'll find a brief example with mostly comments of how
+one could evaluate padding machines with the circuitpadding simulator. Run it as
+follows:
+
+```
+./circpad-sim-exp.py -c data/circpadtrace-example/ -r data/sim-relay-circpadtrace-example/ -t tor
+```
+
 ## Details
 Ticket [#31788](https://trac.torproject.org/projects/tor/ticket/31788)
 

@@ -179,35 +179,54 @@ def circpad_only_ips_in_trace(trace):
             return False
     return True
 
-def circpad_wf_cells(trace):
-    result = []
-    for l in trace:
-        if CIRCPAD_EVENT_NONPADDING_SENT in l[1] or \
-           CIRCPAD_EVENT_PADDING_SENT in l[1]:
-            result.append("1") # outgoing is positive
-        if CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
-           CIRCPAD_EVENT_PADDING_RECV in l[1]:
-            result.append("-1") # incoming is negative
-    return result
 
-def circpad_wf_timecells(trace):
-    result = []
-    for l in trace:
-        if CIRCPAD_EVENT_NONPADDING_SENT in l[1] or \
-           CIRCPAD_EVENT_PADDING_SENT in l[1]:
-            result.append(f"{l[0]} 1") # outgoing is positive
-        if CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
-           CIRCPAD_EVENT_PADDING_RECV in l[1]:
-            result.append(f"{l[0]} -1") # incoming is negative
-    return result
+def circpad_to_wf(trace, cells=False, timecells=False, dirtime=False, strip=False):
+    ''' Get a WF representation of the trace in the specified format.
 
-def circpad_wf_dirtime(trace):
+    We support three formats:
+    - cells, each line only contains 1 or -1 for outgoing or incoming cells.
+    - timecells, relative timestamp (ms) added before each cell.
+    - directionaltime, each line has relative time multiplied with cell value.
+
+    If the strip flag is set, events prior to a first domain resolution is
+    stripped from the trace (if present). Cirucits are typically created in the
+    background by Tor Browser to speed-up browsing for users. Removing this is
+    beneficital for WF attackers, because it's often assumed (more or less
+    realistically so) that an attacker can often detect this (mainly by a
+    significant time of "silence" on the wire, followed by what is assumed to be
+    a website load).
+
+    FIXME: For timecells and dirtime, current magnitute is nanoseconds, might be
+    more efficient to round to seconds with lower resultion, especially for deep
+    learning attacks.
+    '''
     result = []
+
+    # only strip if we find the event for an address being resolved
+    if strip:
+        for i, l in enumerate(trace):
+            if CIRCPAD_ADDRESS_EVENT in l[1]:
+                trace = trace[i:]
+                break
+
     for l in trace:
+        # outgoing is positive
         if CIRCPAD_EVENT_NONPADDING_SENT in l[1] or \
            CIRCPAD_EVENT_PADDING_SENT in l[1]:
-            result.append(f"{l[0]}") # outgoing is positive
-        if CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
+            if cells:
+                result.append("1")
+            if timecells:
+                result.append(f"{l[0]} 1")
+            if dirtime:
+                result.append(f"{l[0]}") 
+            
+        # incoming is negative
+        elif CIRCPAD_EVENT_NONPADDING_RECV in l[1] or \
            CIRCPAD_EVENT_PADDING_RECV in l[1]:
-            result.append(f"{l[0]*-1}") # incoming is negative
+            if cells:
+                result.append("-1")
+            if timecells:
+                result.append(f"{l[0]} -1")
+            if dirtime:
+                result.append(f"{l[0]*-1}") 
     return result

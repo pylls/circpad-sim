@@ -21,7 +21,7 @@ TOR_CIRCPADSIM_SRC_LOC = "src/test/test_circuitpadding_sim.c"
 CLIENT_MACHINE_TOKEN = "//REPLACE-client-padding-machine-REPLACE"
 RELAY_MACHINE_TOKEN = "//REPLACE-relay-padding-machine-REPLACE"
 TOR_CIRCPADSIM_CMD = os.path.join(args["t"], "src/test/test circuitpadding_sim/..")
-TOR_CIRCPADSIM_CMD_FORMAT = f"{TOR_CIRCPADSIM_CMD} --info --circpadsim {{}} {{}}"
+TOR_CIRCPADSIM_CMD_FORMAT = f"{TOR_CIRCPADSIM_CMD} --info --circpadsim {{}} {{}} 1"
 
 circpadsim_src = "placeholder"
 circpad_sim_loc = os.path.join(args["t"], TOR_CIRCPADSIM_SRC_LOC)
@@ -67,19 +67,17 @@ def main():
     client_sim, relay_sim = simulate_traces(client_traces, relay_traces)
     print(f"got {len(client_sim)} client and {len(relay_sim)} relay traces")
     
-    # for WF, can also use:
-    # - common.circpad_wf_timecells for time and cells
-    # - common.circpad_wf_dirtime for directional timestamps
-    # TODO: update calls when we have a better way to deal with time
-    client_wf = common.circpad_wf_cells(client_sim[0])
-    relay_wf = common.circpad_wf_cells(relay_sim[0])
+    # for WF, can use dirtime or timecells instead of cells, also note the strip
+    # parameter, TODO: update calls when we have a better way to deal with time
+    client_wf = common.circpad_to_wf(client_sim[0], cells=True)
+    relay_wf = common.circpad_to_wf(relay_sim[0], cells=True)
     print(f"{len(client_wf)} client and {len(relay_wf)} relay WF cells")
 
     # next, use a ML attack here to train and test on client_wf or relay_wf
 
     # Based on what you learned from the attack evaluation, update your machines
     # and repeat. We don't do that here though, so just cleanup by restoring the
-    # source file for tor and re-building tor
+    # source file for tor and re-building tor.
     with open(circpad_sim_loc, "w") as f:
         f.write(circpadsim_src)
     make_tor()

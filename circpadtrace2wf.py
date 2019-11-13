@@ -14,13 +14,11 @@ ap.add_argument("-t", required=True,
 
 ap.add_argument("-r", required=False,
     help="input folder of relay circpadtraces, will change timestamp calculations")
-ap.add_argument("-f", required=False,
-    help="override output filetype (.cells, .timecells, .dirtime, .pkl)")
-ap.add_argument("-p", required=False, type=bool,
-    help="don't store results in output, but in one pickle file")
+
+ap.add_argument("-s", required=False, default=False, action='store_true',
+    help="strip the trace before generating the WF output")
 
 # FIXME: consider having a noise parameter to randomize the environment
-
 # FIXME: we have to randomize the client traces when producing the WF output,
 # because otherwise we run the risk of having time-based classifiers getting too
 # accurate timings from the client ("+mikeperry | pulls: if the framework allows
@@ -80,12 +78,13 @@ def main():
         wf_out = []
         with open(infname, 'r') as f:
             trace = common.circpad_lines_to_trace(f.readlines())
-            if args["t"] == "cells":
-                wf_out = common.circpad_wf_cells(trace)
-            elif args["t"] == "timecells":
-                wf_out = common.circpad_wf_timecells(trace)
-            elif args["t"] == "dirtime":
-                wf_out = common.circpad_wf_dirtime(trace)
+            wf_out = common.circpad_to_wf(
+                trace,
+                strip=args["s"],
+                cells=(args["t"] == "cells"),
+                timecells=(args["t"] == "timecells"),
+                dirtime=(args["t"] == "dirtime")
+            )
 
         with open(outfname, 'w') as f:
             for l in wf_out:

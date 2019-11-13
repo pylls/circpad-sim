@@ -11,6 +11,9 @@ ap.add_argument("-i", required=True,
 ap.add_argument("-o", required=True, 
     help="output folder to store circpadtrace files in")
 
+ap.add_argument("--cid", required=False, type=int, default=-1,
+    help="extract the specific circuit id instead of the largest cirucit trace")
+
 ap.add_argument('-c', default=True, action='store_true',
     help="include trace events with source client")
 ap.add_argument('-r', default=True, action='store_true',
@@ -58,14 +61,19 @@ def main():
 
         # figure out which circuit has the most events, keeping tabs of the rest
         longest_cid = -1
-        longest_cid_len = -1
         smaller_cids = []
-        for cid in circuits:
-            if len(circuits[cid]) > longest_cid_len:
-                if longest_cid != -1:
-                    smaller_cids.append(longest_cid)
-                longest_cid = cid
-                longest_cid_len = len(circuits[cid])
+        if args["cid"] != -1:
+            if not args["c"] in circuits:
+                sys.exit(f"found no cirucit to extract with id {args['cid']}")
+            longest_cid = args["c"]
+        else:
+            longest_cid_len = -1
+            for cid in circuits:
+                if len(circuits[cid]) > longest_cid_len:
+                    if longest_cid != -1:
+                        smaller_cids.append(longest_cid)
+                    longest_cid = cid
+                    longest_cid_len = len(circuits[cid])
 
         # all done, time to save results
         # we make the time relative here from the selected circuit, in common

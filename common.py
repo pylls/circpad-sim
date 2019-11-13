@@ -17,10 +17,7 @@ CIRCPAD_LOG_EVENT = "event="
 
 CIRCPAD_BLACKLISTED_ADDRESSES = ["aus1.torproject.org"]
 CIRCPAD_BLACKLISTED_EVENTS = [
-    "circpad_negotiate_padding", 
-    "circpad_handle_padding_negotiated", 
-    "circpad_handle_padding_negotiate",
-    "circpad_padding_negotiated"
+    "circpad_negotiate_logging"
 ]
 
 def circpad_get_all_addresses(trace):
@@ -146,39 +143,21 @@ def circpad_remove_blacklisted_events(
     filter_relay_negotiate
     ):
     
-    # three cases: no argument, filter client, or filter relay
     result = []
-    ignore_next_events = 0
+    ignore_next_send_cell = True
 
     for line in trace:
-        # we always filter blacklisted events
-        if not any(b in line for b in CIRCPAD_BLACKLISTED_EVENTS):
-            if ignore_next_events == 0:
-                result.append(line)
+        # If we hit a blacklisted event, this means we should ignore the next
+        # sent nonpadding cell. Since the blacklisted event should only be
+        # triggered client-side, there shouldn't be any impact on relay traces.
+        if any(b in line for b in CIRCPAD_BLACKLISTED_EVENTS):
+            ignore_next_send_cell = True
+        else:
+            if ignore_next_send_cell and CIRCPAD_EVENT_NONPADDING_SENT in line:
+                ignore_next_send_cell = False
             else:
-                ignore_next_events -= 1
-
-    '''
-    For the client, we assume a list as follows:
-      1. circpad_negotiate_padding
-      2. circpad_cell_event_nonpadding_sent
-      3. circpad_cell_event_nonpadding_received
-      4. circpad_handle_padding_negotiated
-    On observing (blacklisted) event 1, we ignore the following 2 events
-    '''
-    if filter_client_negotiate and "circpad_negotiate_padding" in line:
-        ignore_next_events = 2
-
-    '''
-    For the relay, we assume a list as followes:
-      1. circpad_handle_padding_negotiate
-      2. circpad_padding_negotiated
-      3. circpad_cell_event_nonpadding_sent
-    On observing (blacklisted) event 2, we ignore the following 1 event
-    '''
-    if filter_relay_negotiate and "circpad_padding_negotiated" in line:
-        ignore_next_events = 1
-
+                result.append(line)
+                
     return result
 
 def circpad_only_ips_in_trace(trace):

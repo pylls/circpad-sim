@@ -102,7 +102,7 @@ TODOs:
 - consider writing some tests for the simulator
 
 ### Usage considerations
-It's an embarrasingly parallel problem to sim many traces, so the simulator only
+It's an embarrassingly parallel problem to sim many traces, so the simulator only
 simulates one trace per run. For parallelism, run the simulator many times.
 Likely workflow will be dominated by evaluation, including deep learning
 traning.
@@ -110,7 +110,7 @@ traning.
 ### Limitations
 Unfortunately, timers for sending padding cells are unreliable, 0-10 ms extra
 delay [#31653](https://trac.torproject.org/projects/tor/ticket/31653). We
-currently only docuemnt how to simulate traces from a relay, no collection. This
+currently only document how to simulate traces from a relay, no collection. This
 is a flawed approximation, we encourage researchers to carefully consider the
 implications of this. Ideally, the community will provide carefully collected
 traces in the future with accurate timestamps at both clients and relays. The

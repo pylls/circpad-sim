@@ -57,7 +57,8 @@ def main():
                 args["c"], args["r"], args["ip"], args["fnc"], args["fnr"])
 
         if len(circuits) == 0:
-            sys.exit(f"no valid circuits found for {infname}")
+            print(f"error: no valid circuits found for {infname}")
+            continue
 
         # figure out which circuit has the most events, keeping tabs of the rest
         longest_cid = -1

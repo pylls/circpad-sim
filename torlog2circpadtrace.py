@@ -13,6 +13,8 @@ ap.add_argument("-o", required=True,
 
 ap.add_argument("--cid", required=False, type=int, default=-1,
     help="extract the specific circuit id instead of the largest cirucit trace")
+ap.add_argument("-m", required=False, type=int, default=1000*1000*1000,
+    help="the maximum length per circuit to extract")
 
 ap.add_argument('-c', default=True, action='store_true',
     help="include trace events with source client")
@@ -54,7 +56,7 @@ def main():
         circuits = {}
         with open(infname, 'r') as f:
             circuits = common.circpad_extract_log_traces(f.readlines(),
-                args["c"], args["r"], args["ip"], args["fnc"], args["fnr"])
+                args["c"], args["r"], args["ip"], args["fnc"], args["fnr"], args["m"])
 
         if len(circuits) == 0:
             print(f"error: no valid circuits found for {infname}")

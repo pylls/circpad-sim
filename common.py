@@ -76,7 +76,8 @@ def circpad_extract_log_traces(
     source_relay=True,
     allow_ips=False,
     filter_client_negotiate=False,
-    filter_relay_negotiate=False
+    filter_relay_negotiate=False,
+    max_length=999999999
     ):
     # helper function
     def blacklist_hit(d):
@@ -116,7 +117,8 @@ def circpad_extract_log_traces(
 
             # store trace
             if cid in circuits.keys():
-                circuits[cid] = circuits.get(cid) + [(timestamp, event)]
+                if len(circuits[cid]) < max_length:
+                    circuits[cid] = circuits.get(cid) + [(timestamp, event)]
             else:
                 circuits[cid] = [(timestamp, event)]
 

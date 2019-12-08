@@ -13,7 +13,7 @@ ap.add_argument("-o", required=True,
 
 ap.add_argument("--cid", required=False, type=int, default=-1,
     help="extract the specific circuit id instead of the largest cirucit trace")
-ap.add_argument("-m", required=False, type=int, default=1000*1000*1000,
+ap.add_argument("-m", required=False, type=int, default=10*1000,
     help="the maximum length per circuit to extract")
 
 ap.add_argument('-c', default=True, action='store_true',
@@ -29,7 +29,7 @@ ap.add_argument('--fnr', default=False, action='store_true',
 
 args = vars(ap.parse_args())
 
-CONST_OTHER_MAX_EVENTS_WARNING = 100
+CONST_OTHER_MAX_EVENTS_WARNING = 200
 
 def main():
     '''Given an input folder of logs from instrumented tor to log circuitpad traces 

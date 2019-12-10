@@ -16,10 +16,6 @@ ap.add_argument("--cid", required=False, type=int, default=-1,
 ap.add_argument("-m", required=False, type=int, default=10*1000,
     help="the maximum length per circuit to extract")
 
-ap.add_argument('-c', default=True, action='store_true',
-    help="include trace events with source client")
-ap.add_argument('-r', default=True, action='store_true',
-    help="include trace events with source relay")
 ap.add_argument('--ip', default=False, action='store_true',
     help="don't filter out circuits with only ipv4 or ipv6 addresses")
 ap.add_argument('--fnc', default=False, action='store_true',
@@ -56,7 +52,7 @@ def main():
         circuits = {}
         with open(infname, 'r') as f:
             circuits = common.circpad_extract_log_traces(f.readlines(),
-                args["c"], args["r"], args["ip"], args["fnc"], args["fnr"], args["m"])
+                True, True, args["ip"], args["fnc"], args["fnr"], args["m"])
 
         if len(circuits) == 0:
             print(f"error: no valid circuits found for {infname}")

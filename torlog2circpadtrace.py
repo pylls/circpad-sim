@@ -43,7 +43,10 @@ def main():
 
     for fname in os.listdir(args["i"]):
         infname = os.path.join(args["i"], fname)
-        outfname = os.path.join(args["o"], fname)
+        if os.path.splitext(fname)[1] == ".log":
+          outfname = os.path.join(args["o"], os.path.splitext(fname)[0]+'.trace')
+        else:
+          outfname = os.path.join(args["o"], fname+'.trace')
 
         if os.path.exists(outfname):
             sys.exit(f"output file {outfname} already exists")

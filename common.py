@@ -146,16 +146,18 @@ def circpad_remove_blacklisted_events(
     ):
     
     result = []
-    ignore_next_send_cell = True
+    ignore_next_send_cell = False
 
     for line in trace:
+        strline = str(line) # What the hell was this before?
+
         # If we hit a blacklisted event, this means we should ignore the next
         # sent nonpadding cell. Since the blacklisted event should only be
         # triggered client-side, there shouldn't be any impact on relay traces.
-        if any(b in line for b in CIRCPAD_BLACKLISTED_EVENTS):
+        if any(b in strline for b in CIRCPAD_BLACKLISTED_EVENTS):
             ignore_next_send_cell = True
         else:
-            if ignore_next_send_cell and CIRCPAD_EVENT_NONPADDING_SENT in line:
+            if ignore_next_send_cell and CIRCPAD_EVENT_NONPADDING_SENT in strline:
                 ignore_next_send_cell = False
             else:
                 result.append(line)

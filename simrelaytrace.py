@@ -44,6 +44,17 @@ def main():
         if os.path.exists(outfname):
             sys.exit(f"output file {outfname} already exists")
 
+        # By default, middle relays do not see the first onionskin handshake
+        # These bools work as flags to strip it out.
+        skipped_sent = False
+        skipped_recv = False
+
+        if args["guard"]:
+          # If we are making a guard trace, we exactly mirror
+          # the client trace. Dont skip the first handshake
+          skipped_sent = True
+          skipped_recv = True
+
         # estimate latency distribution between client-relay
         latency = estimate_latency_in_us(infname)
 
@@ -66,15 +77,21 @@ def main():
                         if t >= last_relay_sent:
                             break
                     last_relay_sent = t
-                    output.append(
+                    if skipped_recv:
+                      output.append(
                         f"{t:016d} {common.CIRCPAD_EVENT_NONPADDING_SENT}"
                         )
+                    else:
+                       skipped_recv = True
                 elif common.CIRCPAD_EVENT_NONPADDING_SENT in event:
                     # the relay will receive a cell in timestamp + latency
                     t = timestamp + latency()
-                    output.append(
+                    if skipped_sent:
+                      output.append(
                         f"{t:016d} {common.CIRCPAD_EVENT_NONPADDING_RECV}"
                         )
+                    else:
+                      skipped_sent = True
 
         # save results
         with open(outfname, 'w') as f:

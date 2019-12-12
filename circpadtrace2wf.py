@@ -70,7 +70,10 @@ def main():
 
     for fname in os.listdir(args["i"]):
         infname = os.path.join(args["i"], fname)
-        outfname = os.path.join(args["o"], fname)
+        if os.path.splitext(fname)[1] == ".trace":
+          outfname = os.path.join(args["o"], os.path.splitext(fname)[0]+'.wf'+args["t"])
+        else:
+          outfname = os.path.join(args["o"], fname+'.wf'+args["t"])
 
         if os.path.exists(outfname):
             sys.exit(f"output file {outfname} already exists")

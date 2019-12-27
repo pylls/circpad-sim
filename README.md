@@ -408,3 +408,8 @@ TODOs:
 - consider writing some tests for the simulator
 
 
+## Acknowledgements
+
+Part of this work was made possible thanks to generous grants from the [Swedish
+Internet Foundation](https://internetstiftelsen.se/en/) and [NGI Zero
+PET](https://nlnet.nl/PET/).
